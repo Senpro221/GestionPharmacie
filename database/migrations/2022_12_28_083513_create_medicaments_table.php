@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('nom',55);
             $table->string('image',255);
             $table->integer('quantite');
+            $table->string('categorie');
             $table->integer('prix_unitaire');
             $table->string('libelle', 255);
             $table->timestamps();

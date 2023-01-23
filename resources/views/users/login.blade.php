@@ -9,13 +9,6 @@
 			<div class="border-success "><center><h1 class="text-success mt-1">Connecter vous</h2></center></div>
 				<hr>
 			<div class="card-body">
-				
-				@if (session()->has('errors'))
-					<div class="alert alert-danger">
-						{{session()->get('error')}}
-					</div>
-				@endif
-
 				@if (session()->has('error'))
 				<div class="alert alert-danger">
 					{{session()->get('error')}}

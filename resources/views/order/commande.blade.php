@@ -1,12 +1,13 @@
 
-@extends('./../layouts/entete')
+@extends('./../layouts/enteteclient')
 
 
 @section('page-content')
 
-<div class="container ms-2" style="max-width:50%;">
+<div class="container ms-5 mb-2" style="max-width:50%;">
 <div class=" text-success mt-1 mb-1"><h3>Détails de facturation</h3></div>
-    <form class="row g-3">
+<div class="col-md-4"></div> 
+<form class="row g-3">
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Nom<span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="nom">

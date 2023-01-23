@@ -40,6 +40,7 @@
                 <option value="DetenteSommeil">Détente - Sommeil</option>
                 <option value="bucco-dentaires">Soins bucco-dentaires</option>
                 <option value="VitaminesMineraux">Vitamines - Minéraux</option>
+                <option value="produit">Produit</option>
               </select>
 
               @error('categorie')
@@ -62,6 +63,15 @@
               <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="prix du médicament" value="{{ old('prix_unitaire')}}">
 
               @error('prix_unitaire')
+                <div class="text text-danger">
+                {{$message}}
+                </div>
+              @enderror
+              
+              <label for="dlc">Date de pérempption</label>
+              <input type="datetime-local" name="dlc" id="prix_unitaire" placeholder="prix du médicament" value="{{ old('prix_unitaire')}}">
+
+              @error('dlc')
                 <div class="text text-danger">
                 {{$message}}
                 </div>
@@ -95,7 +105,7 @@
 
             </tr>
              @forelse($medicaments as $medicament)
-              @if(Auth::user()->id===$medicament->user_id)
+              {{-- @if(Auth::user()->id===$medicament->user_id) --}}
             <tr>
             
                 <td>{{$medicament->nom}}></td>
@@ -113,8 +123,8 @@
                </td>
    
             </tr>
-                @else 
-              @endif
+                {{-- @else 
+              @endif --}}
       
            @empty
 

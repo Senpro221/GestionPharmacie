@@ -1,4 +1,4 @@
-@extends('./../layouts/enteteclient')
+@extends('./../layouts/entetetriem')
 @section('page-content')
 <body>
   
@@ -7,12 +7,11 @@
 
     <div class="pos position-absolute top-0 start-60">
             <pre><span class="tit">     Bienvenue dans notre plateforme
-                      SEN PHARMACIE</span>
+                      KAY FADIOU</span>
                  
                         
          
-             <span class="jeude text-success">Dans l'incapacité de vous 
-                  déplacer</span> 
+             <span class="jeude text-success">Jënd Mou Gaaw te Nopale</span> 
       </pre>
     </div> 
 </div>   
@@ -20,7 +19,7 @@
 <div class="live bg-success text-white"> 
   <marquee>
  <img src="{{ asset('image/livraison.png')}}" width="100" height="40" class="ms mt-1 mb-3 " fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-  <span class="v1 mt-1">Aujourd'hui on Vous livre vos Médicaments à domicile ou que vous soyez au Sénégal</span>  
+  <span class="v1 mt-1">Faites Vous livrer vos Médicaments à domicile  24h / 24  | 7j / 7 ou que vous soyer dans le Sénégal</span>  
   </marquee>
 </div>
   <hr>

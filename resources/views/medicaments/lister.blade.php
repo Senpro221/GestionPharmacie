@@ -31,7 +31,7 @@ Autres médicaments</button>
 <div class="nb card float-lg-start shadow p-3 mb-1 bg-body rounded" style="max-width: 315px; height:35rem;">
    <img src="image/{{ $medicament->image }}" class="card-img-top" alt="vous">
   <div class="card-body">
-    <h5 class="card-title"><a href="/medicaments/{{$medicament->id}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
+    <h5 class="card-title"><a href="{{route('medicaments.show',$medicament->id)}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
     <p class="card-text">{{$medicament->libelle}}</p>
     <button class="btn btn-outline-success">{{$medicament->quantite}} comprimés</button>
      <button type="button" class="btn btn-success">{{$medicament->prix_unitaire}} fcfa</button>

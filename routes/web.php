@@ -3,7 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\medicamentControler;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BasketController;
 use App\Http\Controllers\MonController;
+use App\Http\Controllers\Connexion;
 use App\Http\Controllers\PharmacieController;
 /*
 |-------+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*-------------------------------------------------------------------
@@ -31,7 +33,8 @@ Route::get('/trie' , [medicamentControler::class, 'trie'])->name('listing');
 Route::get('/triedigest', [medicamentControler::class, 'triedigest'])->name('digestion');
 
 //===============================lister les pharmacies
-Route::get('/listePharmacie', [PharmacieController::class,'listePharma'])->name('listePharmacie');
+Route::get('/listePharmacie', [UserController::class,'listePharma'])->name('listePharmacie');
+Route::get('/listePharmaciecl', [UserController::class,'listePharmacl'])->name('listePharmacie');
 
 //==========================middelware regroupant les route qui non pas besoing de Auth..==========// 
 Route::middleware(['guest'])->group(function(){
@@ -47,7 +50,6 @@ Route::middleware(['guest'])->group(function(){
 
 //==========================connecter un utilisateur==========================================//
     Route::get('/login',[UserController::class, 'login'])->name('login');
-
     Route::post('/login',[UserController::class,'handleLogin'])->name('login');
 
 
@@ -58,10 +60,15 @@ Route::middleware(['guest'])->group(function(){
 Route::middleware('auth')->group(function(){
 
 //===================================page d'accueil de l'admin=============================//
-    Route::get('/admin',[medicamentControler::class,'admin']);
-    Route::get('/min',[medicamentControler::class, 'indexe']);
+ if(Auth::user()->role === 'admin'){
+        Route::get('/admin',[medicamentControler::class,'admin']);
+        Route::get('/min',[medicamentControler::class, 'indexe']);
+     }else{
+       
+     }
+        
 //===================================Les Routes preceder par le /medicament========================================//   
-  Route::prefix('medicaments')->group(function(){
+Route::prefix('medicaments')->group(function(){
 //===================================ajouter des medicament=======================================================//
 
         Route::post('/',[medicamentControler::class, 'store']);
@@ -78,14 +85,12 @@ Route::middleware('auth')->group(function(){
      
 //==========================================supprimer un medicament=====================================//
         Route::delete('/medicaments/{medicament}/delete',[medicamentControler::class,'delete'])->name('medicaments.delete');
-   
 
 
     });
 
-        // //================================client====================================================//
-        // Route::get('/panier',[medicamentControler::class,'panier'])->name('panier');
-        // Route::post('/panier',[medicamentControler::class,'panierhelde'])->name('panier');
+    //commander un medicament//
+    Route::get('/commander',[Connexion::class,'order'])->name('commande');
 
 //=================================disconnect=========================================================//
          Route::get('/logout', [UserController::class, 'logout'])->name('logout');
@@ -119,16 +124,31 @@ Route::middleware('auth')->group(function(){
 
 Route::get('/macie', [MonController::class,'dashboard->'])->name('senpharma');
 
-
+Route::get('/connexion',[Connexion::class,'connexion']);
 
 //=============================/route pour ajouter un pharmacie==================================//
         
 Route::get('/choisirConnexion', [PharmacieController::class,'choice'])->name('choisirConnexion');
-Route::get('/ajoutPharmacie', [PharmacieController::class,'inscription'])->name('ajoutPharmacie');
-Route::post('/ajoutInscriprion', [PharmacieController::class, 'handleInscription'])->name('ajoutInscription');
+Route::get('/ajoutPharmacie', [UserController::class,'inscription'])->name('ajoutPharmacie');
+Route::post('/ajoutInscriprion', [UserController::class, 'handleInscription'])->name('ajoutInscription');
 
-Route::get('/Connexionlogin',[PharmacieController::class, 'Connexionlogin'])->name('Connexionlogin');
+Route::get('/Connexionlogin',[UserController::class, 'Connexionlogin'])->name('Connexionlogin');
 
-Route::post('/Acceslogin',[PharmacieController::class,'handleAccesLogin'])->name('Connexionlogin');
+Route::post('/Acceslogin',[UserController::class,'handleAccesLogin'])->name('Connexionlogin');
+Route::get('/statut/{id}',[UserController::class,'statut'])->name('statut');
 
- Route::get('/statut/{id}',[PharmacieController::class,'statut'])->name('statut');
+Route::get('dashboard',function(){
+        return 'je suis connecter';
+});
+
+Route::get('/medoc{medicament}',[MonController::class,'show'])->name('medicaments.show');
+Route::get('/basket',[BasketController::class,'show'])->name('basket.show');
+Route::post('basket/add/{medicament}', [BasketController::class,'add'])->name('basket.add');
+//Route::get('basket', [BasketController::class,'show'])->name('basket.show');
+Route::get('basket/remove/{medicament}', [BasketController::class,'remove'])->name('basket.remove');
+Route::get('basket/empty', [BasketController::class,'empty'])->name('basket.empty');
+
+ Route::get('dashboad',[Connexion::class,'dashboad']);
+
+//route pour aller dans trimedoc
+Route::get('/trimedoc',[Connexion::class,'trimedoc']);

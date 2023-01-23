@@ -218,7 +218,7 @@ nav .profile-details i {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    min-width: calc(100% /6 - 20px);
+    min-width: calc(100% /4 - 20px);
     background: #fff;
     padding: 15px 10px;
     border-radius: 12px;
@@ -300,7 +300,6 @@ nav .profile-details i {
     justify-content: space-between;
     /* padding: 0 20px; */
 }
-
 
 
 /* left box */
@@ -466,7 +465,7 @@ nav .profile-details i {
         min-width: 40px;
     }
     .home-content .sales-boxes .sales-details {
-        width: 560px;
+        width: 540px;
     }
 }
 

@@ -1,7 +1,4 @@
-
-@extends('./../layouts/entete')
-
-
+@extends('./../layouts/entetepharma')
 @section('page-content')
 <body>
   
@@ -10,7 +7,7 @@
 
     <div class="pos position-absolute top-0 start-60">
             <pre><span class="tit">     Bienvenue dans notre plateforme
-                      SEN pharmacie</span>
+                      SEN PHARMACIE</span>
                  
                         
          
@@ -20,8 +17,10 @@
 </div>   
 <hr>
 <div class="live bg-success text-white"> 
- <img src="{{ asset('image/livraison.png')}}" width="110" height="50" class="ms mt-2 mb-3 " fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-  <span class="v1">Faites Vous livrer vos Médicaments à domicile  24h / 24  | 7j / 7</span>  
+  <marquee>
+ <img src="{{ asset('image/livraison.png')}}" width="100" height="40" class="ms mt-1 mb-3 " fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+  <span class="v1 mt-1">Faites Vous livrer vos Médicaments à domicile  24h / 24  | 7j / 7 ou que vous soyer dans le Sénégal</span>  
+  </marquee>
 </div>
   <hr>
 @forelse($medicaments as $medicament)
@@ -29,7 +28,7 @@
 <div class=" card float-lg-start shadow p-3 mb-1 bg-body rounded" style="width: 315px; height:35rem;">
    <img src="image/{{ $medicament->image }}" class="card-img-top hover-zoom" alt="vous">
   <div class="card-body">
-    <h5 class="card-title"><a href="/medicaments/{{$medicament->id}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
+    <h5 class="card-title"><a href="{{route('medicaments.show',$medicament->id)}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
     <p class="card-text">{{$medicament->libelle}}</p>
     <button class="btn btn-outline-success">{{$medicament->quantite}} comprimés</button>
      <button type="button" class="btn btn-success">{{$medicament->prix_unitaire}} fcfa</button>

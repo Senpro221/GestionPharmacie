@@ -24,8 +24,9 @@
         <div class="signin-signup" >
             
             <form action="{{ route('Connexionlogin') }}" class="sign-in-form" method="POST" >
-                @method('post')
+                
                     @csrf
+                    @method('post')
                     @if (session()->has('error'))
                     <div class="alert alert-danger">
                         {{session()->get('error')}}

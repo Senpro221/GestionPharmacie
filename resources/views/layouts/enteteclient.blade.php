@@ -17,7 +17,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous" defer></script>
 
 </head>
-<body>
+<header>
 <style>
 
 
@@ -99,7 +99,10 @@
       </svg>
     </center>
    <a href="{{route('choisirConnexion')}}" style="text-decoration: none; color:#fff" >  <p class="me-3 mt-0 ">Panier</p></a>
-</div>
+   <span class="mnm position-absolute top-4 start-60 me-2 translate-middle badge rounded-pill bg-danger">
+    0
+</span>
+  </div>
   <div class="sear">
 
     <center>
@@ -158,7 +161,7 @@
         </li>
 
         <li class="nav-item">
-          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="/listePharmacie">Listes des pharmacies</a>
+          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="/listePharmaciecl">Listes des pharmacies</a>
           </li>
       </ul>
       <!-- Left links -->
@@ -209,7 +212,8 @@
 @yield('page-content')
 <!-- Navbar -->
 </div>
-
+</header>
+@include('layouts.footer' )
 
 
 

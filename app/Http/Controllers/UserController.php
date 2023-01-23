@@ -50,10 +50,8 @@ class UserController extends Controller
             if(Auth::user()->role === 'admin'){
                 return view('admin');
              }else{
-                    return redirect('/visiteure');
-             }// }else{
-            //     return redirect('/visiteure');
-            // }
+                return redirect('/visiteure');
+             }
             
         }else{
           return redirect()->back()->with('error','login ou mot de passe incorecte');
@@ -154,5 +152,82 @@ class UserController extends Controller
 
         return redirect('profile')->with('status', 'profile-updated');
     
-}   
+  }   
+
+  public function inscription()
+  {
+      return view('users.registrepharma');
+  }
+
+  public function handleInscription(User $user, UserLoginRequest $request)
+  {
+      $user->name=$request->name;
+      $user->prenom=$request->prenom;
+      $user->email=$request->email;
+      $user->statut=$request->statut=false;
+      $user->nom=$request->nom;
+      $user->adresse=$request->adresse;
+      $user->ville=$request->ville;
+      $user->quartier=$request->quartier;
+      $user->telephone=$request->telephone;
+      $user->password=Hash::make($request->password);
+   
+      $user->save();
+      return redirect()->back()->with('success','Votre compte a ete creer ');
+  }
+
+  public function Connexionlogin()
+  {
+      return view('users.registrepharma');
+  }
+
+  public function  handleAccesLogin(Request $request)
+  {
+
+     $credentials =  $request->validate([
+          'email'=>['required','email'],
+          'password'=> ['required'],
+     ]);
+     if (Auth::attempt($credentials)) {
+          $request->session()->regenerate();
+          if(Auth::user()->role === 'admin'){
+              return view('admin');
+           }else{
+             return redirect('/dashboad');
+           }
+          
+      }else{
+        return redirect()->back()->with('error','login ou mot de passe incorecte');
+      }
+}
+
+
+
+   public function listePharma(){
+   
+      $pharmacie=DB::select('select * from users where statut=0 | statut=1');
+      
+      return view('pharmacie.listePharmacie',['pharmacie'=>$pharmacie]);
+   }
+
+   public function listePharmacl(){
+   
+    $pharmacie=DB::select('select * from users where statut=0 | statut=1');
+    
+    return view('pharmacie.listePharmaCl',['pharmacie'=>$pharmacie]);
+ }
+
+
+   public function statut(Request $request,$id){
+      $data = User::find($id);
+      if($data->statut==0){
+          $data->statut=1;
+      }else{
+          $data->statut=0;
+      }
+      $data->save();
+
+      return redirect('listePharmacie')->with('success','statut has been changed successfully.');
+   }
+  
 }

@@ -1,5 +1,5 @@
 
-@extends('./../layouts/app')
+@extends('./../layouts/enteteclient')
 
 
 @section('page-content')
@@ -26,8 +26,7 @@
               <th class="ms-5">quartier</th>
               <th class="m-2">Telephone</th>
               <th class="m-2">Nom  pharmacie</th>
-              <th class="ms-5">statut</th>
-              <th class="m-2 ms-2">Action</th>
+              <th class="ms-5">Choisir votre pharmacie</th>
             </tr>
              @forelse($pharmacie as $pharma)
             <tr>
@@ -37,18 +36,8 @@
                 <td>{{$pharma->ville}}</td>
                 <td>{{$pharma->quartier}}</td>
                 <td>{{$pharma->telephone}}</td>
-                <td class="text-align:center;"><a class="btn btn-outline-success ms-2" style="text-decoration:none; " href="#">{{$pharma->nom}}</a></td>
-                <td class="m-2">
-                  @if ($pharma->statut == 0) Inactive     
-                  @else
-                  Active    
-                  @endif
-                </td>
-                <td class="text-align:center;"><a class="btn btn-success ms-1" style="text-decoration:none; " href="{{ route('statut',['id'=>$pharma->id]) }}">
-                @if ($pharma->statut == 1) Inactive 
-                @else Active @endif</a></td>
-                <td class="text-align:center;"><a class="btn btn-danger ms-1" style="text-decoration:none; " href="#">Bannir</a></td>
-            
+                <td class="text-align:center;"><a class="btn btn-outline-success ms-2" style="text-decoration:none; " href="/trimedoc">{{$pharma->nom}}</a></td>
+              
             </tr>
 
            @empty
