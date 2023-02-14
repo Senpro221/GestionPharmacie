@@ -7,7 +7,7 @@
   <div class="overview-boxes">
       <div class="box">
          <div style="float: left" >
-             <h1>Connecter vous en ten que</h1>
+             <h1>S'inscrire  en tant que</h1>
           </div> 
         
           <div style="float: left">

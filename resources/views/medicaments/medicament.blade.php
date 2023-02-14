@@ -14,7 +14,7 @@
       <div class="overview-boxes">
       
           <div class="box">
-
+     <div style="max-width: 410px"> 
             <form action="/medicaments" method="POST">
              <h2 class="text-success">Ajouter médicaments</h2>
              <hr>
@@ -39,8 +39,10 @@
                 <option value="Dermatologie">Dermatologie</option>
                 <option value="DetenteSommeil">Détente - Sommeil</option>
                 <option value="bucco-dentaires">Soins bucco-dentaires</option>
+                <option value="Homéopathie">Homéopathie</option>
+                <option value="bucco-dentaires">Soins bucco-dentaires</option>
                 <option value="VitaminesMineraux">Vitamines - Minéraux</option>
-                <option value="produit">Produit</option>
+                <option value="CirculationVeineuse">Circulation veineuse</option>
               </select>
 
               @error('categorie')
@@ -59,6 +61,16 @@
                 </div>
               @enderror
 
+              
+             <label for="nom_medoc">Quantité Minimum</label>
+              <input type="number" name="quantiteMin" id="quantiteMin" placeholder="Quantité minimun de stock du médicament" value="{{ old('quantiteMin')}}">
+
+              @error('quantiteMin')
+                <div class="text text-danger">
+                {{$message}}
+                </div>
+              @enderror
+
               <label for="nom_medoc">Prix unitaire</label>
               <input type="number" name="prix_unitaire" id="prix_unitaire" placeholder="prix du médicament" value="{{ old('prix_unitaire')}}">
 
@@ -69,7 +81,7 @@
               @enderror
               
               <label for="dlc">Date de pérempption</label>
-              <input type="datetime-local" name="dlc" id="prix_unitaire" placeholder="prix du médicament" value="{{ old('prix_unitaire')}}">
+              <input type="date" name="dlc" id="prix_unitaire" placeholder="prix du médicament" value="{{ old('prix_unitaire')}}">
 
               @error('dlc')
                 <div class="text text-danger">
@@ -89,7 +101,7 @@
               <button type="submit" class="btn btn-success mt-1">Ajouter et publié des médicaments</button>
 
             </form>
-            
+          </div>
           </div>
      
       <!-- tables -->  
@@ -101,17 +113,20 @@
               <th>Quantité</th>
               <th>Prix_Unitaire</th>
               <th>Catégorie</th>
+              {{-- <th>DLC</th> --}}
               <th>Action</th>
 
             </tr>
              @forelse($medicaments as $medicament)
-              {{-- @if(Auth::user()->id===$medicament->user_id) --}}
+               {{-- @if(Auth::user()->id===$medicament->user_id)  --}}
             <tr>
             
                 <td>{{$medicament->nom}}></td>
                 <td>{{$medicament->quantite}}</td>
                 <td>{{$medicament->prix_unitaire}}</td>
                 <td>{{$medicament->categorie}}</td>
+
+         
                 <td> 
                 <form action="{{route('medicaments.delete',$medicament->id)}}" method="POST">
                   @csrf
@@ -124,8 +139,8 @@
    
             </tr>
                 {{-- @else 
-              @endif --}}
-      
+              @endif
+       --}}
            @empty
 
         @endforelse

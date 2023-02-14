@@ -21,6 +21,11 @@
 
 <body>
     <div class="container">
+        @if (session()->has('success'))
+        <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+        @endif
         <div class="signin-signup" >
             
             <form action="{{ route('Connexionlogin') }}" class="sign-in-form" method="POST" >
@@ -74,7 +79,7 @@
                         <i class="fab fa-linkedin-in"></i>
                     </a>
                 </div>
-                 <p class="account-text">Vous n’avez pas de compte ? <a href="{{route('registration')}}" id="sign-up-btn2">S’</a></p> 
+                 <p class="account-text">Vous n’avez pas de compte ? <a href="{{route('ajoutInscription')}}" id="sign-up-btn2">S’</a></p> 
             </form>
             <!-- registre -->
             <form action="{{ route('ajoutInscription') }}" class="sign-up-form" method="POST">
@@ -119,6 +124,18 @@
 
                 </div>
 
+                <div class="input-field">
+                    <i class="fas fa-envelope"></i>
+                    <input type="text" name="adress" placeholder="Adresse" value="{{ old('adress')}}">
+
+                    @error('adress')
+                        <div class="text text-danger">
+                            {{$message}}
+                        </div>
+                        @enderror
+
+                </div>
+
                 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
@@ -148,7 +165,7 @@
 
                 <div class="input-field">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <input type="adresse" name="adresse" placeholder="Adresse de la pharmacie" value="{{ old('adress')}}">
+                    <input type="text" name="adresse" placeholder="Adresse de la pharmacie" value="{{ old('adresse')}}">
 
                     @error('adresse')
                         <div class="text text-danger">
@@ -160,7 +177,19 @@
 
                 <div class="input-field">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <input type="adress" name="quartier" placeholder="quartier" value="{{ old('quartier')}}">
+                    <input type="text" name="ville" placeholder="ville" value="{{ old('ville')}}">
+
+                    @error('ville')
+                        <div class="text text-danger">
+                            {{$message}}
+                        </div>
+                        @enderror
+
+                </div>
+
+                <div class="input-field">
+                    <i class="fa fa-home" aria-hidden="true"></i>
+                    <input type="text" name="quartier" placeholder="quartier" value="{{ old('quartier')}}">
 
                     @error('quartier')
                         <div class="text text-danger">
@@ -172,9 +201,9 @@
 
                 <div class="input-field">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <input type="ville" name="ville" placeholder="ville" value="{{ old('adress')}}">
+                    <input type="text" name="rue" placeholder="rue" value="{{ old('rue')}}">
 
-                    @error('ville')
+                    @error('rue')
                         <div class="text text-danger">
                             {{$message}}
                         </div>

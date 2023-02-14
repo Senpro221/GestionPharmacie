@@ -6,56 +6,85 @@ use Illuminate\Http\Request;
 use App\Repositories\BasketInterfaceRepository;
 use App\Repositories\BasketSessionRepository;
 use App\Models\Medicament;
+use App\Models\Panier;
+use App\Models\Appartenir;
+use App\Models\Produit;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
+
 
 class BasketController extends Controller
 {
-
-	protected $basketRepository; // L'instance BasketSessionRepository
-
-    public function __construct (BasketInterfaceRepository $basketRepository) {
-    	$this->basketRepository = $basketRepository;
-    }
-
-    # Affichage du panier
-    public function show () {
-    	return view("basket.show"); // resources\views\basket\show.blade.php
-    }
-
+	
     # Ajout d'un produit au panier
-    public function add(Medicament $medicament, Request $request) {
+    public  function add(Medicament $medicament, Request $request) {
 		$count=0;
     	// Validation de la requête
     	$this->validate($request, [
     		"quantite" => "numeric|min:1",
 			"image"=>"string"
     	]);
+		$prod = Produit::all();
+	
+		if($request['quantite'] > $medicament['quantite']) {
+		    return back()->withMessage('La quantite demander n\'est pas disponible');
+	
+		}else{
+			$user = Auth::user()->id;
+			$panier = DB::select('select id from paniers where user_id = ?',[$user]);
+			$c=$panier[0]->id;
+			//print_r($c); exit();
+	
+			$id = $medicament->id;
+			$quantite=$request->quantite;
 
-    	// Ajout/Mise à jour du produit au panier avec sa quantité
-    	$this->basketRepository->add($medicament, $request->quantite);
-			$count+=1;
-    	// Redirection vers le panier avec un message
-    	return redirect()->route("basket.show")->withMessage("Produit ajouté au panier");
-    }
+		$select = DB::select('select id_panier,id_medoc from appartenirs where id_panier=? and id_medoc = ?', [$c,$id]);
+			   if($select){
+					foreach($select as $sel){
+						if($sel->id_panier = $c){
+						  return back()->withMessage('Produit exist  au panier');
+						}else{
+							$bc = DB::insert('insert into appartenirs (id_panier,quantites,id_medoc) values (?, ?, ?)', [$c,$quantite,$id]);				
+							return back()->withMessage('Produit ajouter au panier');
+						}
+					}			
+				}else{
+					$bc = DB::insert('insert into appartenirs (id_panier,quantites,id_medoc) values (?, ?, ?)', [$c,$quantite,$id]);				
+					return back()->withMessage('Produit ajouter au panier');
+								
+				}	
+	        }
+		}
 
-    // Suppression d'un produit du panier
-    public function remove (Medicament $medicament) {
+		public function show()
+		{
+			 $user = Auth::user()->id; 
+			//=================id_panier de l'utilisateur connecter============================
+			 $pane = DB::select('select id from paniers where user_id =?',[$user]);
+			
+			//print_r ($pane[0]->id);exit();
+			 $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);
+			 $app = DB::select('select * from appartenirs ');
+			
+		
+			$panier=DB::select('select * from paniers ');
+			return view("basket.listpan",[
+				'medicament'=>$medicament,
+				'app'=>$app
+				
+			]); 
+		}
 
-    	// Suppression du produit du panier par son identifiant
-    	$this->basketRepository->remove($medicament);
-
-    	// Redirection vers le panier
-    	return back()->withMessage("Produit retiré du panier");
-    }
-
-    // Vider la panier
-    public function empty () {
-
-    	// Suppression des informations du panier en session
-    	$this->basketRepository->empty();
-
-    	// Redirection vers le panier
-    	return back()->withMessage("Panier vidé");
-
-    }
+	public function retour(Medicament $medicament,Request $request)
+	{
+		BasketController::add($medicament,$request);
+		
+	}
+	public function shows(Medicament $medicament)
+	{ 	
+      return view("medicaments.medoc",[
+        'medicament'=>$medicament
+      ]);
+	}
 
 }

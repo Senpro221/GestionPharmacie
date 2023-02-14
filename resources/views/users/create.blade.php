@@ -4,8 +4,92 @@
 
 @section('page-content')
 
-
 <div class="home-content ">
+    @if (session()->has('success'))
+             <div class="alert alert-success">
+               {{session()->get('success')}}
+             </div>
+          @endif
+     <div class="overview-boxes">
+     
+         <div class="box">
+           <div style="width: 450px;">
+           <form action="{{ route('creation') }}" method="POST">
+            <h2 class="text-success">Ajouter Un Utitilisateur</h2>
+            <hr>
+           @csrf
+           @method('post')
+             <label for="nom_medoc">Nom </label>
+             <input type="text" name="name" id="nom" placeholder=" Entre le Nom" value="{{ old('name')}}">
+
+             @error('name')
+           <div class="text text-danger">
+             {{$message}}
+           </div>
+           @enderror
+            <label for="nom_medoc">Prenom</label>
+             <input type="text" name="prenom" id="prenom" placeholder="Entre le prenom" value="{{ old('prenom')}}">
+
+             @error('prenom')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+
+             <label for="nom_medoc">Email</label>
+             <input type="email" name="email" id="prenom" placeholder="Entre le prenom" value="{{ old('prenom')}}">
+
+             @error('email')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+             
+             <label for="dlc">Telephone</label>
+             <input type="number" name="telephone" id="telephone" placeholder="Telephone" value="{{ old('telephone')}}">
+
+             @error('telephone')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+
+             <label for="nom_medoc">Adresse</label>
+             <input type="text" name="adress" id="adresse" placeholder="adresse" value="{{ old('adresse')}}">
+
+             @error('adress')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+
+              <label for="password">Mot de passe</label>
+             <input type="password" name="password" id="password" placeholder="Entre le password" >
+
+             @error('password')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+
+             <label for="nom_medoc">Profil</label>
+             <select name="role" id="adresse" >
+               <option value="vendeur">admin</option>
+             </select>
+             @error('role')
+               <div class="text text-danger">
+               {{$message}}
+               </div>
+             @enderror
+
+             <button type="submit" class="btn btn-success mt-1">Ajouter</button>
+   
+                <a href="{{ route('utilisateur') }}" class="btn btn-warning ms-3 mt-1">Retour</a>
+            
+           </form>
+       </div>
+ </div>
+{{-- <div class="home-content ">
     
       
     <div class="container ">
@@ -79,5 +163,5 @@
         </form>
         
    <div class="home-content ">
-</div>
+</div> --}}
 @endsection

@@ -6,6 +6,10 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
 use App\Http\Requests\pharmaRequest;
 use App\Models\Pharmacie;
+use App\Http\Requests\medicamentRequest;
+use App\Models\Panier;
+use App\Models\stock;
+use App\Models\Medicament;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use DB;
@@ -15,64 +19,39 @@ class PharmacieController extends Controller
     public function choice(){
         return view('pharmacie.choice');
     }
-//==================//=============================//
-    // public function inscription()
-    // {
-    //     return view('pharmacie.registrepharma');
-    // }
 
-    // public function handleInscription(Pharmacie $pharmacie, Request $request)
-    // {
-    //     $pharmacie->name=$request->name;
-    //     $pharmacie->prenom=$request->prenom;
-    //     $pharmacie->email=$request->email;
-    //     $pharmacie->email=$request->false;
-    //     $pharmacie->nom=$request->nom;
-    //     $pharmacie->adresse=$request->adresse;
-    //     $pharmacie->ville=$request->ville;
-    //     $pharmacie->quartier=$request->quartier;
-    //     $pharmacie->telephone=$request->telephone;
-    //     $pharmacie->password=Hash::make($request->password);
-     
-    //     $pharmacie->save();
-    //     return redirect()->back()->with('success','Votre compte a ete creer ');
-    // }
+    
+    public function index()
+    {
+        $medicaments = Medicament::all();
 
-    // public function Connexionlogin()
-    // {
-    //     return view('pharmacie.registrepharma');
-    // }
+       return view('pharmacie.ajoutmedocPharmacier',[
+            'medicaments'=>$medicaments
 
-    // public function  handleAccesLogin(Request $request)
-    // {
+       ]);
+    }
 
-    //    $credentials =  $request->validate([
-    //         'email'=>['required','email'],
-    //         'password'=> ['required'],
-    //    ]);
-    //    if (Auth::user()) {
-    //         $request->session()->regenerate();
-             
-    //        return view('dashboard');
-    //     }else{
-    //         return redirect()->back()->with('error','login ou mot de passe incorecte');
-    //     }
-    // }
+    public function store(Medicament $medicament,stock $stock,medicamentRequest $request)
+    {
+       $medicament->nom = $request->nom;
+        $medicament->image = $request->image;
+        $medicament->categorie = $request->categorie;
+        $medicament->quantite = $request->quantite;
+        $medicament->prix_unitaire = $request->prix_unitaire;
+        $medicament->dlc = $request->dlc;
+        $medicament->libelle = $request->libelle;
+        $medicament->save();
 
-    //  public function listePharma(){
-    //     $pharmacie=DB::table('pharmacies')->get();
-    //     return view('pharmacie.listePharmacie',['pharmacie'=>$pharmacie]);
-    //  }
+        $id = $medicament->id;
+        $quantite = $medicament->quantite;
+        $quantiteMin = $request->quantiteMin;
 
-    //  public function statut(Request $request,$id){
-    //     $data = Pharmacie::find($id);
-    //     if($data->statut==0){
-    //         $data->statut=1;
-    //     }else{
-    //         $data->statut=0;
-    //     }
-    //     $data->save();
+   $user = Auth::user()->id;
+   $user_id_pharma = DB::select('select id from pharmacies where user_id =?',[$user]);
+   foreach($user_id_pharma as $pharma)
+   //print_r ( $pharma->id);exit();
+   DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_pharma,id_medoc) value(?,?,?,?)',[$quantite,$quantiteMin,$pharma->id,$id]);
 
-    //     return redirect('listePharmacie')->with('success','statut has been changed successfully.');
-    //  }
+       return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
+    }
 }

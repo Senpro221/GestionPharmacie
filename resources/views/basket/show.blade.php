@@ -1,6 +1,4 @@
-
 @extends('./../layouts/enteteclient')
-
 
 @section('page-content')
 
@@ -34,7 +32,7 @@
 					<!-- On incrémente le total général par le total de chaque produit du panier -->
 					@php $total += $item['prix_unitaire'] * $item['quantite'] @endphp
 					<tr>
-						<td>{{ $loop->iteration }}</td>
+						<td>{{ $loop->iteration }}</td> 
 						<td>{{ $item['nom'] }}</td>
 						<td>{{ $item['prix_unitaire'] }} FCFA</td>
 						<td>

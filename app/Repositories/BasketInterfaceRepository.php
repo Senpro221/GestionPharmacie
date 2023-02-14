@@ -14,7 +14,7 @@ interface BasketInterfaceRepository {
 
 	// Retirer un produit du panier
 	public function remove(Medicament $medicament);
-
+// 
 	// Vider le panier
 	public function empty();
 

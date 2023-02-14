@@ -6,30 +6,24 @@
   <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
     <!-- Left -->
     <div class="me-5 d-none d-lg-block mt-5">
-      <span>Get connected with us on social networks:</span>
+      <span>Rejoignez-nous sur les réseaux sociaux :</span>
     </div>
     <!-- Left -->
 
     <!-- Right -->
     <div>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-facebook-f"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
+      <a href="#" class="social-icon">
+        <i class="fab fa-facebook"></i>
+    </a>
+    <a href="" class="social-icon">
         <i class="fab fa-twitter"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
+    </a>
+    <a href="" class="social-icon">
         <i class="fab fa-google"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-instagram"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-linkedin"></i>
-      </a>
-      <a href="" class="me-4 text-reset">
-        <i class="fab fa-github"></i>
-      </a>
+    </a>
+    <a href="" class="social-icon">
+        <i class="fab fa-linkedin-in"></i>
+    </a>
     </div>
     <!-- Right -->
   </section>
@@ -44,11 +38,12 @@
         <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
           <!-- Content -->
           <h6 class="text-uppercase fw-bold mb-4">
-            <i class="fas fa-gem me-3"></i>Company name
+            <i class="fas fa-gem me-3"></i>SEN PHARMACIE
           </h6>
           <p>
-            Here you can use rows and columns to organize your footer content. Lorem ipsum
-            dolor sit amet, consectetur adipisicing elit.
+            Est une plateforme de vente et d'achats de médicament destiné aux pharmaciens publiques
+            comme privées qui souhaitent vendre leurs médicaments et
+            produits en ligne
           </p>
         </div>
         <!-- Grid column -->
@@ -57,20 +52,12 @@
         <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
-            Products
+            Nos principaux atouts
           </h6>
-          <p>
-            <a href="#!" class="text-reset">Angular</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">React</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Vue</a>
-          </p>
-          <p>
-            <a href="#!" class="text-reset">Laravel</a>
-          </p>
+          <p>Accessibilité</p>
+          <p>Économies</p>
+          <p>Solution écologique</p>
+          <p>Inscription gratuite</p>
         </div>
         <!-- Grid column -->
 
@@ -78,16 +65,16 @@
         <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">
-            Useful links
+            Liens utiles
           </h6>
           <p>
-            <a href="#!" class="text-reset">Pricing</a>
+            <a href="#!" class="text-reset">BSD</a>
           </p>
           <p>
-            <a href="#!" class="text-reset">Settings</a>
+            <a href="#!" class="text-reset">sn.pharma</a>
           </p>
           <p>
-            <a href="#!" class="text-reset">Orders</a>
+            <a href="#!" class="text-reset">Vues</a>
           </p>
           <p>
             <a href="#!" class="text-reset">Help</a>
@@ -99,13 +86,13 @@
         <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
           <!-- Links -->
           <h6 class="text-uppercase fw-bold mb-4">Contact</h6>
-          <p><i class="fas fa-home me-3"></i> New York, NY 10012, US</p>
+          <p><i class="fas fa-home me-3"></i> Sénégal / thiés - Bambey</p>
           <p>
             <i class="fas fa-envelope me-3"></i>
-            info@example.com
+            SENpharamcie@gmail.com
           </p>
-          <p><i class="fas fa-phone me-3"></i> + 01 234 567 88</p>
-          <p><i class="fas fa-print me-3"></i> + 01 234 567 89</p>
+          <p><i class="fas fa-phone me-3"></i> + 221 76 276 07 87</p>
+          <p><i class="fas fa-print me-3"></i> + 221 77 692 55 30</p>
         </div>
         <!-- Grid column -->
       </div>
@@ -115,9 +102,9 @@
   <!-- Section: Links  -->
 
   <!-- Copyright -->
-  <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
-    © 2021 Copyright:
-    <a class="text-reset fw-bold" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+  <div class="text-center p-4 text-light bg-success">
+    © 2023 SEN pharmacie
+    <a class="text-reset fw-bold text-light" href="https://mdbootstrap.com/">SENPHARMACIE.com</a>
   </div>
   <!-- Copyright -->
 

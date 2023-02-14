@@ -12,9 +12,7 @@
     </div>
  @endif
       <div class="overview-boxes ms-5 mt-2">
-      
-          
-     
+
       <!-- tables -->  
 
         <div class="box">
@@ -26,9 +24,10 @@
               <th class="ms-5">quartier</th>
               <th class="m-2">Telephone</th>
               <th class="m-2">Nom  pharmacie</th>
-              <th class="ms-5">Choisir votre pharmacie</th>
+              
             </tr>
              @forelse($pharmacie as $pharma)
+          
             <tr>
             
                 <td class="m-2">{{$pharma->prenom}}</td>
@@ -39,13 +38,14 @@
                 <td class="text-align:center;"><a class="btn btn-outline-success ms-2" style="text-decoration:none; " href="/trimedoc">{{$pharma->nom}}</a></td>
               
             </tr>
-
+        
            @empty
 
         @endforelse
         </table>
         </div>
-  </div>    
+  </div>   
+  
   </body>
   </center>
   @endsection

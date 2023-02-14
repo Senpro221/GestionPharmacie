@@ -20,19 +20,25 @@
     <div class="sidebar">
       <div class="logo-details">
         <i class="bx bxl-c-plus-plus"></i>
-        <span class="logo_name">D-CLIC</span>
+        <span class="logo_name" style="margin: 0px; font-size:22px;">SENPHARMACIE</span>
       </div>
       <ul class="nav-links">
         <li>
-          <a href="#" class="active" >
+          <a href="/admin" class="active" >
             <i class="bx bx-grid-alt"></i>
-            <span class="links_name">Dashboard</span>
+            <span class="links_name">Bienvenue {{Auth::user()->prenom}} </span>
           </a>
         </li>
         <li>
           <a href="/min">
-            <i class="bx bx-box"></i>
+            <i class="bx bx-box active"></i>
             <span class="links_name">Médicaments</span>
+          </a>
+        </li>
+        {{-- <li>
+          <a href="#">
+            <i class='bx bx-shopping-bag'></i>
+            <span class="links_name">Ventes</span>
           </a>
         </li>
         <li>
@@ -40,7 +46,7 @@
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Commandes</span>
           </a>
-        </li>
+        </li> --}}
         <li>
           <a href="{{ route('listePharmacie') }}">
             <i class="bx bx-pie-chart-alt-2"></i>
@@ -60,7 +66,7 @@
           </a>
         </li> -->
         <li>
-          <a href="{{route('utilisateur')}}">
+          <a href="{{route('allUser')}}">
             <i class="bx bx-user"></i>
             <span class="links_name">Utilisateur</span>
           </a>
@@ -99,7 +105,7 @@
 
         <div class="flex-shrink-0">
            @auth
-           <a class="nav-link" href="{{route('registration')}}">
+           <a class="nav-link" href="#">
               <center>
                 <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
                   alt="Generic placeholder image" class="img-fluid rounded-circle border border-light border-3 me-2"

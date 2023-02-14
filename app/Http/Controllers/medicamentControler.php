@@ -16,10 +16,11 @@ class medicamentControler extends Controller
 
     public function indexVisiteur()
     {
-      $medicaments = Medicament::all();
-
+      $medicaments = Medicament::paginate(5);
+        $stock = 0;
        return view('dashboardcl',[
-            'medicaments'=>$medicaments
+            'medicaments'=>$medicaments,
+            'stock'=>$stock
 
        ]);
     }
@@ -27,11 +28,11 @@ class medicamentControler extends Controller
 
     public function index()
     {
-      $medicaments = Medicament::paginate(5);
-
+      $medicaments = Medicament::all();
+      $quantite = null;
        return view('dashboardcl',[
-            'medicaments'=>$medicaments
-
+            'medicaments'=>$medicaments,
+            'quantite'=>$quantite
        ]);
     }
 
@@ -53,38 +54,30 @@ class medicamentControler extends Controller
             'categorie'=>$request->categorie,
             'quantite'=>$request->quantite,
             'prix_unitaire'=>$request->prix_unitaire,
+            'dlc'=>$request->dlc,
             'libelle'=>$request->libelle,
-            'user_id'=>Auth::id()
+            
        ]);
 
        return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
     }
 
-    // public function accueil()
-    // {
-    //   $medicaments = Medicament::paginate(5);
-
-    //    return view('dashboard',[
-    //         'medicaments'=>$medicaments
-
-    //    ]);
-    // }
-
+  
 //methode detaille
     public function show(Medicament $medicament)
     {
         // $medicament = Medicament::find($id);
-
+       
         return view('medicaments.show',[
 
-            'medicament'=>$medicament
-
+            'medicament'=>$medicament,
+           
         ]);
     }
 
     public function lister()
     {
-      $medicaments = Medicament::paginate(5);
+      $medicaments = Medicament::paginate(10);
 
        return view('medicaments.lister',[
             'medicaments'=>$medicaments
@@ -92,12 +85,12 @@ class medicamentControler extends Controller
        ]);
     }
 //triel douleur fiervre
-    public function trie()
+    public function trieDouleurFievre()
     {
 
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'DouleursFievre')->get();
 
-       return view('medicaments.listeTrie',[
+       return view('medicaments.TrieDouleur',[
             'medicaments'=>$medicaments
 
        ]);
@@ -114,6 +107,79 @@ class medicamentControler extends Controller
        ]);
     }
 
+    //trie dermatologie
+    public function dematologie()
+    {
+
+      $medicaments = DB::table('medicaments')->where('categorie', '=' ,'Dermatologie')->get();
+
+       return view('medicaments.Dermatologie',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+
+    //trie Homéopathie
+    public function Homéopathie()
+    {
+
+      $medicaments = DB::table('medicaments')->where('categorie', '=' ,'Homéopathie')->get();
+
+       return view('medicaments.Homéopathie',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+
+    //trie Détente-Sommeile
+    public function DetenteSommeil()
+    {
+
+      $medicaments = DB::table('medicaments')->where('categorie', '=' ,'DetenteSommeil')->get();
+
+       return view('medicaments.DetenteSommeil',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+
+    //trie Détente-Sommeile
+    public function VitaminesMineraux()
+    {
+
+      $medicaments = DB::table('medicaments')->where('categorie', '=' ,'VitaminesMineraux')->get();
+
+       return view('medicaments.VitaminesMineraux',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+    //trie bucco-dentaires
+    public function dentaires()
+    {
+
+      $medicaments = DB::table('medicaments')->where('categorie', '=' ,'bucco-dentaires')->get();
+
+       return view('medicaments.bucco-dentaires',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+
+
+     //trie CirculationVeineuse
+     public function CirculationVeineuse()
+     {
+
+     $medicaments = DB::table('medicaments')->where('categorie', '=' ,'CirculationVeineuse')->get();
+
+     return view('medicaments.CirculationVeineuse',[
+          'medicaments'=>$medicaments
+
+     ]);
+     }
+
+
     public function admin()
     {
         return view('admin');
@@ -127,7 +193,7 @@ class medicamentControler extends Controller
         ]);
     }
 //update
-     public function update(Medicament $medicament,medicamentRequest $request)
+     public function update(Medicament $medicament,Request $request)
      {
         $medicament->nom = $request->nom;
         $medicament->image = $request->image;
@@ -135,11 +201,12 @@ class medicamentControler extends Controller
         $medicament->quantite = $request->quantite;
         $medicament->prix_unitaire = $request->prix_unitaire;
         $medicament->libelle = $request->libelle;
-
+        $medicament->dlc = $request->dlc;
         $medicament->save();
 
-        return redirect('/min')->with('success', 'Medicament a été mise à jour');
+       return redirect('/min')->with('success', 'Medicament a été mise à jour');
      }
+
 //suppression de medicament
      public function delete(Medicament $medicament)
      {
@@ -185,5 +252,27 @@ class medicamentControler extends Controller
         return redirect('/panier');
      }
 
+     public function medicamentAll()
+     {
+         $medicaments = Medicament::all();
+ 
+        return view('medicaments.medicamentAll',[
+             'medicaments'=>$medicaments
+ 
+        ]);
+     }
+
+     
+    //editer
+    public function editQuantite(Medicament $medicament, Request $request)
+    {
+        $dr = $request->quantite;
+        //DB::insert('insert into stocks (quantiteStock, quantiteMinim, id_pharma, id_medoc) values (?, ?, ?, ?)', [1, 'Dayle']);
+        return dd($dr);//view('stock.quantite',[
+            //'medicament'=>$medicament
+        //]);
+    }
+    
+    
     
 }

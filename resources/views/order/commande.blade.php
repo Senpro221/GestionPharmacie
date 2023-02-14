@@ -1,13 +1,12 @@
-
-@extends('./../layouts/enteteclient')
-
-
+@extends('./../layouts/entete')
 @section('page-content')
 
 <div class="container ms-5 mb-2" style="max-width:50%;">
 <div class=" text-success mt-1 mb-1"><h3>Détails de facturation</h3></div>
 <div class="col-md-4"></div> 
-<form class="row g-3">
+<form class="row g-3" action="{{ route('detailleComme') }}" method="POST">
+    @csrf
+    @method('post')
     <div class="col-md-6">
         <label for="inputEmail4" class="form-label">Nom<span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="nom">
@@ -30,8 +29,8 @@
         <input type="text" class="form-control" id="inputAddress2" placeholder="Bâtiment,appartement,lot etc. (facultatif)">
     </div>
     <div class="col-md-6">
-    <label for="inputAddress" class="form-label">Type de livraison<span class="text-danger">*</span></label>
-        <select name="region" class="form-select">
+    <label for="inputAddress"  class="form-label">Type de livraison<span class="text-danger">*</span></label>
+        <select name="typeLivraison" class="form-select">
         <option>En pharmacie</option>
         <option>A domicile</option>
       </select>
@@ -45,7 +44,7 @@
         <input type="email" class="form-control" name="email"  placeholder="Votre adresse email">
     </div>
     <div class="d-grid gap-2">
-        <button class="btn btn-success" type="button">Commander</button>
+        <button class="btn btn-success" type="submit">Commander</button>
     </div>
 </div>
 @endsection

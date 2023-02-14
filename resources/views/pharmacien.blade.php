@@ -3,15 +3,19 @@
 <body>
   
 <div class="position-relative">
-    <img src="{{ asset('image/home.svg')}}" class="img-fluid mt-2" alt="..." style="height: 450px; width: 50%;">
+    <img src="{{ asset('image/home.svg')}}" class="img-fluid mt-5 ms-5"  alt="..." style="height: 440px; width: 40%;">
 
     <div class="pos position-absolute top-0 start-60">
-            <pre><span class="tit">     Bienvenue dans notre plateforme
-                      SEN PHARMACIE</span>
-                 
-                        
-         
-             <span class="jeude text-success">Jënd Mou Gaaw te Nopale</span> 
+            <pre><span class="tit">  Bienvenue dans notre plateforme  <span class="text-bg-success p-1 m-1"> SEN Pharmacie</span></span>                      
+              <span class="jeude text-success">Gaay Mou Gaaw te Nopale</span> 
+  
+  
+              <span class="dec">Vous voulez vendre vos produit en toutes rapidité 
+      et en toutes sécurité vous Etes au bon endroit
+           avec SEN Pharmacie </span> 
+             
+
+
       </pre>
     </div> 
 </div>   
@@ -19,33 +23,10 @@
 <div class="live bg-success text-white"> 
   <marquee>
  <img src="{{ asset('image/livraison.png')}}" width="100" height="40" class="ms mt-1 mb-3 " fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
-  <span class="v1 mt-1">Faites Vous livrer vos Médicaments à domicile  24h / 24  | 7j / 7 ou que vous soyer dans le Sénégal</span>  
+  <span class="v1 mt-1">Vender vos Médicaments et Produits au jour le jour  24h / 24  | 7j / 7 ou que vous soyer dans le Sénégal</span>  
   </marquee>
 </div>
   <hr>
-@forelse($medicaments as $medicament)
-<div  class="nb">
-<div class=" card float-lg-start shadow p-3 mb-1 bg-body rounded" style="width: 315px; height:35rem;">
-   <img src="image/{{ $medicament->image }}" class="card-img-top hover-zoom" alt="vous">
-  <div class="card-body">
-    <h5 class="card-title"><a href="{{route('medicaments.show',$medicament->id)}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
-    <p class="card-text">{{$medicament->libelle}}</p>
-    <button class="btn btn-outline-success">{{$medicament->quantite}} comprimés</button>
-     <button type="button" class="btn btn-success">{{$medicament->prix_unitaire}} fcfa</button>
-  </div>
-</div>
-</div>
-@empty
-@endforelse
-
-  <div class='voire float-lg-start mt-2 ms-9 mb-2'>
-      <button class="btn btn-outline-success fs-3 fw-bold">Voire tous les Médicaments</button>
-  </div>
-<hr>
-  <div class='voires float-lg-start mt-5 ms-9 mb-2'>
-      <h1 class=" fs-3 fw-bold">Nos Produits</h1>
-  </div>
-</div>
 @endsection
 </body>
 </html>

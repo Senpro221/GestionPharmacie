@@ -210,7 +210,7 @@ nav .profile-details i {
     align-items: flex-start;
     justify-content: space-between;
     flex-wrap: nowrap;
-    padding: 0 10px;
+    padding: 0 20px;
     margin-bottom: 26px;
 }
 
@@ -218,11 +218,11 @@ nav .profile-details i {
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    min-width: calc(100% /4 - 20px);
+    min-width: calc(100% /4 - 15px);
     background: #fff;
-    padding: 15px 10px;
+    padding: 15px 14px;
     border-radius: 12px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
 }
 
 .overview-boxes .box-topic {
@@ -260,6 +260,79 @@ nav .profile-details i {
 
 .home-content .box .indicator .text {
     font-size: 12px;
+}
+
+.home-content .total-order {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+
+/* left box */
+
+.home-content .sales-boxes .recent-sales {
+    width: 65%;
+    background: #fff;
+    padding: 20px 30px;
+    margin: 0 20px;
+    border-radius: 12px;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.home-content .sales-boxes {
+    display: flex;
+    justify-content: space-between;
+    /* padding: 0 20px; */
+}
+
+.home-content .sales-boxes .sales-details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sales-boxes .box .title {
+    font-size: 24px;
+    font-weight: 500;
+    /* margin-bottom: 10px; */
+}
+
+.sales-boxes .sales-details li.topic {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.sales-boxes .sales-details li {
+    list-style: none;
+    margin: 8px 0;
+}
+
+.sales-boxes .sales-details li a {
+    font-size: 18px;
+    color: #333;
+    font-size: 400;
+    text-decoration: none;
+}
+
+.sales-boxes .box .button {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.sales-boxes .box .button a:hover {
+    background: #0d3073;
+}
+
+.sales-boxes .box .button a {
+    color: #fff;
+    background: #0a2558;
+    padding: 4px 12px;
+    font-size: 15px;
+    font-weight: 400;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
 
 .home-content .box .cart {
@@ -465,7 +538,7 @@ nav .profile-details i {
         min-width: 40px;
     }
     .home-content .sales-boxes .sales-details {
-        width: 540px;
+        width: 560px;
     }
 }
 
