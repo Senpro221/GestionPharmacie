@@ -16,8 +16,25 @@ use DB;
 use App\Http\Requests\pharmaLoginRequest;
 class PharmacieController extends Controller
 {
-    public function choice(){
-        return view('pharmacie.choice');
+
+    public function pagePharmacie()
+    {
+        return view('pharmacien');
+    }
+
+    public function contact()
+    {
+        return view('pharmacie.contact');
+    }
+
+
+    public function apropos()
+    {
+        return view('pharmacie.apropos');
+    }
+
+    public function alertMedoc(){
+        return view('medicaments.alertMedoc');
     }
 
     

@@ -64,7 +64,7 @@
 
 
                 <input type="submit" value="Login" class="btn">
-                <p class="social-text">Ou connectez-vous avec la plateforme sociale</p>
+                <p class="social-text fs-5">Vous n'êtes pas pharmacien ? <a href="{{ route('registration') }}" class="text-success fs-5" style="text-decoration: none;">Cliquez ici !</a></p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <i class="fab fa-facebook"></i>
@@ -200,19 +200,6 @@
                 </div>
 
                 <div class="input-field">
-                    <i class="fa fa-home" aria-hidden="true"></i>
-                    <input type="text" name="rue" placeholder="rue" value="{{ old('rue')}}">
-
-                    @error('rue')
-                        <div class="text text-danger">
-                            {{$message}}
-                        </div>
-                        @enderror
-
-                </div>
-
-
-                <div class="input-field">
                     <i class="fa fa-phone" aria-hidden="true"></i>
                     <input type="number" name="telephone" placeholder="Numéro de téléphone" value="{{ old('telephone')}}">
 
@@ -235,16 +222,17 @@
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
-                    <h3>Je suis client</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt minima iure?</p>
+                    <h3>Connectez-vous à votre espace personnel</h3>
+                    <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
                     <button class="btn" id="sign-in-btn">Connexion</button>
                 </div>
                 <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">
             </div>
             <div class="panel right-panel">
                 <div class="content">
-                    <h3>Nouveau chez SUNU PHARMACIE?</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt minima iure?</p>
+                    <h3>Vous n'avez pas de compte ?</h3>
+                    <p>Inscrivez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.
+                    </p>
                     <button class="btn" id="sign-up-btn">S'inscrire</button>
                 </div>
                 <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">

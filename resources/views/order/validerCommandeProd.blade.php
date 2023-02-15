@@ -1,9 +1,10 @@
 
-@extends('./../layouts/entete')
+@extends('./../layouts/enteteclient')
 
 
 @section('page-content')
-<div class="alert alert-success w-100 h-100" role="alert">
+<div class="home-containe">
+  <div class="alert alert-success w-100 h-100" role="alert">
     <center><h4 class="alert-heading mt-2" style="font-size: 5rem">Merci!</h4>
       <hr>
     <p class="mb-1 text-dark" style="font-size: 40px;">Votre commande à été traitée avec succés </p>
@@ -15,4 +16,6 @@
       </div>
   </center>
   </div>
+</div>
+
 @endsection

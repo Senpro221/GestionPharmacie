@@ -41,7 +41,7 @@
 					@csrf
 					@method('post')
 					<div style="position: relative">
-					<input type="number" name="quantite" placeholder="Quantité ?" class="form-control mr-2" value="{{$produit->id}}" >
+					<input type="number" min="1" name="quantite" placeholder="Quantité ?" class="form-control mr-2" value="{{$produit->id}}" >
 					<button type="submit" class="btn btn-success " style="position:absolute; margin-top:-40px; margin-left:113px; width:190px;">+ Ajouter au panier</button>
 				</div>
 				</form>

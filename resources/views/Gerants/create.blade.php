@@ -92,6 +92,7 @@
       <!-- tables -->  
 
         <div class="box">
+        
           <table class="mtable" border="1">
             <tr>
               <th>Nom</th>

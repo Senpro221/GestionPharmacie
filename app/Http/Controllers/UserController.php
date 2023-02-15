@@ -15,6 +15,18 @@ use App\Notifications\envoiMessage;
 class UserController extends Controller
 {
 
+    public function contact()
+    {
+        return view('users.contact');
+    }
+
+
+    public function apropos()
+    {
+        return view('users.apropos');
+    }
+
+
   public  function allUser(User $users){
     $users = User::all();
     return view('users.allUser',compact('users'));
@@ -213,7 +225,7 @@ class UserController extends Controller
           $request->session()->regenerate();
           if(Auth::user()->role === 'admin'){
               return view('admin');
-           }elseif(Auth::user()->statut == '1'){
+           }elseif(Auth::user()->statut == '1' || Auth::user()->role === 'vendeur'){
                 return view('pharmacien');
            }else{
             return redirect('/dashboad');

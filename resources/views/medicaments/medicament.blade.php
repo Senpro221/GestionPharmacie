@@ -43,6 +43,7 @@
                 <option value="bucco-dentaires">Soins bucco-dentaires</option>
                 <option value="VitaminesMineraux">Vitamines - Minéraux</option>
                 <option value="CirculationVeineuse">Circulation veineuse</option>
+                <option value="sous-ordonence">sous-ordonence</option>
               </select>
 
               @error('categorie')

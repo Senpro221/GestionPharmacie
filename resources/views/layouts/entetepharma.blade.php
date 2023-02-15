@@ -81,42 +81,18 @@
 </style>
 <nav class="navbar  p-3 bg-success text-white">
 
-  <div class="img-fluid ">
+  <div class="img-fluid" style="">
     <!-- Notifications -->
-    <img src="{{ asset('image/panier.png')}}"  alt="..." style="height: 50px; width:50px; color:white; align-items:center">
+    <img src="{{ asset('image/log.png')}}"  alt="..." class="mt-2" style="margin-left:-12px; height: 130px; width:250px; color:white;">
   </div>
-  <center>
+ 
   <div class="bgput">
     <input class="putin" type="text" name="recherche" placeholder="   rechercher un médicament">
     <a href="#"><img class="icone" src="{{ asset('image/chercher.png')}}" width="25px;" alt="photo"></a>
   </div>
-
-   </center>
-   <div class="sear1">
-    @guest
-    <center>
-      <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-cart  mt-4 me-3" viewBox="0 0 16 16">
-        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l1.313 7h8.17l1.313-7H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-      </svg>
-    </center>
-   <a href="{{route('choisirConnexion')}}" style="text-decoration: none; color:#fff" >  <p class="me-3 mt-0 ">Panier</p></a>
-   <span class="mnm position-absolute top-4 start-60 me-2 translate-middle badge rounded-pill bg-danger">
-    0
-</span>
-  </div>
- 
-  <div class="sear">
-<center>
-  <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="boi bi bi-person-circle me-5 mt-4" viewBox="0 0 16 16">
-    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
-    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
-  </svg>
-</center>
-<a href="{{route('choisirConnexion')}}" style="text-decoration: none; color:#fff" >  <p class="me-5 mt-0 ">Connexion</p></a>
-</div>
-@endguest
-   
-
+  <center>
+  @include('partials.search');
+  </center>
 </nav>
 
 <!-- Navbar -->
@@ -149,21 +125,21 @@
       <!-- Left links -->
       <ul class="navbar-nav me-auto mb-3 mb-lg-0">
         <li class="nav-item">
-          <a style="margin-left: 90px; text-transform: uppercase;" class="nav-link mt-2" href="{{route('visiteur')}}">Accueil</a>
+          <a style="margin-left: 90px; text-transform: uppercase;" class="nav-link mt-2" href="{{route('pagePharmacie')}}">Accueil</a>
         </li>
          <li class="nav-item">
-          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="{{route('medicaments')}}">Médicaments</a></li>
+          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="#">Produits</a></li>
         </li>
         
         <li class="nav-item">
-          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="#">Blog</a></li>
+          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="{{ route('contactpharma') }}">Contact</a></li>
         </li>
         <li class="nav-item">
-          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="#">A propos</a></li>
+          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="{{ route('apropospharma') }}">A propos</a></li>
         </li>
         @auth
         <li class="nav-item">
-          <a style="text-transform: uppercase; color:rgb(7, 122, 7);" class="nav-link  mt-2" href="/adminGerant">Acceder a votre page admin</a></li>
+          <a style="text-transform: uppercase; color:rgb(7, 122, 7);" class="nav-link  mt-2" href="/adminGerant">MON ESPACE PHARMACIEN</a></li>
         </li>
         @endauth
 

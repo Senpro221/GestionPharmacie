@@ -11,4 +11,12 @@ class Produit extends Model
     protected $guarded= [''];
 
     public $timestamps=false;
+
+    public function commandes() { 
+        return $this->belongsToMany(Commande::class);
+    }
+
+    public function paniers() { 
+        return $this->belongsToMany(Panier::class);
+    }
 }

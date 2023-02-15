@@ -9,7 +9,7 @@ class Appartenir extends Controller
 {
     public function commander(Request $request)
     {
-        $app = DB::select('select * from appartenires');
+        $app = DB::select('select * from appartenirs');
 			foreach($panier as $pan)
 			$c = $pan->id;
 			

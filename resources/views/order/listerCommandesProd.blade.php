@@ -1,4 +1,4 @@
-@extends('./../layouts/entete')
+@extends('./../layouts/enteteclient')
 @section('page-content')
 
 
@@ -30,16 +30,16 @@
                  <td><img src="/image/{{ $comm->image }}" class="card-img-top hover-zoom" alt="vous" style="width:50px;"></td>
                 <td>{{ $comm->nom }}</td>
                 <td>{{ $comm->quantiteCom }}</td>
-                <td>{{ $typeLivraison[0]->typeLivraison }}</td>
-                <td>{{ $date[0]->dateCommande }}</td>
+                <td>{{ $comm->typeLivraison }}</td>
+                <td>{{ $comm->dateCommande }}</td>
               </tr>
             @endforeach
         </tbody>
       </table>
-      @else
-      <div class="alert alert-info">Aucune passée pour le moment</div>
-     
-      @endif
+    @else
+    <div class="alert alert-info">Aucune passée pour le moment</div>
+   
+    @endif
     </div>
   </body>
 </html

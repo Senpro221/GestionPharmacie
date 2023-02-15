@@ -58,7 +58,7 @@
 
 
                 <input type="submit" value="Login" class="btn">
-                <p class="social-text">Ou connectez-vous avec la plateforme sociale</p>
+                <p class="social-text fs-4 me-2">Vous êtes pharmacien ? <a href="{{ route('ajoutPharmacie') }}" class="text-success fs-4" style="text-decoration: none;">Cliquez ici !</a> </p>
                 <div class="social-media">
                     <a href="#" class="social-icon">
                         <i class="fab fa-facebook"></i>
@@ -176,8 +176,8 @@
         <div class="panels-container">
             <div class="panel left-panel">
                 <div class="content">
-                    <h3>Je suis client</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt minima iure?</p>
+                    <h3>Vous avez un compte Connectez-vous !</h3>
+                    <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
                     <button class="btn" id="sign-in-btn">Connexion</button>
                 </div>
                 <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">
@@ -185,7 +185,7 @@
             <div class="panel right-panel">
                 <div class="content">
                     <h3>Nouveau chez SUNU PHARMACIE?</h3>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque accusantium dolor, eos incidunt minima iure?</p>
+                    <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
                     <button class="btn" id="sign-up-btn">S'inscrire</button>
                 </div>
                 <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">

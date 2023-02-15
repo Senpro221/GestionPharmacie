@@ -58,16 +58,27 @@ public function listerCommandes(){
 
    //dd($typeLivraison[0]->typeLivraison);
    $commande = DB::select('select id from commandes where user_id =?',[$user]);
+   if($commande ){
+    $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande=?',[$commande[0]->id]);
 
-  $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande=?',[$commande[0]->id]);
+      return view('order.listerCommandes',[
+        'listeCom'=>$listeCom,
+        'nom'=>$nom,
+        'date'=>$date,
+        'commande'=>$commande,
+        'typeLivraison'=>$typeLivraison
+      ]);
+   }else{
+      $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc');
 
-    return view('order.listerCommandes',[
-      'listeCom'=>$listeCom,
-      'nom'=>$nom,
-      'date'=>$date,
-      'typeLivraison'=>$typeLivraison
-    ]);
-      //dd($listeCom[0]->quantiteCom);
+        return view('order.listerCommandes',[
+          'listeCom'=>$listeCom,
+          'nom'=>$nom,
+          'date'=>$date,
+          'commande'=>$commande,
+          'typeLivraison'=>$typeLivraison
+        ]);
+   }  
 }
 
 
@@ -103,7 +114,6 @@ $nomCommande = DB::select('select prenom from users,commandes where users.id = c
         if(Auth::user()->statut == '0'){
             return redirect()->back()->with('error','votre compte n\'a pas été valider veuillez patienter');
           }else if(Auth::user()->statut == '1'){
-           
             
             $data = Auth::user()->email;
             Mail::to($data)->send(new welcomeUsername());

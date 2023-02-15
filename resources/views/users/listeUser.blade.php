@@ -14,7 +14,6 @@
         <div class="box">
           <table class="mtable" padding-left: 10px;>
             <tr>
-              
             <th class="btn btn-success mt-1 mb-1 m-md-1">
                 <a href="{{route('creation')}}" style="text-decoration: none; color: white;">
              

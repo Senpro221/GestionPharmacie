@@ -21,17 +21,6 @@ use App\Http\Controllers\Appartenir;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/contact', function () {
- 
-       return view('users.contact');
-});
-
-Route::get('/apropos', function () {
- 
-        return view('users.apropos');
- });
-
  Route::get('/',[medicamentControler::class, 'index']);
 
 //=================================accueil visiteure====================================//
@@ -52,6 +41,12 @@ Route::get('/apropos', function () {
         Route::get('/detailPharmacie{pharmacie}', [UserController::class,'detailPharmacie'])->name('detailPharmacie');
 //==========================middelware regroupant les route qui non pas besoing de Auth..==========// 
  Route::middleware(['guest'])->group(function(){
+        //======================route apropos ,contacte=============//
+                
+        Route::get('/contact', [UserController::class,'contact'])->name('contact');
+        Route::get('/apropos', [UserController::class,'apropos'])->name('apropos'); 
+
+
 //========================================enregistre un utilisateur===============================//     
     Route::get('/register', [UserController::class, 'register'])->name('registration');
     Route::post('/register', [UserController::class, 'handleRegistration'])->name('registration');
@@ -94,6 +89,9 @@ Route::middleware('auth')->group(function(){
         Route::get('/listerCommandes',[Connexion::class,'listerCommandes'])->name('listerCommandes');
         Route::get('/listesCommandesAll',[Connexion::class,'listesCommandesAll'])->name('listesCommandesAll');
        
+
+
+
         //===============================vente========================================================//
         Route::get('/vente',[HomController::class,'vente'])->name('vente');
         Route::get('/medicaments/{medicament}/vendre',[HomController::class,'vendre'])->name('medicaments.vendre');
@@ -103,8 +101,15 @@ Route::middleware('auth')->group(function(){
         Route::post('/userregister', [HomController::class, 'handlecreate'])->name('createUser');
 
 //==========================page admin du pharmacien un utilisateur==========================================//
-        Route::get('/adminGerant',[HomController::class, 'index'])->name('adminGerat');
-//==========================edit,update.delete d'un vendeur
+        Route::get('/adminGerant',[HomController::class, 'index'])->name('adminGerant');
+ //======================route apropos ,contacte danspharmacue controleurs=============//
+                
+        Route::get('/contactpharma', [PharmacieController::class,'contact'])->name('contactpharma');
+        Route::get('/apropospharma', [PharmacieController::class,'apropos'])->name('apropospharma'); 
+        Route::get('/pagePharmacie', [PharmacieController::class,'pagePharmacie'])->name('pagePharmacie'); 
+        Route::get('/choisirConnexion', [PharmacieController::class,'alertMedoc'])->name('alertMedoc');
+
+        //==========================edit,update.delete d'un vendeur
         Route::get('/users/{user}/editVendeur',[HomController::class,'edit'])->name('users.edit');
         Route::put('/users/{user}/updateVendeur',[HomController::class,'update'])->name('vendeur.update');
 //================================supprimer un vendeur====================================/      
@@ -146,9 +151,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/connexion',[Connexion::class,'connexion']);
 
 //=============================/route pour ajouter un pharmacie==================================//
-        
-        Route::get('/choisirConnexion', [PharmacieController::class,'choice'])->name('choisirConnexion');
-        Route::get('/ajoutPharmacie', [UserController::class,'inscription'])->name('ajoutPharmacie');
+       Route::get('/ajoutPharmacie', [UserController::class,'inscription'])->name('ajoutPharmacie');
         Route::post('/ajoutInscriprion', [UserController::class, 'handleInscription'])->name('ajoutInscription');
 
         Route::get('/Connexionlogin',[UserController::class, 'Connexionlogin'])->name('Connexionlogin');
@@ -159,6 +162,7 @@ Route::middleware('auth')->group(function(){
 
         Route::get('dashboard',function(){
         return 'je suis connecter';
+
 });
 
 //=======================route ajout panier=================================
@@ -187,7 +191,14 @@ Route::middleware('auth')->group(function(){
         //===================================liste des routes pur ajouter,editer,lister et supprimer un produit=======================================================//
         Route::get('/ajout',[ProduitController::class, 'index'])->name('ajout');
         Route::post('/ajout',[ProduitController::class, 'store'])->name('ajout2');
-           
+
+//================commander un produit=====================================================//
+        Route::get('/commandeProd',[ProduitController::class,'commandeProd'])->name('commandeProd');
+        Route::post('/detailleCommandeProd',[ProduitController::class,'detailleCommandeProd'])->name('detailleCommandeProd');
+        Route::get('/listerCommandesProd',[ProduitController::class,'listerCommandesProd'])->name('listerCommandesProd');
+
+
+
         //====================================lister les produits=====================================================//
         Route::get('/liste', [ProduitController::class, 'lister'])->name('produits');
         
@@ -210,7 +221,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/search2', [ProduitController::class,'search2'])->name('medoc.search2');
        
 
-        Route::get('/contact', [Appartenir::class,'contact'])->name('contact');
+        // Route::get('/contact', [Appartenir::class,'contact'])->name('contact');
         //===========================route pour le stock de medicament================================================================// 
         Route::get('/stock', [Appartenir::class,'stock'])->name('stock');
     

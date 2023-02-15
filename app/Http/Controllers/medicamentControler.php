@@ -17,10 +17,8 @@ class medicamentControler extends Controller
     public function indexVisiteur()
     {
       $medicaments = Medicament::paginate(5);
-        $stock = 0;
        return view('dashboardcl',[
-            'medicaments'=>$medicaments,
-            'stock'=>$stock
+            'medicaments'=>$medicaments,   
 
        ]);
     }
@@ -78,9 +76,10 @@ class medicamentControler extends Controller
     public function lister()
     {
       $medicaments = Medicament::paginate(10);
-
+      $categorie='';
        return view('medicaments.lister',[
-            'medicaments'=>$medicaments
+            'medicaments'=>$medicaments,
+            'categorie'=>$categorie
 
        ]);
     }

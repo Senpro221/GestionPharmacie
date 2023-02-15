@@ -79,9 +79,9 @@
 </div>
 	<!-- Lien pour vider le panier -->
 	{{-- <a class="btn btn-outline-danger mb-4 fs-5" href="{{ route('basket.empty') }}" title="Retirer tous les produits du panier" >Vider le panier</a> --}}
-	<a class="btn btn-outline-success  mb-4 ms-5 fs-5" href="/" title="Retourner pour conntinuer l'acha" >Continuer votre achat</a>
+	<a class="btn btn-outline-success  mb-4 ms-5 fs-5" href="/list" title="Retourner pour conntinuer l'acha" >Continuer votre achat</a>
 
-	<a class="btn btn-success mb-4 fs-5"  style="margin-left:720px "  href="{{ route('commande') }}" title="commander" >Commander</a>
+	<a class="btn btn-success mb-4 fs-5"  style="margin-left:720px "  href="{{ route('commandeProd') }}" title="commander" >Commander</a>
 @else
 	
 <div class="alert alert-info">Aucun produit au panier</div>

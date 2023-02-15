@@ -30,15 +30,16 @@
              
             <label for="nom_medoc">Catégorie</label>
               <select id="categorie"  name="categorie" value="{{$medicament->categorie}}" >
-                <option value="Digestion">Digestion</option>
-                <option value="DouleursFievre">Douleurs - Fièvre</option>
-                <option value="Dermatologie">Dermatologie</option>
-                <option value="DetenteSommeil">Détente - Sommeil</option>
-                <option value="bucco-dentaires">Soins bucco-dentaires</option>
-                <option value="Homéopathie">Homéopathie</option>
-                <option value="bucco-dentaires">Soins bucco-dentaires</option>
-                <option value="VitaminesMineraux">Vitamines - Minéraux</option>
-                <option value="CirculationVeineuse">Circulation veineuse</option>
+                <option value="{{$medicament->categorie}}">Digestion</option>
+                <option value="{{$medicament->categorie}}">Douleurs - Fièvre</option>
+                <option value="{{$medicament->categorie}}">Dermatologie</option>
+                <option value="{{$medicament->categorie}}">Détente - Sommeil</option>
+                <option value="{{$medicament->categorie}}">Soins bucco-dentaires</option>
+                <option value="{{$medicament->categorie}}">Homéopathie</option>
+                <option value="{{$medicament->categorie}}">Soins bucco-dentaires</option>
+                <option value="{{$medicament->categorie}}">Vitamines - Minéraux</option>
+                <option value="{{$medicament->categorie}}">Circulation veineuse</option>
+                <option value="{{$medicament->categorie}}">sous-ordonence</option>
               </select>
 
             

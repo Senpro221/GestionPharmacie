@@ -10,11 +10,13 @@ use App\Http\Requests\ProduitRequest;
 use App\Models\Medicament;
 use App\Models\Panier;
 use App\Models\User;
+use App\Models\Possede;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class ProduitController extends Controller
 {
-    
+//===================commande produit==========================/
+ 
 	public function index()
     {
         $produits = Produit::all();
@@ -197,13 +199,13 @@ class ProduitController extends Controller
 		   }
 
 //==============================commander un produit======================	
-		   public function order(Possede $app,Request $request)
+		   public function commandeProd(Possede $app,Request $request)
 		   {
 			 
-			  return view('order.commande');
+			  return view('order.commandeProd');
 		   }
 	   
-		 public  function detailleComme(Request $request){
+		 public  function detailleCommandeProd(Request $request){
 		   
 		   $user = Auth::user()->id;
 		   $livraison = $request->typeLivraison;
@@ -219,13 +221,40 @@ class ProduitController extends Controller
 				
 			   $pa = DB::select('select id from commandes where user_id =?',[$user]);
 		   
-			   DB::insert('insert into orders (id_commande,id_medoc,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$cb]);
+			   DB::insert('insert into orders (id_commande,id_prod,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$cb]);
 	   //=========================on vide le panier de l'utilisateurs=======================================
-			   DB::delete('delete from appartenirs where id_panier =?',[$pane[0]->id]);
+			   DB::delete('delete from possedes where id_panier =?',[$pane[0]->id]);
 			  
 			 }   
-			 return view('order.valider');
-		 }	   
+			 return view('order.validerCommandeProd');
+		 }	  
+		 
+		 public function listerCommandesProd(){
+			$user = Auth::user()->id;
+			$nom = Auth::user()->prenom;
+			// $typeLivraison = DB::select('select typeLivraison from commandes where user_id=?',[$user]);
+			// $date = DB::select('select * from commandes where user_id=?',[$user]);
+			// //dd($typeLivraison[0]->typeLivraison);
+			$commande = DB::select('select id from commandes where user_id =?',[$user]);
+		 if($commande ){
+		   $listeCom =  DB::select('select * from orders,produits,commandes where produits.id=orders.id_prod and commandes.id=orders.id_commande and id_commande=?',[$commande[0]->id]);
+		   return view('order.listerCommandesProd',[
+			'listeCom'=>$listeCom,
+			'nom'=>$nom,
+		 
+		  ]);
+		
+		}else{
+			$listeCom =  DB::select('select * from orders,produits,commandes where produits.id=orders.id_prod and commandes.id=orders.id_commande');
+
+			 return view('order.listerCommandesProd',[
+			   'listeCom'=>$listeCom,
+			   'nom'=>$nom,
+			
+			 ]);
+			   
+		 }
+		}
 }
 
 

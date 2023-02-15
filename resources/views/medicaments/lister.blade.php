@@ -34,9 +34,16 @@ Autres médicaments</a>
 <div class="nb card float-lg-start shadow p-3 mb-1 bg-body rounded" style="max-width: 315px; height:35rem;">
    <img src="image/{{ $medicament->image }}" class="card-img-top" alt="vous">
   <div class="card-body">
-    <h5 class="card-title"><a href="{{route('medicaments.show',$medicament->id)}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
+    <h5 class="card-title">
+      <a href="{{route('medicaments.show',$medicament->id)}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a>
+   </h5>
+  
     <p class="card-text">{{$medicament->libelle}}</p>
+    @if ($medicament->categorie === 'sous-ordonence')
+    <h5 class="text-danger">Ordonnance obligatoire</h5>
+ @endif
     <p
+    
     @if($medicament->quantite ===0 )
     <span class="alert alert-danger p-1 mb-3 ms-0 w-1">Indisponible</span>
    @else
