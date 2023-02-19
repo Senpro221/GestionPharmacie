@@ -7,7 +7,7 @@
 
     <div class="pos position-absolute top-0 start-60">
             <pre><span class="tit">  Bienvenue dans notre plateforme  <span class="text-bg-success p-1 m-1"> SEN Pharmacie</span></span>                      
-              <span class="jeude text-success">Gaay Mou Gaaw te Nopale</span> 
+              <span class="jeude text-success">Jaay Mou Gaaw te Nopale</span> 
   
   
               <span class="dec">Vous voulez vendre vos produit en toutes rapidité 

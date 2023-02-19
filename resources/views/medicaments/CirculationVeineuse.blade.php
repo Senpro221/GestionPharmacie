@@ -36,7 +36,6 @@ Autres médicaments</button>
 
 @endif</p>
     <a href="{{route('medicaments.show',$medicament->id)}}"  class="btn btn-outline-success">Détail</a>
-     <button class="btn btn-outline-success">{{$medicament->quantite}} comprimés</button>
      <button type="button" class="btn btn-success">{{$medicament->prix_unitaire}} fcfa</button>
   </div>
 </div>

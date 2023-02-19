@@ -171,7 +171,7 @@ class UserController extends Controller
             $request->User()->password = $request->password;
        
 
-        $request->user()->save();
+            $request->user()->save();
 
         return redirect('profile')->with('status', 'profile-updated');
     
@@ -225,7 +225,7 @@ class UserController extends Controller
           $request->session()->regenerate();
           if(Auth::user()->role === 'admin'){
               return view('admin');
-           }elseif(Auth::user()->statut == '1' || Auth::user()->role === 'vendeur'){
+           }else if(Auth::user()->statut === '1' |  Auth::user()->role === 'vendeur'){
                 return view('pharmacien');
            }else{
             return redirect('/dashboad');

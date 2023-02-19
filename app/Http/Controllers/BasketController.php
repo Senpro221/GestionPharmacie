@@ -16,6 +16,11 @@ use Illuminate\Support\Facades\DB;
 class BasketController extends Controller
 {
 	
+public function ajoutOrdonnance()
+{
+	//DB::insert('insert into commandes (image) values (?, ?)', [1, 'Dayle']);
+}
+
     # Ajout d'un produit au panier
     public  function add(Medicament $medicament, Request $request) {
 		$count=0;
@@ -33,12 +38,12 @@ class BasketController extends Controller
 			$user = Auth::user()->id;
 			$panier = DB::select('select id from paniers where user_id = ?',[$user]);
 			$c=$panier[0]->id;
-			//print_r($c); exit();
 	
 			$id = $medicament->id;
 			$quantite=$request->quantite;
 
-		$select = DB::select('select id_panier,id_medoc from appartenirs where id_panier=? and id_medoc = ?', [$c,$id]);
+		$select = DB::select('select id_panier,id_medoc from appartenirs where id_panier=?
+		 and id_medoc = ?', [$c,$id]);
 			   if($select){
 					foreach($select as $sel){
 						if($sel->id_panier = $c){
@@ -60,7 +65,8 @@ class BasketController extends Controller
 		{
 			 $user = Auth::user()->id; 
 			//=================id_panier de l'utilisateur connecter============================
-			 $pane = DB::select('select id from paniers where user_id =?',[$user]);
+			 $pane = DB::select('select id from paniers where user_id =?'
+			 ,[$user]);
 			
 			//print_r ($pane[0]->id);exit();
 			 $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);

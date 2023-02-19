@@ -226,7 +226,7 @@
                     <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
                     <button class="btn" id="sign-in-btn">Connexion</button>
                 </div>
-                <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">
+                <img src="{{ asset('image/photo.jpg')}}" alt="" class="image" style="width: 100%;">
             </div>
             <div class="panel right-panel">
                 <div class="content">
@@ -235,7 +235,7 @@
                     </p>
                     <button class="btn" id="sign-up-btn">S'inscrire</button>
                 </div>
-                <img src="{{ asset('image/pho.png')}}" alt="" class="image" style="width: 100%;">
+                <img src="{{ asset('image/photo.jpg')}}" alt="" class="image" style="width: 100%;">
             </div>
         </div>
     </div>

@@ -68,32 +68,32 @@ class HomController extends Controller
         return redirect("/userregister")->with('success', 'user a été supprimer avec succée');
     }
 
-    public function vente()
-    {
-        $medicaments=Medicament::all();
-        return view('vendeurs.vente',[
-            'medicaments'=>$medicaments
-        ]);
-    }
+    // public function vente()
+    // {
+    //     $medicaments=Medicament::all();
+    //     return view('vendeurs.vente',[
+    //         'medicaments'=>$medicaments
+    //     ]);
+    // }
 
-      //editer
-      public function vendre(Medicament $medicament)
-      {
-          return view('vendeurs.edit',[
-              'medicament'=>$medicament
-          ]);
-      }
+    //   //editer
+    //   public function vendre(Medicament $medicament)
+    //   {
+    //       return view('vendeurs.edit',[
+    //           'medicament'=>$medicament
+    //       ]);
+    //   }
 
-    public function updateVente(Medicament $medicament, Request $request) {
+    // public function updateVente(Medicament $medicament, Request $request) {
 		
-		$count=0;
-    	// Validation de la requête
-    	$this->validate($request, [
-    		"quantite" => "numeric|min:1",
-			"image"=>"string"
-    	]);
+	// 	$count=0;
+    // 	// Validation de la requête
+    // 	$this->validate($request, [
+    // 		"quantite" => "numeric|min:1",
+	// 		"image"=>"string"
+    // 	]);
 
-            $medicament['quantite'] - $request['quantite'];
-            $count--;
-    }    
+    //         $medicament['quantite'] - $request['quantite'];
+    //         $count--;
+    // }    
 }

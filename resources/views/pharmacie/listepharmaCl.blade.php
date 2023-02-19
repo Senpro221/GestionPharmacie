@@ -35,7 +35,7 @@
                 <td>{{$pharma->ville}}</td>
                 <td>{{$pharma->quartier}}</td>
                 <td>{{$pharma->telephone}}</td>
-                <td class="text-align:center;"><a class="btn btn-outline-success ms-2" style="text-decoration:none; " href="/trimedoc">{{$pharma->nom}}</a></td>
+                <td class="text-align:center;"><a class="btn btn-outline-success ms-2" style="text-decoration:none; " href="{{ route('pharmaChoice',$pharma->id) }}">{{$pharma->nom}}</a></td>
               
             </tr>
         

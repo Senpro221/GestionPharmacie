@@ -33,20 +33,17 @@ class PharmacieController extends Controller
         return view('pharmacie.apropos');
     }
 
-    public function alertMedoc(){
-        return view('medicaments.alertMedoc');
-    }
-
-    
-    public function index()
-    {
+    public function alertMedoc(Request $request,$id){
+         
         $medicaments = Medicament::all();
-
-       return view('pharmacie.ajoutmedocPharmacier',[
+       // dd($request->quantite);
+        return view('medicaments.alertMedoc',[
             'medicaments'=>$medicaments
 
        ]);
     }
+
+
 
     public function store(Medicament $medicament,stock $stock,medicamentRequest $request)
     {
@@ -63,11 +60,11 @@ class PharmacieController extends Controller
         $quantite = $medicament->quantite;
         $quantiteMin = $request->quantiteMin;
 
-   $user = Auth::user()->id;
-   $user_id_pharma = DB::select('select id from pharmacies where user_id =?',[$user]);
-   foreach($user_id_pharma as $pharma)
-   //print_r ( $pharma->id);exit();
-   DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_pharma,id_medoc) value(?,?,?,?)',[$quantite,$quantiteMin,$pharma->id,$id]);
+        $user = Auth::user()->id;
+        $user_id_pharma = DB::select('select id from pharmacies where user_id =?',[$user]);
+        foreach($user_id_pharma as $pharma)
+        //print_r ( $pharma->id);exit();
+        DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_pharma,id_medoc) value(?,?,?,?)',[$quantite,$quantiteMin,$pharma->id,$id]);
 
        return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
     }

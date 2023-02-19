@@ -17,7 +17,7 @@
           <div class="box">
 
             <form action="{{route('medicaments.updatemedoc',$medicament->id)}}" method="POST">
-             <h2 class="text-success">Ajouter médicaments</h2>
+             <h2 class="text-success">Modifier médicaments</h2>
              <hr>
             @csrf
             @method('put')
@@ -30,16 +30,16 @@
              
             <label for="nom_medoc">Catégorie</label>
               <select id="categorie"  name="categorie" value="{{$medicament->categorie}}" >
-                <option value="{{$medicament->categorie}}">Digestion</option>
-                <option value="{{$medicament->categorie}}">Douleurs - Fièvre</option>
-                <option value="{{$medicament->categorie}}">Dermatologie</option>
-                <option value="{{$medicament->categorie}}">Détente - Sommeil</option>
-                <option value="{{$medicament->categorie}}">Soins bucco-dentaires</option>
-                <option value="{{$medicament->categorie}}">Homéopathie</option>
-                <option value="{{$medicament->categorie}}">Soins bucco-dentaires</option>
-                <option value="{{$medicament->categorie}}">Vitamines - Minéraux</option>
-                <option value="{{$medicament->categorie}}">Circulation veineuse</option>
-                <option value="{{$medicament->categorie}}">sous-ordonence</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
+                <option value="{{$medicament->categorie}}">{{$medicament->categorie}}</option>
               </select>
 
             
@@ -50,7 +50,7 @@
               <input type="number" name="prix_unitaire" value="{{$medicament->prix_unitaire}}">
 
               <label for="nom_medoc">Date de peremtion</label>
-              <input type="datetime-local" name="dlc" id="dlc" placeholder="date" {{$medicament->dlc}}>
+              <input type="date" name="dlc" id="dlc"  value="{{$medicament->dlc}}">
 
 
                <label for="nom_medoc">Libelle</label>

@@ -19,9 +19,5 @@ class Appartenir extends Controller
 			$quantite=$request->quantite;
     }
 
-    public function stock(Medicament $stocks)
-    {
-        $stocks = Medicament::all();
-        return view('stock.stock',compact('stocks'));
-    }
+   
 }

@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\mail;
 use App\Mail\welcomeUsername;
 use Illuminate\Support\Facades\DB;
 use App\Models\Medicament;
-
+session_start();
 class Connexion extends Controller
 {
 
@@ -21,6 +21,14 @@ class Connexion extends Controller
     {
       
        return view('order.commande');
+    }
+
+    public function pharmaChoice( $id,Request $request)
+    {
+      
+       $req  = $request->$id;
+       return redirect('/');
+      
     }
 
   public  function detailleComme(Request $request){
@@ -31,7 +39,8 @@ class Connexion extends Controller
     $pane = DB::select('select id from paniers where user_id =?',[$user]);
 
     $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);
-      foreach($medicament as $medicament){
+    
+    foreach($medicament as $medicament){
         $cb  =  $medicament->prix_unitaire * $medicament->quantites;
         $id = $medicament->id;
           
@@ -50,26 +59,15 @@ class Connexion extends Controller
       return view('order.valider');
   }
 
-public function listerCommandes(){
-   $user = Auth::user()->id;
-   $nom = Auth::user()->prenom;
-   $typeLivraison = DB::select('select typeLivraison from commandes where user_id=?',[$user]);
-   $date = DB::select('select dateCommande from commandes where user_id=?',[$user]);
+  public function listerCommandes(){
+    $user = Auth::user()->id;
+    $nom = Auth::user()->prenom;
+    $typeLivraison = DB::select('select typeLivraison from commandes where user_id=?',[$user]);
+    $date = DB::select('select dateCommande from commandes where user_id=?',[$user]);
 
-   //dd($typeLivraison[0]->typeLivraison);
-   $commande = DB::select('select id from commandes where user_id =?',[$user]);
-   if($commande ){
-    $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande=?',[$commande[0]->id]);
-
-      return view('order.listerCommandes',[
-        'listeCom'=>$listeCom,
-        'nom'=>$nom,
-        'date'=>$date,
-        'commande'=>$commande,
-        'typeLivraison'=>$typeLivraison
-      ]);
-   }else{
-      $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc');
+    $commande = DB::select('select id from commandes where user_id =?',[$user]);
+    if($commande ){
+      $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande=?',[$commande[0]->id]);
 
         return view('order.listerCommandes',[
           'listeCom'=>$listeCom,
@@ -78,25 +76,33 @@ public function listerCommandes(){
           'commande'=>$commande,
           'typeLivraison'=>$typeLivraison
         ]);
-   }  
-}
+    }else{
+        $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc');
+
+          return view('order.listerCommandes',[
+            'listeCom'=>$listeCom,
+            'nom'=>$nom,
+            'date'=>$date,
+            'commande'=>$commande,
+            'typeLivraison'=>$typeLivraison
+          ]);
+    }  
+  }
 
 
-public function listesCommandesAll(){
-$nomCommande = DB::select('select * from users,commandes where users.id = commandes.user_id');
-  // foreach($nomCommande as $nomC)
-  //   print_r($nomC->prenom);exit();
-  $typeLivraison = DB::select('select typeLivraison from commandes,users where commandes.user_id=users.id');
-  $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande');
-$nomCommande = DB::select('select prenom from users,commandes where users.id = commandes.user_id');
+  public function listesCommandesAll(){
+    $nomCommande = DB::select('select * from users,commandes where users.id = commandes.user_id');
+    $typeLivraison = DB::select('select typeLivraison from commandes,users where commandes.user_id=users.id');
+    $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande');
+    $nomCommande = DB::select('select prenom from users,commandes where users.id = commandes.user_id');
 
-   return view('order.listesCommandesAll',[
-     'listeCom'=>$listeCom,
-     'nomCommande'=>$nomCommande,
-     'typeLivraison'=>$typeLivraison
-   ]);
-   
-}
+    return view('order.listesCommandesAll',[
+      'listeCom'=>$listeCom,
+      'nomCommande'=>$nomCommande,
+      'typeLivraison'=>$typeLivraison
+    ]);
+    
+  }
 
     public function index()
     {
@@ -113,7 +119,7 @@ $nomCommande = DB::select('select prenom from users,commandes where users.id = c
       $medicaments = Medicament::all();
         if(Auth::user()->statut == '0'){
             return redirect()->back()->with('error','votre compte n\'a pas été valider veuillez patienter');
-          }else if(Auth::user()->statut == '1'){
+          }else if(Auth::user()->statut === '1' | Auth::user()->role === 'vendeur'){
             
             $data = Auth::user()->email;
             Mail::to($data)->send(new welcomeUsername());
@@ -133,7 +139,7 @@ $nomCommande = DB::select('select prenom from users,commandes where users.id = c
         ]);
     }
     //editer
-    public function editquantite(Appartenire $panier)
+    public function editquantite(Appartenires $panier)
     {
         return view('basket.edit',[
             'panier'=>$panier
@@ -151,14 +157,13 @@ $nomCommande = DB::select('select prenom from users,commandes where users.id = c
      }
 
 //===================suppression de medicament=====================//
-    public function delete(Request $request,$id)
+    public function delete(Appartenires $app , Request $request,$id)
     { 
-      
       $user = Auth::user()->id;
 
       $del = DB::select('select id from paniers where user_id=?',[$user]);
-      $idApp = DB::select('select id from appartenirs where id_panier = ?',[$del[0]->id]);
-      //dd($idApp[0]->id);
+      $idApp = DB::select('select id from appartenirs where id_panier = ? and id_medoc=?',[$del[0]->id,$id]);
+     // dd($id);
         DB::delete('delete from appartenirs where id =?',[$idApp[0]->id]);
         return redirect("/basket")->with('success', 'Medicament retiré avec succée');
     }

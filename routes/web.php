@@ -10,6 +10,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomController;
 use App\Http\Controllers\PharmacieController;
 use App\Http\Controllers\ProduitController;
+use App\Http\Controllers\PanierController;
 use App\Http\Controllers\Appartenir;
 /*
 |-------+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*-------------------------------------------------------------------
@@ -24,6 +25,10 @@ use App\Http\Controllers\Appartenir;
  Route::get('/',[medicamentControler::class, 'index']);
 
 //=================================accueil visiteure====================================//
+ //======================route apropos ,contacte=============//
+                
+        Route::get('/contact', [UserController::class,'contact'])->name('contact');
+        Route::get('/apropos', [UserController::class,'apropos'])->name('apropos'); 
         Route::get('/visiteure',[medicamentControler::class,'indexVisiteur'])->name('visiteur');
  //=================================//lister par categorie=================================//
          Route::get('/triedouleurs' , [medicamentControler::class, 'trieDouleurFievre'])->name('DouleurFievre');
@@ -41,19 +46,14 @@ use App\Http\Controllers\Appartenir;
         Route::get('/detailPharmacie{pharmacie}', [UserController::class,'detailPharmacie'])->name('detailPharmacie');
 //==========================middelware regroupant les route qui non pas besoing de Auth..==========// 
  Route::middleware(['guest'])->group(function(){
-        //======================route apropos ,contacte=============//
-                
-        Route::get('/contact', [UserController::class,'contact'])->name('contact');
-        Route::get('/apropos', [UserController::class,'apropos'])->name('apropos'); 
-
 
 //========================================enregistre un utilisateur===============================//     
-    Route::get('/register', [UserController::class, 'register'])->name('registration');
-    Route::post('/register', [UserController::class, 'handleRegistration'])->name('registration');
+        Route::get('/register', [UserController::class, 'register'])->name('registration');
+        Route::post('/register', [UserController::class, 'handleRegistration'])->name('registration');
 
 //==========================connecter un utilisateur==========================================//
-    Route::get('/login',[UserController::class, 'login'])->name('login');
-    Route::post('/login',[UserController::class,'handleLogin'])->name('login');
+        Route::get('/login',[UserController::class, 'login'])->name('login');
+        Route::post('/login',[UserController::class,'handleLogin'])->name('login');
 });
 
 
@@ -90,12 +90,6 @@ Route::middleware('auth')->group(function(){
         Route::get('/listesCommandesAll',[Connexion::class,'listesCommandesAll'])->name('listesCommandesAll');
        
 
-
-
-        //===============================vente========================================================//
-        Route::get('/vente',[HomController::class,'vente'])->name('vente');
-        Route::get('/medicaments/{medicament}/vendre',[HomController::class,'vendre'])->name('medicaments.vendre');
-   
 //========================================enregistre un vendeuree===============================//     
         Route::get('/userregister', [HomController::class, 'create'])->name('createUser');
         Route::post('/userregister', [HomController::class, 'handlecreate'])->name('createUser');
@@ -107,8 +101,7 @@ Route::middleware('auth')->group(function(){
         Route::get('/contactpharma', [PharmacieController::class,'contact'])->name('contactpharma');
         Route::get('/apropospharma', [PharmacieController::class,'apropos'])->name('apropospharma'); 
         Route::get('/pagePharmacie', [PharmacieController::class,'pagePharmacie'])->name('pagePharmacie'); 
-        Route::get('/choisirConnexion', [PharmacieController::class,'alertMedoc'])->name('alertMedoc');
-
+        
         //==========================edit,update.delete d'un vendeur
         Route::get('/users/{user}/editVendeur',[HomController::class,'edit'])->name('users.edit');
         Route::put('/users/{user}/updateVendeur',[HomController::class,'update'])->name('vendeur.update');
@@ -169,8 +162,12 @@ Route::middleware('auth')->group(function(){
         Route::get('/medoc{medicament}',[BasketController::class,'shows'])->name('medicaments.show');
         Route::post('basket/add/{medicament}', [BasketController::class,'add'])->name('basket.add')->Middleware('auth');
         Route::get('/basketlispane',[BasketController::class,'show'])->name('basket.listpan');
-        
-//===================================update quantite=========================================
+    
+        //=================================route des ordonances====================
+        Route::get('/ajoutOrdonnance',[BasketController::class,'ajoutOrdonnance']);
+        Route::post('/choisirordonance/{medicament}', [PharmacieController::class,'alertMedoc'])->name('alertMedoc');
+
+        //===================================update quantite=========================================
 //==================================editer un appartenir=========================================================//
         Route::get('/appartenirs/{appartenire}/edit',[Connexion::class,'editquantite'])->name('appartenires.edit');
         Route::put('/appartenirs/{id}/update',[Connexion::class,'update'])->name('appartenires.update');
@@ -197,8 +194,19 @@ Route::middleware('auth')->group(function(){
         Route::post('/detailleCommandeProd',[ProduitController::class,'detailleCommandeProd'])->name('detailleCommandeProd');
         Route::get('/listerCommandesProd',[ProduitController::class,'listerCommandesProd'])->name('listerCommandesProd');
 
+//=============================lister produit categorie huile de massage======================================================//
+        Route::get('/listerhuileMassage',[ProduitController::class,'listerhuileMassage'])->name('listerhuileMassage');
 
+//=============================lister produit categorie huile listerparfums======================================================//
+        Route::get('/listerparfums',[ProduitController::class,'listerparfums'])->name('listerparfums');
 
+//=============================lister produit categorie huile listerCrémeVisage======================================================//
+        Route::get('/listerCrémeVisage',[ProduitController::class,'listerCrémeVisage'])->name('listerCrémeVisage');
+
+//=============================lister produit categorie huile listerCremePeau======================================================//
+        Route::get('/listerCremePeau',[ProduitController::class,'listerCremePeau'])->name('listerCremePeau');
+
+        
         //====================================lister les produits=====================================================//
         Route::get('/liste', [ProduitController::class, 'lister'])->name('produits');
         
@@ -220,14 +228,22 @@ Route::middleware('auth')->group(function(){
         //==================route pour rechercher un produit=======================//
         Route::get('/search2', [ProduitController::class,'search2'])->name('medoc.search2');
        
-
-        // Route::get('/contact', [Appartenir::class,'contact'])->name('contact');
-        //===========================route pour le stock de medicament================================================================// 
-        Route::get('/stock', [Appartenir::class,'stock'])->name('stock');
+//===========================route pour le stock de medicament================================================================// 
+        Route::get('/stock', [PanierController::class,'stock'])->name('stock');
     
-        Route::get('/medicamentAll',[medicamentControler::class,'medicamentAll'])->name('medicamentAll');
+        Route::get('/alerteQuantite', [PanierController::class,'alerteQuantite'])->name('alerteQuantite');
+    
+        Route::delete('{medicament}/deletestock',[medicamentControler::class,'delete'])->name('medicaments.deleteStock');
+
+        Route::get('/medicamentAll',[PanierController::class,'medicamentAll'])->name('medicamentAll');
+        
+//===============================//============================================================//       
         Route::get('dashboad',[Connexion::class,'dashboad']);
 
         //========================route pour aller dans trimedoc===========================//
-                Route::get('/trimedoc',[Connexion::class,'trimedoc']);
+        Route::get('/trimedoc',[Connexion::class,'trimedoc']);
+//=================================entete======================================================================//
+        Route::get('/entete',[Connexion::class,'entete']);
         
+//=========================//============================================//
+        Route::get('/pharmaChoice/{id}',[Connexion::class,'pharmaChoice'])->name('pharmaChoice');

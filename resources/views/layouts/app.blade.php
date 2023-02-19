@@ -54,7 +54,7 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{ route('stock') }}">
             <i class="bx bx-coin-stack"></i>
             <span class="links_name">Stock</span>
           </a>
@@ -79,9 +79,9 @@
         </li>
         -->
         <li>
-          <a href="#">
+          <a href="{{ route('alerteQuantite') }}">
             <i class="bx bx-cog"></i>
-            <span class="links_name">Configuration</span>
+            <span class="links_name">Alert</span>
           </a>
         </li>
         <li class="log_out">

@@ -64,9 +64,7 @@ class ProduitController extends Controller
 		}else{
 			$user = Auth::user()->id; 
 			//=================id_panier de l'utilisateur connecter============================
-			 $pane = DB::select('select id from paniers where user_id =?',[$user]);
-		
-				
+			 $pane = DB::select('select id from paniers where user_id =?',[$user]);	
 			$pro = $produit->id;
 			$user = Auth::user()->id;
 			$id = $produit->id;
@@ -95,9 +93,7 @@ class ProduitController extends Controller
 	}
 
 		public function panierProd()
-		{
-
-			
+		{	
 			 $user = Auth::user()->id; 
 			//=================id_panier de l'utilisateur connecter============================
 			 $pane = DB::select('select id from paniers where user_id =?',[$user]);
@@ -197,6 +193,53 @@ class ProduitController extends Controller
 	   
 			  ]);
 		   }
+//==================================lister deo et parfun=====================================//
+			public function listerparfums()
+		    {
+			 $produits = DB::table('produits')->where('categorie', '=' ,'deodorant')->get();
+
+	   
+			  return view('Produits.listerparfums',[
+				   'produits'=>$produits
+	   
+			  ]);
+		   }
+
+//==================================lister creme de visage=====================================//
+			public function listerCrémeVisage()
+		    {
+			 $produits = DB::table('produits')->where('categorie', '=' ,'Créme-de-visage')->get();
+
+	   
+			  return view('Produits.listerCrémeVisage',[
+				   'produits'=>$produits
+	   
+			  ]);
+		   }
+
+//==================================lister creme de peau=====================================//
+		public function listerCremePeau()
+		{
+		$produits = DB::table('produits')->where('categorie', '=' ,'creme-de-peau')->get();
+
+
+		return view('Produits.listerCremePeau',[
+			'produits'=>$produits
+
+		]);
+		}
+
+//==================================lister huile-de-massage=====================================//
+		public function listerhuileMassage()
+		{
+		$produits = DB::table('produits')->where('categorie', '=' ,'huile-de-massage')->get();
+
+
+		return view('Produits.listerhuileMassage',[
+			'produits'=>$produits
+
+		]);
+		}
 
 //==============================commander un produit======================	
 		   public function commandeProd(Possede $app,Request $request)
@@ -232,9 +275,6 @@ class ProduitController extends Controller
 		 public function listerCommandesProd(){
 			$user = Auth::user()->id;
 			$nom = Auth::user()->prenom;
-			// $typeLivraison = DB::select('select typeLivraison from commandes where user_id=?',[$user]);
-			// $date = DB::select('select * from commandes where user_id=?',[$user]);
-			// //dd($typeLivraison[0]->typeLivraison);
 			$commande = DB::select('select id from commandes where user_id =?',[$user]);
 		 if($commande ){
 		   $listeCom =  DB::select('select * from orders,produits,commandes where produits.id=orders.id_prod and commandes.id=orders.id_commande and id_commande=?',[$commande[0]->id]);
@@ -253,8 +293,8 @@ class ProduitController extends Controller
 			
 			 ]);
 			   
-		 }
 		}
+	}
 }
 
 

@@ -5,7 +5,7 @@ use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests\medicamentRequest;
 use App\Models\Medicament;
-use Cart;
+use App\Models\stock;
 use App\Http\Controllers\Commande;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\medicamentControler;
@@ -19,10 +19,8 @@ class medicamentControler extends Controller
       $medicaments = Medicament::paginate(5);
        return view('dashboardcl',[
             'medicaments'=>$medicaments,   
-
        ]);
     }
-
 
     public function index()
     {
@@ -44,18 +42,22 @@ class medicamentControler extends Controller
        ]);
     }
   
-   public function store(Medicament $medicament, medicamentRequest $request)
+    public function store(Medicament $medicament,stock $stock,medicamentRequest $request)
     {
-       $medicament::create([
-            'nom'=>$request->nom,
-            'image'=>$request->image,
-            'categorie'=>$request->categorie,
-            'quantite'=>$request->quantite,
-            'prix_unitaire'=>$request->prix_unitaire,
-            'dlc'=>$request->dlc,
-            'libelle'=>$request->libelle,
-            
-       ]);
+       $medicament->nom = $request->nom;
+        $medicament->image = $request->image;
+        $medicament->categorie = $request->categorie;
+        $medicament->quantite = $request->quantite;
+        $medicament->prix_unitaire = $request->prix_unitaire;
+        $medicament->dlc = $request->dlc;
+        $medicament->libelle = $request->libelle;
+        $medicament->save();
+
+        $id = $medicament->id;
+        $quantite = $medicament->quantite;
+        $quantiteMin = $request->quantiteMin;
+       
+        DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_medoc) value(?,?,?)',[$quantite,$quantiteMin,$id]);
 
        return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
     }
@@ -64,8 +66,6 @@ class medicamentControler extends Controller
 //methode detaille
     public function show(Medicament $medicament)
     {
-        // $medicament = Medicament::find($id);
-       
         return view('medicaments.show',[
 
             'medicament'=>$medicament,
@@ -80,77 +80,59 @@ class medicamentControler extends Controller
        return view('medicaments.lister',[
             'medicaments'=>$medicaments,
             'categorie'=>$categorie
-
        ]);
     }
 //triel douleur fiervre
     public function trieDouleurFievre()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'DouleursFievre')->get();
-
        return view('medicaments.TrieDouleur',[
             'medicaments'=>$medicaments
-
        ]);
     }
 //trie digestion
     public function triedigest()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'Digestion')->get();
-
        return view('medicaments.listdigest',[
             'medicaments'=>$medicaments
-
        ]);
     }
 
     //trie dermatologie
     public function dematologie()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'Dermatologie')->get();
-
        return view('medicaments.Dermatologie',[
             'medicaments'=>$medicaments
-
        ]);
     }
 
     //trie Homéopathie
     public function Homéopathie()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'Homéopathie')->get();
-
        return view('medicaments.Homéopathie',[
             'medicaments'=>$medicaments
-
        ]);
     }
 
     //trie Détente-Sommeile
     public function DetenteSommeil()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'DetenteSommeil')->get();
-
        return view('medicaments.DetenteSommeil',[
             'medicaments'=>$medicaments
-
        ]);
     }
 
     //trie Détente-Sommeile
     public function VitaminesMineraux()
     {
-
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'VitaminesMineraux')->get();
 
        return view('medicaments.VitaminesMineraux',[
             'medicaments'=>$medicaments
-
        ]);
     }
     //trie bucco-dentaires
@@ -165,7 +147,6 @@ class medicamentControler extends Controller
        ]);
     }
 
-
      //trie CirculationVeineuse
      public function CirculationVeineuse()
      {
@@ -174,10 +155,8 @@ class medicamentControler extends Controller
 
      return view('medicaments.CirculationVeineuse',[
           'medicaments'=>$medicaments
-
      ]);
      }
-
 
     public function admin()
     {

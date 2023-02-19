@@ -4,16 +4,16 @@
 @section('page-content')
 <center><h1 class="mt-4">Produits en ligne livrés en 24h</h1></center>
 <center class="mt-1">
-<button type="button" class="btn btn-outline-success ms-2 fs-5">Huile de massage</button>
-<a href="#" type="button" class="btn btn-outline-success ms-2 fs-5">Créme de peau</a>
-<a href="#" type="button" class="btn btn-outline-success ms-2 fs-5">Créme de visage</a>
-<button type="button" class="btn btn-outline-success ms-2 fs-5">Déodorant</button>
-<button type="button" class="btn btn-outline-success mt-1 ms-2 fs-5">
-Autres Produits</button>
+  <a href="{{ route('listerhuileMassage') }}" type="button" class="btn btn-outline-success ms-2 fs-5">Huile de massage et produits Bio</button>
+    <a href="{{ route('listerCremePeau') }}" type="button" class="btn btn-outline-success ms-2 fs-5">Soins de peau</a>
+    <a href="{{ route('listerCrémeVisage') }}" type="button" class="btn btn-outline-success ms-2 fs-5">Soins de visage</a>
+    <a href="{{ route('listerparfums') }}" type="button" class="btn btn-outline-success ms-2 fs-5">Déodorant et parfums</button>
+    <a href="#" type="button" class="btn btn-outline-success mt-1 ms-2 fs-5">
+    Autres Produits</a>
 </center>
 </center>
 
-<img src="{{ asset('image/banneres.jpg')}}" class="img-fluid" alt="..." style="height: 320px; width: 100%x; padding: 10px 10px;">
+<img src="{{ asset('image/PROD.jpg')}}" class="img-fluid" alt="..." style="height: 320px; width: 100% ; padding: 10px 10px;">
 <hr>
 
 @foreach($produits as $produit)
