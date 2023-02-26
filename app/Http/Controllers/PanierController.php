@@ -25,7 +25,7 @@ class PanierController extends Controller
     public function delete(Medicament $medicament)
     {
         $medicament->delete();
-        return redirect()->Route('medicaments.deleteStock')->with('success', 'Medicament a été supprimer avec succée');
+        return redirect()->Route('medicaments.deleteStock')->with('success', 'Ce médicament a été supprimé avec succée');
     }
 
 }

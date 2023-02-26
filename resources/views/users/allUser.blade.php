@@ -6,7 +6,11 @@
 
 
    <div class="home-content ">
-    
+    @if (session()->has('error'))
+				<div class="alert alert-danger">
+					{{session()->get('error')}}
+				</div>
+				@endif
       <div class="overview-boxes">
       
       <!-- tables -->  
@@ -16,7 +20,7 @@
             <tr>
               
             <th class="btn btn-success mt-1 mb-1 m-md-1">
-                <a href="{{route('creation')}}" style="text-decoration: none; color: white;">
+                <a href="{{route('createSuperPharmacie')}}" style="text-decoration: none; color: white;">
              
                     <img src="{{ asset('image/icons.png')}}" class="img-fluid" alt="..." style="width:30px";>Ajouter
                 </a>
@@ -25,7 +29,7 @@
             </tr>
             <tr>
               <th>Nom</th>
-              <th>Prenom</th>
+              <th>Prénom</th>
               <th>Email</th>
               <th>Téléphone</th>
               <th>Adresse</th>

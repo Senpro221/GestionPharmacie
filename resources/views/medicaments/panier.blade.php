@@ -4,7 +4,7 @@
 
 @section('page-content')
     
-<h1>Votre panier</h1>
+<h1>Mon panier</h1>
 
 <div class="card mb-3" style="max-width: 540px;">
 @forelse($medicament as $medicament)

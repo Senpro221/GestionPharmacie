@@ -16,7 +16,7 @@
           <div class="box">
 
             <form action="/users/{{$user->id}}/updateVendeur" method="POST">
-             <h2 class="text-success">Ajouter Un vendeur</h2>
+             <h2 class="text-success">Editer Un compte vendeur</h2>
              <hr>
             @csrf
             @method('put')
@@ -28,7 +28,7 @@
               {{$message}}
             </div>
             @enderror
-             <label for="nom_medoc">Prenom</label>
+             <label for="nom_medoc">Prénom</label>
               <input type="text" name="prenom" id="prenom"  value="{{ $user->prenom}}">
 
 
@@ -36,7 +36,7 @@
               <input type="email" name="email" id="email"  value="{{ $user->email}}">
 
               
-              <label for="dlc">Telephone</label>
+              <label for="dlc">Téléphone</label>
               <input type="number" name="telephone" id="telephone"  value="{{ $user->telephone}}">
 
 
@@ -60,7 +60,7 @@
 
               <label for="nom_medoc">Profil</label>
               <select name="role" id="adresse" >
-                <option value="vendeur">Vemdeur</option>
+                <option value="vendeur">Vendeur</option>
               </select>
               @error('role')
                 <div class="text text-danger">

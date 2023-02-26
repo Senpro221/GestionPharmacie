@@ -24,7 +24,7 @@
             </tr>
             <tr>
               <th>Nom</th>
-              <th>Prenom</th>
+              <th>Prénom</th>
               <th>Email</th>
               <th>Téléphone</th>
               <th>Adresse</th>

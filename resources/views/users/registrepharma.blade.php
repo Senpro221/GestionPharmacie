@@ -223,7 +223,7 @@
             <div class="panel left-panel">
                 <div class="content">
                     <h3>Connectez-vous à votre espace personnel</h3>
-                    <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
+                    <p>Connectez-vous pour Vendre vos médicaments et produits..</p>
                     <button class="btn" id="sign-in-btn">Connexion</button>
                 </div>
                 <img src="{{ asset('image/photo.jpg')}}" alt="" class="image" style="width: 100%;">
@@ -231,7 +231,7 @@
             <div class="panel right-panel">
                 <div class="content">
                     <h3>Vous n'avez pas de compte ?</h3>
-                    <p>Inscrivez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.
+                    <p>Incrivez vous pour Vendre vos médicaments et produits.
                     </p>
                     <button class="btn" id="sign-up-btn">S'inscrire</button>
                 </div>

@@ -40,10 +40,8 @@ use App\Http\Controllers\Appartenir;
         Route::get('/VitaminesMineraux', [medicamentControler::class, 'VitaminesMineraux'])->name('VitaminesMineraux');
         Route::get('/CirculationVeineuse', [medicamentControler::class, 'CirculationVeineuse'])->name('CirculationVeineuse');
 
- //===============================lister les pharmacies=========================================
+ //===============================lister compte pharmacies=========================================
         Route::get('/listePharmacie', [UserController::class,'listePharma'])->name('listePharmacie');
-        Route::get('/listePharmaciecl', [UserController::class,'listePharmacl'])->name('listePharmaciecl');
-        Route::get('/detailPharmacie{pharmacie}', [UserController::class,'detailPharmacie'])->name('detailPharmacie');
 //==========================middelware regroupant les route qui non pas besoing de Auth..==========// 
  Route::middleware(['guest'])->group(function(){
 
@@ -63,7 +61,7 @@ Route::middleware('auth')->group(function(){
 //===================================page d'accueil de l'admin=============================//
         Route::get('/admin',[medicamentControler::class,'admin']);
         Route::get('/min',[medicamentControler::class, 'indexe'])->name('medocs');
-   
+
 //===================================Les Routes preceder par le /medicament========================================//   
         Route::prefix('medicaments')->group(function(){
 //===================================ajouter des medicament=======================================================//
@@ -87,22 +85,41 @@ Route::middleware('auth')->group(function(){
         Route::get('/commander',[Connexion::class,'order'])->name('commande');
         Route::post('/detailleComme',[Connexion::class,'detailleComme'])->name('detailleComme');
         Route::get('/listerCommandes',[Connexion::class,'listerCommandes'])->name('listerCommandes');
+        Route::get('/DetailsCommandes/{id}',[Connexion::class,'DetailsCommandes'])->name('DetailsCommandes');
+
         Route::get('/listesCommandesAll',[Connexion::class,'listesCommandesAll'])->name('listesCommandesAll');
        
+        Route::get('/statutCommande/{id}',[Connexion::class,'statutCommande'])->name('statutCommande');
+        Route::get('/CommandeLivrer/{id}',[Connexion::class,'CommandeLivrer'])->name('CommandeLivrer');
 
 //========================================enregistre un vendeuree===============================//     
         Route::get('/userregister', [HomController::class, 'create'])->name('createUser');
         Route::post('/userregister', [HomController::class, 'handlecreate'])->name('createUser');
+       
+        Route::get('/adminSuper',[HomController::class,'adminSuper']);
+        Route::get('/createSuperPharmacie', [HomController::class, 'createSuperPharmacie'])->name('createSuperPharmacie');
+        Route::post('/creationSuperPharmacie', [HomController::class, 'creationSuperPharmacie'])->name('creationSuperPharmacie');
 
 //==========================page admin du pharmacien un utilisateur==========================================//
         Route::get('/adminGerant',[HomController::class, 'index'])->name('adminGerant');
  //======================route apropos ,contacte danspharmacue controleurs=============//
-                
+        Route::get('/listeMedicament', [PharmacieController::class,'listeMedicament'])->name('listeMedicament');        
         Route::get('/contactpharma', [PharmacieController::class,'contact'])->name('contactpharma');
         Route::get('/apropospharma', [PharmacieController::class,'apropos'])->name('apropospharma'); 
+//=================================liste des pharmacie============================================================//       
         Route::get('/pagePharmacie', [PharmacieController::class,'pagePharmacie'])->name('pagePharmacie'); 
+        Route::get('/listePharmaciecl', [PharmacieController::class,'listePharmacl'])->name('listePharmaciecl');
+        Route::get('/choisirPharmacie/{id}',[PharmacieController::class,'choisirPharmacie'])->name('choisirPharmacie');
         
+        Route::get('/listerProduitPharma',[PharmacieController::class,'listerProduitPharma'])->name('listerProduitPharma');
+
+        Route::get('/maPharmacie', [PharmacieController::class,'maPharmacie'])->name('maPharmacie'); 
+
+        Route::get('/pharmacies/{pharmacie}/edit',[PharmacieController::class,'editPharmacie'])->name('editPharmacie');
+        Route::put('/pharmacies/{pharmacie}/update',[PharmacieController::class,'updatePharmacie'])->name('updatePharmacie');
+
         //==========================edit,update.delete d'un vendeur
+        Route::get('/accederPharmacie/{id}',[HomController::class,'accederPharmacie'])->name('accederPharmacie');
         Route::get('/users/{user}/editVendeur',[HomController::class,'edit'])->name('users.edit');
         Route::put('/users/{user}/updateVendeur',[HomController::class,'update'])->name('vendeur.update');
 //================================supprimer un vendeur====================================/      
@@ -139,7 +156,7 @@ Route::middleware('auth')->group(function(){
 });
 //==============================dasboard================================
 
-        Route::get('/macie', [MonController::class,'dashboard->'])->name('senpharma');
+        Route::get('/macie', [MonController::class,'dashboard'])->name('senpharma');
 
         Route::get('/connexion',[Connexion::class,'connexion']);
 
@@ -155,7 +172,7 @@ Route::middleware('auth')->group(function(){
 
         Route::get('dashboard',function(){
         return 'je suis connecter';
-
+ 
 });
 
 //=======================route ajout panier=================================
@@ -182,18 +199,35 @@ Route::middleware('auth')->group(function(){
         Route::get('basket/empty', [Connexion::class,'empty'])->name('basket.empty');
 //========================prod====================================================//
         Route::get('/produits{produit}',[ProduitController::class,'show'])->name('produits.show');
-        Route::post('produits/add/{produit}', [ProduitController::class,'add'])->name('produits.add');
- 
+      //  Route::post('produits/add/{produit}', [ProduitController::class,'add'])->name('produits.add');
+      Route::get('/choisirPharmacie/{id}',[PharmacieController::class,'choisirPharmacie'])->name('choisirPharmacie');
+
 //=========================groupes des routes pour le produits=========================//
         //===================================liste des routes pur ajouter,editer,lister et supprimer un produit=======================================================//
         Route::get('/ajout',[ProduitController::class, 'index'])->name('ajout');
         Route::post('/ajout',[ProduitController::class, 'store'])->name('ajout2');
 
 //================commander un produit=====================================================//
-        Route::get('/commandeProd',[ProduitController::class,'commandeProd'])->name('commandeProd');
-        Route::post('/detailleCommandeProd',[ProduitController::class,'detailleCommandeProd'])->name('detailleCommandeProd');
-        Route::get('/listerCommandesProd',[ProduitController::class,'listerCommandesProd'])->name('listerCommandesProd');
 
+
+//==================route pour qui retourne la vue commder.blade.php=====================//
+        Route::get('/commandeProd',[ProduitController::class,'commandeProd'])
+        ->name('commandeProd');
+//====================route qu'on va mettre dans le formaillaire de la vue commander.blade.php======//
+        Route::post('/detailleCommandeProd',[ProduitController::class,'detailleCommandeProd'])
+        ->name('detailleCommandeProd');
+//====================route pour lister les commandes===============================================//
+        Route::get('/listerCommandesProd',[ProduitController::class,'listerCommandesProd'])->name('listerCommandesProd');
+        Route::get('/DetailsCommandesProd/{id}',[ProduitController::class,'DetailsCommandesProd'])->name('DetailsCommandesProd');
+
+
+
+
+
+
+
+
+        
 //=============================lister produit categorie huile de massage======================================================//
         Route::get('/listerhuileMassage',[ProduitController::class,'listerhuileMassage'])->name('listerhuileMassage');
 
@@ -247,3 +281,5 @@ Route::middleware('auth')->group(function(){
         
 //=========================//============================================//
         Route::get('/pharmaChoice/{id}',[Connexion::class,'pharmaChoice'])->name('pharmaChoice');
+
+        Route::get('/detailPharmacie{user}', [UserController::class,'detailPharmacie'])->name('detailPharmacie');

@@ -1,6 +1,6 @@
 
 
-@extends('./../layouts/app')
+@extends('./../layouts/appSuper')
 
 
 @section('page-content')
@@ -44,10 +44,10 @@
 
             
             <label for="nom_medoc">Quantité</label>
-              <input type="number" name="quantite" value="{{ $medicament->quantite}}">
+              <input type="number" min="0" name="quantite" value="{{ $medicament->quantite}}">
 
               <label for="nom_medoc">Prix unitaire</label>
-              <input type="number" name="prix_unitaire" value="{{$medicament->prix_unitaire}}">
+              <input type="number" min="0" name="prix_unitaire" value="{{$medicament->prix_unitaire}}">
 
               <label for="nom_medoc">Date de peremtion</label>
               <input type="date" name="dlc" id="dlc"  value="{{$medicament->dlc}}">

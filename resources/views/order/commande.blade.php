@@ -12,13 +12,15 @@
         <input type="text" class="form-control" name="nom">
     </div>
     <div class="col-md-6">
-        <label for="inputPassword4" class="form-label">Prenom<span class="text-danger">*</span></label>
+        <label for="inputPassword4" class="form-label">Prénom<span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="prenom">
     </div>
     <div class="col-12">
         <label for="inputAddress" class="form-label">Région/Département<span class="text-danger">*</span></label>
         <select name="region" class="form-select">
-        <option>Disabled select</option>
+        <option value="Thies">Thiès</option>
+        <option value="dakar">Sait-Liou</option>
+        <option value="dakar">Dakar</option>
       </select>
     </div>
     <div class="col-12">

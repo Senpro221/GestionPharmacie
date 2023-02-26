@@ -128,7 +128,7 @@
           <a style="margin-left: 90px; text-transform: uppercase;" class="nav-link mt-2" href="{{route('pagePharmacie')}}">Accueil</a>
         </li>
          <li class="nav-item">
-          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="#">Produits</a></li>
+          <a style="text-transform: uppercase;" class="nav-link  mt-2" href="{{ route('listerProduitPharma') }}">Produits</a></li>
         </li>
         
         <li class="nav-item">

@@ -104,10 +104,10 @@
 
             </tr>
              @forelse($produits as $produit)
-              {{-- @if(Auth::user()->id===$produit->user_id) --}}
-            {{-- <tr>
-            <td><img src="image/{{ $produit->image }}" class="zoom card-img-top hover-zoom" alt="vous" style="width:220px; height:220px; margin-left:-962px; position: absolute; margin-top:20px; margin-bottom:5px ;"> 		
-            </td> --}}
+             
+              {{-- @if($pharmacie) --}}
+             <tr>
+            
                 <td>{{$produit->nom}}></td>
                 <td>{{$produit->quantite}}</td>
                 <td>{{$produit->prix_unitaire}}</td>
@@ -123,8 +123,8 @@
    
             </tr>
                 {{-- @else 
-              @endif
-       --}}
+              @endif --}}
+      
            @empty
 
         @endforelse

@@ -16,7 +16,7 @@
 			<thead class="thead-dark" >
 				<tr>
 					<th>#</th>
-					<th>Medicament</th>
+					<th>Médicament</th>
 					<th>Prix</th>
 					<th>Quantité</th>
 					<th>Total</th>

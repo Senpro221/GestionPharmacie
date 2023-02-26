@@ -27,7 +27,7 @@ Autres médicaments</a>
 <img src="{{ asset('image/banneres.jpg')}}" class="img-fluid" alt="..." style="height: 320px; width: 100%x; padding: 10px 10px;">
 <hr>
 @if(request()->input())
-   <h6>{{ $medicaments->count() }} resultat(s) pour la recherche "{{ request()->req }}"</h6>
+   <h6>{{ $medicaments->count() }} résultat(s) pour la recherche "{{ request()->req }}"</h6>
 @endif
 @foreach($medicaments as $medicament)
 
@@ -39,17 +39,18 @@ Autres médicaments</a>
    </h5>
   
     <p class="card-text">{{$medicament->libelle}}</p>
-    @if ($medicament->categorie === 'sous-ordonence')
-    <h5 class="text-danger">Ordonnance obligatoire</h5>
- @endif
+      @if ($medicament->categorie === 'sous-ordonence')
+         <h5 class="text-danger">Ordonnance obligatoire</h5>
+      @endif
     <p
     
-    @if($medicament->quantite ===0 )
-    <span class="alert alert-danger p-1 mb-3 ms-0 w-1">Indisponible</span>
-   @else
-   <span class="alert alert-success p-1 mb-3 ms-1 w-1">En stock</span>
+      @if($medicament->quantite ===0 )
+         <span class="alert alert-danger p-1 mb-3 ms-0 w-1">Indisponible</span>
+      @else
+         <span class="alert alert-success p-1 mb-3 ms-1 w-1">En stock</span>
 
-@endif</p>
+      @endif
+   </p>
     <a href="{{route('medicaments.show',$medicament->id)}}"  class="btn btn-outline-success">Détail</a>
      <button type="button" class="btn btn-success ms-1">{{$medicament->prix_unitaire}} fcfa</button>
      

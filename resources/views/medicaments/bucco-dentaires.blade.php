@@ -30,7 +30,7 @@ Autres médicaments</button>
     <h5 class="card-title"><a href="/medicaments/{{$medicament->id}}" class="text-success" style="text-decoration: none;">{{$medicament->nom}}</a></h5>
     <p class="card-text">{{$medicament->libelle}}</p>
     <p
-    @if($medicament->quantite ===0 )
+    @if($medicament->quantiteStock ===0 )
     <span class="alert alert-danger p-1 mb-3 ms-0 w-1">Indisponible</span>
    @else
    <span class="alert alert-success p-1 mb-3 ms-1 w-1">En stock</span>

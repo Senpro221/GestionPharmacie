@@ -1,5 +1,5 @@
 
-@extends('./layouts/app')
+@extends('./layouts/appSuper')
 
 
 @section('page-content')
@@ -13,27 +13,33 @@
         <div class="box">
             <table class="mtable" border="1">
                 <tr>
-                    <th>Nom medicaments</th>
+                    <th>Nom médicaments</th>
                     <th>Quantité en stock</th>
+                    <th>Quantité minimum</th>
                     <th>Date actuelle</th>
                     <th>Date de péremption</th>
                     <th>Action</th>
                 </tr>
                 @foreach($stocks as $stock ) 
-                    <tr>
+                    <tr class="bla">
                         <td>{{ $stock->nom }}</td>
-                        @if ($stock->quantite <= $stock->quantiteMinim)
-                        <td class="text-warning">{{ $stock->quantite }} minimum</td>
+                        @if ($stock->quantiteStock <= $stock->quantiteMinim)
+                        
+                            <td  class="alert alert-warning" role="alert">{{ $stock->quantiteStock }} minimum</td>
+                          
                         @else
-                        <td>{{ $stock->quantite }}</td>
+                        <td>{{ $stock->quantiteStock }}</td>
                         @endif
-
+                        <td>{{ $stock->quantiteMinim }}</td>
                         @php
-                            $date = gmdate('Y-d-m')  
+                            $date = gmdate('d-M-Y');
+                            $current_datetime = Carbon\Carbon::now();
                         @endphp
-                        <td>{{ $date }}</td>
-                        @if ($date >= $stock->dlc)
-                        <td class="text-danger">{{ $stock->dlc }}</td>
+                        <td>{{ $current_datetime }}</td>
+                        
+                        @if ($current_datetime >= $stock->dlc)
+                      
+                       <td class="alert alert-danger" role="alert">{{ $stock->dlc }}</td> 
                         <td>
                         <form action="#" method="POST">
                             @csrf

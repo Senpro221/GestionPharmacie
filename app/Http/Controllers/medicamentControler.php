@@ -24,7 +24,7 @@ class medicamentControler extends Controller
 
     public function index()
     {
-      $medicaments = Medicament::all();
+      $medicaments = Medicament::paginate(5);
       $quantite = null;
        return view('dashboardcl',[
             'medicaments'=>$medicaments,
@@ -49,6 +49,7 @@ class medicamentControler extends Controller
         $medicament->categorie = $request->categorie;
         $medicament->quantite = $request->quantite;
         $medicament->prix_unitaire = $request->prix_unitaire;
+        $medicament->quantite= $request->quantite;
         $medicament->dlc = $request->dlc;
         $medicament->libelle = $request->libelle;
         $medicament->save();
@@ -59,7 +60,7 @@ class medicamentControler extends Controller
        
         DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_medoc) value(?,?,?)',[$quantite,$quantiteMin,$id]);
 
-       return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
+       return redirect()->back()->with('success','Le médicament a été ajouter avec succés');
     }
 
   
@@ -75,16 +76,19 @@ class medicamentControler extends Controller
 
     public function lister()
     {
+      $medicaments = DB::select('select * from stocks,medicaments where medicaments.id = stocks.id_medoc');
       $medicaments = Medicament::paginate(10);
+
       $categorie='';
        return view('medicaments.lister',[
             'medicaments'=>$medicaments,
             'categorie'=>$categorie
        ]);
     }
-//triel douleur fiervre
+//===========================================triel douleur fiervre========================
     public function trieDouleurFievre()
     {
+        
       $medicaments = DB::table('medicaments')->where('categorie', '=' ,'DouleursFievre')->get();
        return view('medicaments.TrieDouleur',[
             'medicaments'=>$medicaments
@@ -182,19 +186,21 @@ class medicamentControler extends Controller
         $medicament->dlc = $request->dlc;
         $medicament->save();
 
-       return redirect('/min')->with('success', 'Medicament a été mise à jour');
+       return redirect('/min')->with('success', 'Le médicament a été mise à jour');
      }
 
 //suppression de medicament
      public function delete(Medicament $medicament)
      {
          $medicament->delete();
-         return redirect('/min')->with('success', 'Medicament a été supprimer avec succée');
+         return redirect('/min')->with('success', 'médicament a été supprimé avec succés');
      }
 
 
      public function commande()
-     {$ma_commande = Commande::find($user_id); $medicament = Medicament::find('3'); // ok
+     {
+        $ma_commande = Commande::find($user_id); 
+        $medicament = Medicament::find('3'); // ok
          return view('commande',[
             'ma_commande'=>$ma_commande
          ]);

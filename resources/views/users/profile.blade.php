@@ -8,7 +8,7 @@
 		<div class="card border border-success shadow p-3 mb-1 bg-white rounded ">
 
 			<div class="card-body">
-					<center><h4 class="text-success">Modifier votre profile!!!</h4></center> 
+					<center><h4 class="text-success">Modifier votre profile !!!</h4></center> 
 				<form action="{{route('registration')}}" method="POST" class="form-product">
 					@method('post')
 					@csrf 
@@ -20,7 +20,7 @@
 		        	</div>
 
 					<div class="form-group">
-						<label for="">Prenom</label>
+						<label for="">Prénom</label>
 						<input type="text"  class="form-control mt-1" value="{{$user->prenom}}">
 		        	</div>
 

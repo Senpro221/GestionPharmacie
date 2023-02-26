@@ -96,7 +96,7 @@
 
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" name="prenom" placeholder="Votre prenom" value="{{ old('prenom')}}">
+                    <input type="text" name="prenom" placeholder="Entrer Votre prénom" value="{{ old('prenom')}}">
 
                     @error('prenom')
                         <div class="text text-danger">
@@ -120,7 +120,7 @@
 
                 <div class="input-field">
                     <i class="fa fa-phone" aria-hidden="true"></i>
-                    <input type="number" name="telephone" placeholder="Votre numéro de téléphone" value="{{ old('telephone')}}">
+                    <input type="number" name="telephone" placeholder="Entrer Votre numéro de téléphone" value="{{ old('telephone')}}">
 
                     @error('telephone')
                         <div class="text text-danger">
@@ -132,7 +132,7 @@
 
                 <div class="input-field">
                     <i class="fa fa-home" aria-hidden="true"></i>
-                    <input type="adress" name="adress" placeholder="Votre adresse" value="{{ old('adress')}}">
+                    <input type="adress" name="adress" placeholder="Entrer Votre adresse" value="{{ old('adress')}}">
 
                     @error('adress')
                         <div class="text text-danger">
@@ -144,7 +144,7 @@
 
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" name="password" placeholder="Password">
+                    <input type="password" name="password" placeholder="Entrer mot de passe">
 
                     @error('password')
                         <div class="text text-danger mt-1">
@@ -184,7 +184,7 @@
             </div>
             <div class="panel right-panel">
                 <div class="content">
-                    <h3>Nouveau chez SUNU PHARMACIE?</h3>
+                    <h3>Nouveau chez SEN PHARMACIE?</h3>
                     <p>Connectez-vous pour bénéficier de tous nos services de mise en relation avec votre pharmacien.</p>
                     <button class="btn" id="sign-up-btn">S'inscrire</button>
                 </div>

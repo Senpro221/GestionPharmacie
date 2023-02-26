@@ -9,8 +9,8 @@
 
 
 
-    <div class="site-blocks-cover inner-page h-2" >  
-        <img src="{{ asset('image/Jauner.png')}}" alt="Image placeholder" class="mb-4" style="width:100%; height:0%">
+    <div class="site-blocks-cover inner-page " style="width:100%;" >  
+        <img src="{{ asset('image/Jauner.png')}}" alt="Image placeholder" class="mb-4" style="width:100%; height: 550px; ">
     </div>
 
     <div class="site-section bg-light custom-border-bottom" data-aos="fade">
@@ -19,7 +19,7 @@
           <div class="col-md-6">
             <div class="block-16">
               <figure>
-                <img src="{{ asset('image/pho.png')}}" alt="Image placeholder" class="img-fluid rounded ">
+                <img src="{{ asset('image/photo.jpg')}}" alt="Image placeholder" class="img-fluid rounded ">
                 <a href="https://vimeo.com/channels/staffpicks/93951774" class="play-button popup-vimeo"><span
                     class="icon-play"></span></a>
     
@@ -31,7 +31,7 @@
     
     
             <div class="site-section-heading pt-3 mb-4">
-              <h2 class="text-black">Comment nous avons commencé</h2>
+              <h2 class="text-black">QUELQUES MOTS POUR NOTRE PLATEFORME</h2>
             </div>
             <p>L’humain et l’innovation au service du bien-être des pharmaciens.</p>            </p>
             <p>L’accès à la plateforme SEN PHARMACIE est strictement réservé aux pharmaciens,aux clients et aux autres professionnels du médicament.
@@ -68,9 +68,9 @@
               <span class="icon-help text-primary"></span>
             </div>
             <div class="text">
-              <h2>Customer Support</h2>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at iaculis quam. Integer accumsan
-                tincidunt fringilla.</p>
+              <h2>La plateforme</h2>
+              <p>Découvrez comment nous pouvons vous aider à distribuer des étiquettes de pharmacie, 
+                à gérer l'approvisionnement et à soutenir la production pharmaceutique..</p>
             </div>
           </div>
         </div>
@@ -82,7 +82,7 @@
       <div class="container">
         <div class="row justify-content-center mb-5">
           <div class="col-md-7 site-section-heading text-center pt-4">
-            <h2>The Team</h2>
+            <h2>L'équipe</h2>
           </div>
         </div>
         <div class="row">
@@ -91,13 +91,12 @@
             <div class="block-38 text-center">
               <div class="block-38-img">
                 <div class="block-38-header">
-                  <img src="{{ asset('image/Jaune2.png')}}" alt="Image placeholder" class="mb-4" style="width:200px; height:200px; clip-path:ellipse(50% 50%); ">
-                  <h3 class="block-38-heading h4">Elizabeth Graham</h3>
-                  <p class="block-38-subheading">CEO/Co-Founder</p>
+                  <img src="{{ asset('image/mad.jpeg')}}" alt="Image placeholder" class="mb-4" style="width:200px; height:200px; clip-path:ellipse(50% 50%); ">
+                  <h3 class="block-38-heading h4">Hawa Thioube</h3>
+                  <p class="block-38-subheading">Développeur</p>
                 </div>
                 <div class="block-38-body">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                    recusandae doloribus ut fugit officia voluptate soluta. </p>
+                  <p>... </p>
                 </div>
               </div>
             </div>
@@ -106,13 +105,12 @@
             <div class="block-38 text-center">
               <div class="block-38-img">
                 <div class="block-38-header">
-                    <img src="{{ asset('image/Jaune2.png')}}" alt="Image placeholder" class="mb-4" style="width:200px; height:200px; clip-path:ellipse(50% 50%); ">
-                    <h3 class="block-38-heading h4">Jennifer Greive</h3>
-                  <p class="block-38-subheading">Co-Founder</p>
+                    <img src="{{ asset('image/moi.png')}}" alt="Image placeholder" class="mb-4" style="width:200px; height:200px; clip-path:ellipse(50% 50%); ">
+                    <h3 class="block-38-heading h4">Ibra Diouf</h3>
+                  <p class="block-38-subheading">Développeur</p>
                 </div>
                 <div class="block-38-body">
-                  <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae aut minima nihil sit distinctio
-                    recusandae doloribus ut fugit officia voluptate soluta. </p>
+                  <p>...</p>
                 </div>
               </div>
             </div>

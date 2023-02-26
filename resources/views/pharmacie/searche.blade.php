@@ -22,7 +22,7 @@
                     <th>Adresse</th>
                     <th>Ville</th>
                     <th>quartier</th>
-                    <th>Telephone</th>
+                    <th>Téléphone</th>
                     <th>Choisir votre pharmacie</th>
                     <th>Action</th>
                 

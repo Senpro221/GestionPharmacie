@@ -3,10 +3,22 @@
 
 @section('page-content')
 
-<div class="site-blocks-cover inner-page" >  
-  <img src="{{ asset('image/Jaune2.png')}}" alt="Image placeholder" class="mb-4" style="width:100%; height:200%;">
-</div>
+<img src="{{ asset('image/home.svg')}}" class="img-fluid mt-4 ms-5" alt="..." style="height: 440px; width: 40%;">
 
+<div class="pos position-absolute  start-60" style="margin-top: -370px;">
+                                                             <pre>                           <span class="tite" style="font-size: 70px; ">  SEN PHARMACIE</span>
+                                           <span class="jeude text-success" style="font-size: 50px;">Nous Contacter</span> 
+                                    </pre>
+  </div> 
+</div>   
+<hr>
+<div class="live bg-success text-white"> 
+  <marquee>
+ <img src="{{ asset('image/livraison.png')}}" width="100" height="40" class="ms mt-1 mb-3 " fill="currentColor" class="bi bi-truck" viewBox="0 0 16 16">
+  <span class="v1 mt-1">Vous pouvez nous contacter sur la plateforme 24/24</span>  
+  </marquee>
+</div>
+  <hr>
     <div class="site-section">
       <div class="container">
         <div class="row">

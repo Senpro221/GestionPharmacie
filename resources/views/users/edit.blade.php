@@ -19,7 +19,7 @@
 		        	</div>
 
 					<div class="form-group">
-						<label for="">Prenom</label>
+						<label for="">Prénom</label>
 						<input type="text"  class="form-control mt-1" name="prenom" value="{{$user->prenom}}">
 
 		        	</div>

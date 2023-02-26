@@ -15,7 +15,7 @@
                     <tr>
                         {{-- <td>{{ $stock->nom }}</td> --}}
                         @if ($stock->quantite <= $stock->quantiteMinim)
-                        <td class="text-dark"><span class="text-dark">{{ $stock->nom }}     ==>    </span> <span class="text-bg-danger p-2"> {{ $stock->quantite }}</span>  <span class="text-dark">Ce médicament a atteint sa quantité seuil </span></td>
+                            <td class="text-dark"><span class="text-dark"><h1></h1>{{ $stock->nom }} </h1>        </span> <span class="text-bg-danger p-2"> {{ $stock->quantite }}</span>  <span class="text-dark">Ce médicament a atteint sa quantité seuil </span></td>
                         @else
                        
                         @endif
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div class="overview-boxes ms-5 mt-2">
+    {{-- <div class="overview-boxes ms-5 mt-2">
         <div class="box">
             <table class="mtable" border="1">
                 <tr>
@@ -52,6 +52,6 @@
                 @endforeach
             </table>
         </div>
-    </div>
+    </div> --}}
 </div>
 @endsection

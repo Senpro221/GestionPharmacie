@@ -36,17 +36,17 @@
           </a>
         </li>
         <li>
-          <a href="#">
+          <a href="{{ route('listeMedicament') }}">
             <i class="bx bx-box"></i>
             <span class="links_name">Medicaments</span>
           </a>
         </li>
-        <li>
-          <a href="{{ route('vente') }}">
+        {{-- <li>
+          <a href="#">
             <i class='bx bx-shopping-bag'></i>
             <span class="links_name">Ventes</span>
           </a>
-        </li>
+        </li> --}}
         <li>
           <a href="{{ route('listesCommandesAll') }}">
             <i class="bx bx-list-ul"></i>
@@ -54,17 +54,12 @@
           </a>
         </li>
         <li>
-          <a href="{{ route('listePharmacie') }}">
+          <a href="{{ route('maPharmacie') }}">
             <i class="bx bx-pie-chart-alt-2"></i>
             <span class="links_name">Pharmacies</span>
           </a>
         </li>
-        <li>
-          <a href="#">
-            <i class="bx bx-coin-stack"></i>
-            <span class="links_name">Stock</span>
-          </a>
-        </li>
+       
        
         <li>
           <a href="{{ route('createUser') }}">
@@ -84,18 +79,19 @@
       <nav>
         <div class="sidebar-button">
           <i class="bx bx-menu sidebarBtn"></i>
-          <span class="dashboard ">Bienvenue {{Auth::user()->prenom}}</span>
+          <span class="dashboard ">Bienvenue {{Auth::user()->prenom}} {{Auth::user()->name}}</span>
         </div>
-        <div class="search-box">
-          <input type="text" placeholder="Recherche..." />
+        <div class="search-box" >
           <i class="bx bx-search"></i>
+          <input type="text" placeholder="Recherche..." />
+          
         </div>
 
         <div class="flex-shrink-0">
            @auth
            <a class="nav-link" href="#">
               <center>
-                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-2.webp"
+                <img src="{{ asset('image/profile.png')}}"
                   alt="Generic placeholder image" class="img-fluid rounded-circle border border-light border-3 me-2"
                   style="width: 50px;">
               </center>

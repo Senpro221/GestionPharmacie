@@ -46,14 +46,12 @@ class UserController extends Controller
         $user->telephone = $request->telephone;
         $user->adress = $request->adress;
         $user->password = Hash::make($request->password);
-
         $user->save();
 
         $user = $user->id;
         $pan=DB::insert('insert into paniers (user_id) values (?)', [$user]);
         
-	
-        return redirect()->back()->with('success','Votre compte a ete creer ');
+        return redirect()->back()->with('success','Votre compte a été créé avec');
     }
 
 
@@ -61,7 +59,7 @@ class UserController extends Controller
     {
         return view('users.registre');
     }
-
+//==================================connexion d'un utilisateur=================================//
     public function handleLogin(Request $request)
     {
        $credentials =  $request->validate([
@@ -72,25 +70,29 @@ class UserController extends Controller
             $request->session()->regenerate();
             session();
             if(Auth::user()->role === 'admin'){
-                return view('admin');
+                return redirect('/admin');
+            }elseif(Auth::user()->role === 'super'){
+                return redirect('/adminSuper');
+                
             }elseif(Auth::user()->statut == '1'){
-                return view('pharmacien');
+                return redirect()->Route('pagePharmacie');
             }else{
                 return redirect('/visiteure');
             }
             
         }else{
-          return redirect()->back()->with('error','login ou mot de passe incorecte');
+          return redirect()->back()->with('error','login ou mot de passe incorrecte');
         }
         
     }
+//======================================deconnexion d'un utilisateur===========================//
     public function logout()
     {
        Session::flush();
        Auth::logout();
        return redirect('login');
     }
-
+//==================================lister les utilisateurs ayant le rols vendeurs==============//
     public function listeUser()
     {
         $users = DB::table('users')->where('role', '=' ,'vendeur')->get();
@@ -101,20 +103,21 @@ class UserController extends Controller
        ]);
     }
 
+//===================================supprimer un compte utilisateur============================//
     public function delete(User $user)
     {
         $user->delete();
-        return back()->with('success', 'user a été supprimer avec succée');
+        return back()->with('success', 'Ce compte a été supprimé avec succée');
     }
 
-        //editer
+//==================================editer compte utilisateur=================================//
         public function edit(User $user)
         {
             return view('users.edit',[
                 'user'=>$user
             ]);
         }
-    //update
+//=================================update profil utilisateur================================//
          public function update(User $user,UserLoginRequest $request)
          {
             $user->name = $request->name;
@@ -123,10 +126,9 @@ class UserController extends Controller
             $user->telephone = $request->telephone;
             $user->adress = $request->adress;
             $user->password = Hash::make($request->password);
-    
             $user->save();
     
-            return redirect('/listeUser')->with('success', 'Medicament a été mise à jour');
+            return redirect('/listeUser')->with('success', 'Ce médicament a été mise à jour');
          }
     
 
@@ -147,7 +149,7 @@ class UserController extends Controller
              $user->password = Hash::make($request->password);
      
              $user->save();
-             return redirect()->back()->with('success','Ajout avec succé  ');
+             return redirect()->back()->with('success','Ajout avec succés  ');
     }
 
         //editer
@@ -161,7 +163,6 @@ class UserController extends Controller
          public function profileupdate(UserLoginRequest $request)
          {
             $request->User()->fill($request->validated());
-
             $request->User()->email_verified_at = null;
             $request->User()->name = $request->name;
             $request->User()->prenom = $request->prenom;
@@ -169,11 +170,10 @@ class UserController extends Controller
             $request->User()->adress = $request->adress;
             $request->User()->telephone = $request->telephone;
             $request->User()->password = $request->password;
-       
 
             $request->user()->save();
 
-        return redirect('profile')->with('status', 'profile-updated');
+        return redirect('profile')->with('success', 'Profile modifié avec succés');
     
   }   
 
@@ -204,7 +204,7 @@ class UserController extends Controller
       $telephone = $request->telephone;
     //==================================INSERTION AU NIVEAU DE LA TABLE PHARMACIE===========//
     DB::insert('insert into pharmacies (nom,telephone,adresse,ville,quartier,rue,user_id) values(?, ?, ?, ?, ?, ?, ?)',[$nom,$telephone,$adresse,$ville,$quartier,$rue,$s]);
-    return redirect()->back()->with('success','Votre compte a ete creer ');
+    return redirect()->back()->with('success','Votre compte a été créé ');
   }
 
   public function Connexionlogin()
@@ -216,7 +216,6 @@ class UserController extends Controller
 
   public function  handleAccesLogin(Request $request)
   {
-
      $credentials =  $request->validate([
           'email'=>['required','email'],
           'password'=> ['required'],
@@ -232,32 +231,26 @@ class UserController extends Controller
            }
           
       }else{
-        return redirect()->back()->with('error','login ou mot de passe incorecte');
+        return redirect()->back()->with('error','login ou mot de passe incorrecte');
       }
 }
 
 
    public function listePharma(){
    
-      $pharmacie=DB::select('select * from users where statut=0 | statut=1');
-      
+      $pharmacie=DB::select('select * from users where statut=0 || statut=1');
       return view('pharmacie.listePharmacie',['pharmacie'=>$pharmacie]);
    }
 
-   public function detailPharmacie(Pharmacie $pharmacie){
-   
-    //$pharmacie=DB::select('select * from users,pharmacies where users.id=pharmacies.user_id and statut=0 | statut=1');
-    
-    return view('pharmacie.DetailsPharmacie',['pharmacie'=>$pharmacie]);
- }
+     public function detailPharmacie(User $user,Pharmacie $pharmacie){
+        // $pharmacie = Pharmacie::all();
+        // $pharmacie=DB::select('select * from users,pharmacies where users.id=pharmacies.user_id and statut=1');  
 
-   public function listePharmacl(){
-   
-    $pharmacie=DB::select('select * from users,pharmacies where users.id=pharmacies.user_id and statut=1');
-    
-    return view('pharmacie.listepharmaCl',['pharmacie'=>$pharmacie]);
- }
-
+        return view('pharmacie.DetailsPharmacie',[
+            'user'=>$user,
+            'pharmacie'=>$pharmacie
+        ]);
+     }
 
    public function statut(Request $request,$id){
       $data = User::find($id);
@@ -267,7 +260,7 @@ class UserController extends Controller
           $data->statut=0;
       }
       $data->save();
-      return redirect('listePharmacie')->with('success','statut has been changed successfully.');
+      return redirect('listePharmacie')->with('success','Ce compte à été activé avec succés.');
    }
 
 }

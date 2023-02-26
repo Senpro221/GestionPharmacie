@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\Models\Pharmacie;
 use App\Http\Requests\AppartenirRequest;
 use App\Models\Panier;
+use App\Models\Commande;
 use App\Models\User;
 use App\Models\Appartenires;
 use Illuminate\Support\Facades\mail;
@@ -16,93 +17,123 @@ use App\Models\Medicament;
 session_start();
 class Connexion extends Controller
 {
-
+//========================methode qui retoune la view commander========
     public function order(Appartenires $app,Request $request)
     {
-      
        return view('order.commande');
     }
+//====================================================
 
     public function pharmaChoice( $id,Request $request)
     {
-      
        $req  = $request->$id;
        return redirect('/');
       
     }
 
+    public function choisirPharmacie($id){
+      $pharma = Pharmacie::find($id);
+      dd($pharma->id);
+  }
+
   public  function detailleComme(Request $request){
-    
     $user = Auth::user()->id;
+    if($request->session()->has('idPharmacie')){
+      $pharma =  session('idPharmacie');
+    //dd($pharma);
     $livraison = $request->typeLivraison;
 
     $pane = DB::select('select id from paniers where user_id =?',[$user]);
 
     $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);
-    
+ 
     foreach($medicament as $medicament){
-        $cb  =  $medicament->prix_unitaire * $medicament->quantites;
-        $id = $medicament->id;
-          
-        DB::insert('insert into commandes (user_id,typeLivraison) values (?,?)', [$user,$livraison]);
+         $id = $medicament->id;
+         $quantites  = $medicament->quantites;
+
+        DB::insert('insert into commandes (user_id,id_pharma,typeLivraison) values (?,?,?)', [$user,$pharma,$livraison]);
          
         $pa = DB::select('select id from commandes where user_id =?',[$user]);
-    
-        DB::insert('insert into orders (id_commande,id_medoc,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$cb]);
+        
+        DB::insert('insert into orders (id_commande,id_medoc,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$quantites]);
 
         $this->updateStock();
 
         //=========================on vide le panier de l'utilisateurs=======================================
         DB::delete('delete from appartenirs where id_panier =?',[$pane[0]->id]);
-       
-      }   
+        
+      } 
+
+    }  
       return view('order.valider');
   }
 
-  public function listerCommandes(){
-    $user = Auth::user()->id;
-    $nom = Auth::user()->prenom;
-    $typeLivraison = DB::select('select typeLivraison from commandes where user_id=?',[$user]);
-    $date = DB::select('select dateCommande from commandes where user_id=?',[$user]);
-
-    $commande = DB::select('select id from commandes where user_id =?',[$user]);
-    if($commande ){
-      $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande=?',[$commande[0]->id]);
-
-        return view('order.listerCommandes',[
-          'listeCom'=>$listeCom,
-          'nom'=>$nom,
-          'date'=>$date,
-          'commande'=>$commande,
-          'typeLivraison'=>$typeLivraison
+  public function listerCommandes(Request $request){
+      $user = null;
+      $nompharma = null;
+       if($request->session()->has('nomPharmacie')){
+        $nompharma =  session('nomPharmacie');
+       
+        $user =  Auth::user()->id;
+       $listeCommande =  DB::select('select * from commandes where  user_id=? ORDER BY dateCommande',[$user]);
+       
+       return view('order.listerCommandes',[
+                  'listeCommande'=>$listeCommande,
+                  'nompharma'=>$nompharma
         ]);
-    }else{
-        $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc');
-
+      }else{
+          $listeCommande =  DB::select('select * from commandes where  user_id=? ORDER BY dateCommande',[$user]);
           return view('order.listerCommandes',[
-            'listeCom'=>$listeCom,
-            'nom'=>$nom,
-            'date'=>$date,
-            'commande'=>$commande,
-            'typeLivraison'=>$typeLivraison
+                  'listeCommande'=>$listeCommande,
+                  'nompharma'=>$nompharma
           ]);
-    }  
+      }
   }
 
 
-  public function listesCommandesAll(){
-    $nomCommande = DB::select('select * from users,commandes where users.id = commandes.user_id');
-    $typeLivraison = DB::select('select typeLivraison from commandes,users where commandes.user_id=users.id');
-    $listeCom =  DB::select('select * from orders,medicaments where medicaments.id=orders.id_medoc and id_commande');
-    $nomCommande = DB::select('select prenom from users,commandes where users.id = commandes.user_id');
+  public function DetailsCommandes($id){
+    $data = Commande::find($id);
+      $detailsCom =  DB::select('select * from orders,medicaments,commandes where medicaments.id=orders.id_medoc and commandes.id=orders.id_commande and id_commande=?',[$data->id]);
+        return view('order.DetailsCommandes',[
+          'detailsCom'=>$detailsCom,
+        ]);
+    
+  }
+
+
+  public function listesCommandesAll(Request $request){
+    
+    $listeCommande =  DB::select('select * from commandes where statut =1  || statut=2');
 
     return view('order.listesCommandesAll',[
-      'listeCom'=>$listeCom,
-      'nomCommande'=>$nomCommande,
-      'typeLivraison'=>$typeLivraison
+      'listeCommande'=>$listeCommande,
+      'request'=>$request
     ]);
     
   }
+
+  public function statutCommande(Request $request,$id){
+    $data = Commande::find($id);
+    //dd($data);
+    if($data->statut==0){
+        $data->statut=1;
+    }else{
+        $data->statut=0;
+    }
+    $data->save();
+    return redirect('listerCommandes')->with('success','Cette commande a été validée avec succée.');
+ }
+
+    public function CommandeLivrer(Request $request,$id){
+      $data = Commande::find($id);
+      if($data->statut==1){
+          $data->statut=2;
+      }else{
+          $data->statut=1;
+      }
+      $data->save();
+      return redirect('listesCommandesAll')->with('success','Cette commande a été livrée.');
+    }
 
     public function index()
     {
@@ -118,12 +149,12 @@ class Connexion extends Controller
     {
       $medicaments = Medicament::all();
         if(Auth::user()->statut == '0'){
-            return redirect()->back()->with('error','votre compte n\'a pas été valider veuillez patienter');
-          }else if(Auth::user()->statut === '1' | Auth::user()->role === 'vendeur'){
+            return redirect()->back()->with('error','Votre compte n\'a pas été validé. Veuillez patienter');
+          }else if(Auth::user()->statut == '1' || Auth::user()->role === 'vendeur'){
             
-            $data = Auth::user()->email;
-            Mail::to($data)->send(new welcomeUsername());
-                 return view('pharmacien');
+            // $data = Auth::user()->email;
+            // Mail::to($data)->send(new welcomeUsername());
+                return redirect()->Route('pagePharmacie');
           }else{
             return view('dashboardcl',compact('medicaments'));
            }
@@ -153,7 +184,7 @@ class Connexion extends Controller
       //return dd($app);
      $app= DB::update('update appartenirs set quantites ='.$request->quantite .' where id_medoc = ?', [$app]);
 
-      return redirect('/basket')->withMessage('quantite mise a jour avec succee');
+      return redirect('/basket')->withMessage('La quantité a été mise à jour avec succés');
      }
 
 //===================suppression de medicament=====================//
@@ -165,7 +196,7 @@ class Connexion extends Controller
       $idApp = DB::select('select id from appartenirs where id_panier = ? and id_medoc=?',[$del[0]->id,$id]);
      // dd($id);
         DB::delete('delete from appartenirs where id =?',[$idApp[0]->id]);
-        return redirect("/basket")->with('success', 'Medicament retiré avec succée');
+        return redirect("/basket")->with('success', 'Médicament retiré avec succés');
     }
 
 //==================vider le panier==============================//

@@ -12,10 +12,6 @@
     </div>
  @endif
       <div class="overview-boxes ms-5 mt-2">
-      
-          
-     
-      <!-- tables -->  
 
         <div class="box">
           <table class="mtable" border="1">
@@ -25,23 +21,19 @@
               <th class="ms-3">Adresse Phamacie</th>
               <th class="ms-3">Ville</th>
               <th class="ms-3">quartier</th>
-              <th class="ms-3">Rue</th>
-              <th class="m-1">Telephone</th>
-
-              
+              <th class="m-1">Telephone</th>              
               <th class="m-2 ms-2">Action</th>
             </tr>
-            <tr>
-                <td><img src="" alt="logo pharmacie"></td>
-                <td class="m-1">{{$pharmacie->nom}}</td>
-                <td class="m-1">{{$pharmacie->adresse}}</td>
-                <td>{{$pharmacie->ville}}</td>
-                <td>{{$pharmacie->quartier}}</td>
-                <td>{{$pharmacie->rue}}</td>
-                <td>{{$pharmacie->telephone}}</td>
-              
-            </tr>
-  
+            {{-- @foreach ($pharmacie as $pharmacie) --}}
+              <tr>
+                <td class="m-1">{{$user->name}}</td>
+                  <td class="m-1">{{$user->nom}}</td>
+                  <td class="m-1">{{$pharmacie->adresse}}</td>
+                  {{-- <td>{{$pharmacie->ville}}</td>
+                  <td>{{$pharmacie->quartier}}</td>
+                  <td>{{$pharmacie->telephone}}</td>   --}}
+              </tr>
+            {{-- @endforeach --}}
         </table>
         </div>
   </div>    

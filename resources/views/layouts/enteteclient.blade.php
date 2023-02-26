@@ -227,10 +227,7 @@
             <a  style="text-decoration:none;" class="dropdown-item" href="/users/{{Auth::user()}}/profile">Mon profile</a>
           </li>
           <li>
-            <a  style="text-decoration:none;" class="dropdown-item" href="#">Settings</a>
-          </li>
-          <li>
-            <a  style="text-decoration:none;" class="dropdown-item" href="{{route('logout')}}">Logout</a>
+            <a  style="text-decoration:none;" class="dropdown-item" href="{{route('logout')}}">Déconnexion</a>
           </li>
         </ul>
       @endauth

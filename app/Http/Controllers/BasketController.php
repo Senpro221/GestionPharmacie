@@ -9,6 +9,7 @@ use App\Models\Medicament;
 use App\Models\Panier;
 use App\Models\Appartenir;
 use App\Models\Produit;
+use App\Models\stock;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
@@ -30,9 +31,8 @@ public function ajoutOrdonnance()
 			"image"=>"string"
     	]);
 		$prod = Produit::all();
-	
 		if($request['quantite'] > $medicament['quantite']) {
-		    return back()->withMessage('La quantite demander n\'est pas disponible');
+		    return back()->withMessage('La quantité demandée n\'est pas disponible');
 	
 		}else{
 			$user = Auth::user()->id;
@@ -42,12 +42,11 @@ public function ajoutOrdonnance()
 			$id = $medicament->id;
 			$quantite=$request->quantite;
 
-		$select = DB::select('select id_panier,id_medoc from appartenirs where id_panier=?
-		 and id_medoc = ?', [$c,$id]);
+		$select = DB::select('select id_panier,id_medoc from appartenirs where id_panier=? and id_medoc = ?', [$c,$id]);
 			   if($select){
 					foreach($select as $sel){
 						if($sel->id_panier = $c){
-						  return back()->withMessage('Produit exist  au panier');
+						  return back()->withMessage('Médicament existe  au panier');
 						}else{
 							$bc = DB::insert('insert into appartenirs (id_panier,quantites,id_medoc) values (?, ?, ?)', [$c,$quantite,$id]);				
 							return back()->withMessage('Produit ajouter au panier');
@@ -55,7 +54,7 @@ public function ajoutOrdonnance()
 					}			
 				}else{
 					$bc = DB::insert('insert into appartenirs (id_panier,quantites,id_medoc) values (?, ?, ?)', [$c,$quantite,$id]);				
-					return back()->withMessage('Produit ajouter au panier');
+					return back()->withMessage('Médicament ajouté au panier');
 								
 				}	
 	        }
@@ -73,7 +72,7 @@ public function ajoutOrdonnance()
 			 $app = DB::select('select * from appartenirs ');
 			
 		
-			$panier=DB::select('select * from paniers ');
+			//$panier=DB::select('select * from paniers ');
 			return view("basket.listpan",[
 				'medicament'=>$medicament,
 				'app'=>$app
@@ -86,10 +85,11 @@ public function ajoutOrdonnance()
 		BasketController::add($medicament,$request);
 		
 	}
-	public function shows(Medicament $medicament)
+	public function shows(Medicament $medicament,stock $stock)
 	{ 	
       return view("medicaments.medoc",[
-        'medicament'=>$medicament
+        'medicament'=>$medicament,
+		'stock'=>$stock
       ]);
 	}
 

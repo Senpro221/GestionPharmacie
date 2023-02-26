@@ -31,8 +31,10 @@
             <label for="nom_medoc">Catégorie</label>
               <select id="categorie"  name="categorie" value="{{$produit->categorie}}" >
                 <option value="huile-de-massage">Huile-de-massage</option>
-                <option value="deodorant">Deodorant</option>
-                <option value="creme-de-peau">Creme-de-peau</option>
+                <option value="deodorant">Déodorant</option>
+                <option value="creme-de-peau">Créme-de-peau</option>
+                <option value="Créme-de-visage">Créme-de-visage</option>
+
               </select>
 
             
@@ -43,14 +45,14 @@
               <input type="number" name="prix_unitaire" value="{{$produit->prix_unitaire}}">
 
               
-              <label for="nom_medoc">Date de peremtion</label>
+              <label for="nom_medoc">Date de peremption</label>
               <input type="datetime-local" name="dlc" id="dlc" placeholder="date" {{$produit->dlc}}>
 
 
-               <label for="nom_medoc">Libelle</label>
+               <label for="nom_medoc">Libellé</label>
               <textarea name="libelle" >{{$produit->libelle}}</textarea>
 
-              <button type="submit" class="btn btn-success mt-1">Editer</button>
+              <button type="submit" class="btn btn-success mt-1">Editer ce produit</button>
 
             </form>
             

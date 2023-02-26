@@ -75,7 +75,7 @@
 
               <label for="nom_medoc">Profil</label>
               <select name="role" id="adresse" >
-                <option value="vendeur">Vemdeur</option>
+                <option value="vendeur">Vendeur</option>
               </select>
               @error('role')
                 <div class="text text-danger">

@@ -16,10 +16,10 @@
           <table class="mtable" border="1">
             <tr class="m-2">
               <th class="ms-5">Nom</th>
-              <th class="ms-5">Prenom</th>
+              <th class="ms-5">Prénom</th>
               <th class="ms-5">Adresse</th>
               <th class="ms-5">Email</th>
-              <th class="m-2">Telephone</th>
+              <th class="m-2">Téléphone</th>
               <th class="m-2">Etat</th>
               <th class="ms-5">statut</th>
               <th class="m-2 ms-2">Pharmacie</th>
@@ -41,13 +41,13 @@
                 <td class="text-align:center;">
                   <a class="btn btn-success ms-1" style="text-decoration:none; "
                    href="{{ route('statut',['id'=>$pharma->id]) }}">
-                    @if ($pharma->statut == 1) desactiver
-                    @else Activer @endif
+                    @if ($pharma->statut == 1) desactivé
+                    @else Activé @endif
                   </a>
                 </td>
                 <td class="text-align:center;">
-                  <a href="{{ route('detailPharmacie',$pharma->id,) }}" 
-                    class="btn btn-outline-success">Details</a>
+                  <a href="{{ route('detailPharmacie',$pharma->id) }}" 
+                    class="btn btn-outline-success">Détails</a>
                 </td>
             
             </tr>

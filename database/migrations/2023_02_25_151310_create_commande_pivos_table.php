@@ -13,14 +13,15 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('paniers', function (Blueprint $table) {
+        Schema::create('commande_pivos', function (Blueprint $table) {
             $table->id();
-            
-            $table->unsignedBigInteger('user_id');
-          //  $table->date('date');
+            $table->unsignedBigInteger('id_prod');
+            $table->unsignedBigInteger('id_commande');
+            $table->integer('quantite');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('id_prod')->references('id')->on('produits');
+            $table->foreign('id_commande')->references('id')->on('commandes');
+       
         });
     }
 
@@ -31,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('panier');
+        Schema::dropIfExists('commande_pivos');
     }
 };

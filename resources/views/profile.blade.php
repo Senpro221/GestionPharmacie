@@ -4,13 +4,13 @@
 
 <body>
 <div class="row">
-	<div class="col-md-2" ></div>
-	<div class="col-md-8 mt-1">
+	<div class="col-md-4 mt-2" ></div>
+	<div class="col-md-4 mt-2">
 	@if (session()->has('success'))
-              <div class="alert alert-success">
-                {{session()->get('success')}}
-              </div>
-           @endif
+         <div class="alert alert-success">
+            {{session()->get('success')}}
+        </div>
+    @endif
 		<div class="card border border-success shadow p-3 mb-1 bg-white rounded ">
 
 			<div class="card-body">

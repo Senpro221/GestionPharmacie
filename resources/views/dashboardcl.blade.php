@@ -15,7 +15,7 @@
                                 de produits  pharmaceutique  entre pharmaciens et clients     </span>                
                                 <hr>                    
                                                         <span class="tite">  AVEC SEN PHARMACIE</span>
-                                          <span class="jeude text-success">Moins de médicament périmés un impact 
+                                          <span class="jeude text-success">Moins de médicaments périmés, un impact 
                                                     sur l'environnement limité</span> 
         </pre>
       </div> 
@@ -38,7 +38,7 @@
     <p
     {{-- {{  $quantite = $medicament->quantite ===0 ?'Indisponible':'Disponible' }} 
      --}}
-    @if($medicament->quantite === 0 )
+    @if($medicament->quantiteStock === 0 )
         <span class="alert alert-danger p-1 mb-3 ms-0 w-1">Indisponible</span>
     @else
     <span class="alert alert-success p-1 mb-3 ms-1 w-1">En stock</span>
@@ -54,14 +54,15 @@
 
 @endforeach
 
-  <div class='voire float-lg-start mt-2 ms-9 mb-2'>
+  <div class='voire float-lg-start mt-5 ms-9 mb-2'>
       <button class="btn btn-outline-success fs-3 fw-bold">Voire tous les Médicaments</button>
   </div>
 <hr>
   <div class='voires float-lg-start mt-5 ms-9 mb-2'>
-      <h1 class=" fs-3 fw-bold">Nos Produits</h1>
+      {{-- <h1 class=" fs-3 fw-bold">Nos Produits</h1> --}}
   </div>
 </div>
+{{$medicaments->links()}}
 @endsection
 </body>
 </html>

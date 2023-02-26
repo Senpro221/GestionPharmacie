@@ -12,7 +12,7 @@
         <input type="text" class="form-control" name="nom">
     </div>
     <div class="col-md-6">
-        <label for="inputPassword4" class="form-label">Prenom<span class="text-danger">*</span></label>
+        <label for="inputPassword4" class="form-label">Prénom<span class="text-danger">*</span></label>
         <input type="text" class="form-control" name="prenom">
     </div>
     <div class="col-12">

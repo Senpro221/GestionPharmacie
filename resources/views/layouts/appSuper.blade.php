@@ -30,18 +30,41 @@
           </a>
         </li>
         <li>
+          <a href="/min">
+            <i class="bx bx-box active"></i>
+            <span class="links_name">Médicaments</span>
+          </a>
+        </li>
+        {{-- <li>
+          <a href="#">
+            <i class='bx bx-shopping-bag'></i>
+            <span class="links_name">Ventes</span>
+          </a>
+        </li>
+        <li>
+          <a href="#">
+            <i class="bx bx-list-ul"></i>
+            <span class="links_name">Commandes</span>
+          </a>
+        </li> --}}
+        {{-- <li>
           <a href="{{ route('listePharmacie') }}">
             <i class="bx bx-pie-chart-alt-2"></i>
             <span class="links_name">Pharmacies</span>
           </a>
-        </li>
-       
+        </li> --}}
         <li>
-          <a href="{{route('allUser')}}">
-            <i class="bx bx-user"></i>
-            <span class="links_name">Utilisateur</span>
+          <a href="{{ route('stock') }}">
+            <i class="bx bx-coin-stack"></i>
+            <span class="links_name">Stock</span>
           </a>
         </li>
+        <!-- <li>
+          <a href="#">
+            <i class="bx bx-book-alt"></i>
+            <span class="links_name">Tout les commmandes</span>
+          </a>
+        </li> -->
        
         <li class="log_out">
           <a href="{{route('logout')}}">
@@ -55,7 +78,7 @@
       <nav>
         <div class="sidebar-button">
           <i class="bx bx-menu sidebarBtn"></i>
-          <span class="dashboard ">Page administrateur</span>
+          <span class="dashboard ">Dashboard</span>
         </div>
         <div class="search-box">
           <input type="text" placeholder="Recherche..." />

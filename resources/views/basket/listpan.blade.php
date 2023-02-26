@@ -18,7 +18,7 @@
 			<thead class="thead-dark" >
 				<tr>
 					<th style="widht:45px; height:45px;">&#x1F6CD;</th>
-					<th>Medicament</th>
+					<th>Médicament</th>
 					<th>Prix</th>
 					<th>Quantité</th>
 					<th>Total</th>

@@ -14,7 +14,7 @@
      
          <div class="box">
            <div style="width: 450px;">
-           <form action="{{ route('creation') }}" method="POST">
+           <form action="{{ route('creationSuperPharmacie') }}" method="POST">
             <h2 class="text-success">Ajouter Un Utitilisateur</h2>
             <hr>
            @csrf
@@ -74,7 +74,7 @@
 
              <label for="nom_medoc">Profil</label>
              <select name="role" id="adresse" >
-               <option value="vendeur">vendeur</option>
+               <option value="super">super</option>
              </select>
              @error('role')
                <div class="text text-danger">

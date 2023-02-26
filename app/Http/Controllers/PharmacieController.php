@@ -16,10 +16,23 @@ use DB;
 use App\Http\Requests\pharmaLoginRequest;
 class PharmacieController extends Controller
 {
+    
+    public function listeMedicament()
+    {
+        $medicaments = Medicament::all();
+
+       return view('pharmacie.medicament',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+  
 
     public function pagePharmacie()
     {
-        return view('pharmacien');
+        $pharma = Pharmacie::all();
+        
+        return view('pharmacien',compact('pharma'));
     }
 
     public function contact()
@@ -36,13 +49,11 @@ class PharmacieController extends Controller
     public function alertMedoc(Request $request,$id){
          
         $medicaments = Medicament::all();
-       // dd($request->quantite);
         return view('medicaments.alertMedoc',[
             'medicaments'=>$medicaments
 
        ]);
     }
-
 
 
     public function store(Medicament $medicament,stock $stock,medicamentRequest $request)
@@ -66,6 +77,65 @@ class PharmacieController extends Controller
         //print_r ( $pharma->id);exit();
         DB::insert('insert into stocks (quantiteStock,quantiteMinim,id_pharma,id_medoc) value(?,?,?,?)',[$quantite,$quantiteMin,$pharma->id,$id]);
 
-       return redirect()->back()->with('success','Le médicament à été ajouter avec succée');
+       return redirect()->back()->with('success','Le médicament a été ajouter avec succée');
     }
+
+    public function listePharmacl(){
+    
+        $pharmacie=DB::select('select * from users,pharmacies where users.id=pharmacies.user_id and statut=1');  
+        //DB::select('select * from pharmacies where statut=1');
+            return view('pharmacie.listepharmaCl',['pharmacie'=>$pharmacie]);
+        }
+
+        public function choisirPharmacie(Request $request,$id){
+            $pharma = Pharmacie::find($id);
+            session(['idPharmacie'=>$pharma->id]);
+            session(['nomPharmacie'=>$pharma->nom]);
+
+            return redirect('/');
+            
+        }
+
+        public function maPharmacie(Request $request)
+        {
+            if($request->session()->has('idPharmacie')){
+                $pharma =  session('idPharmacie');
+               $pharmacie = DB::select('select * from pharmacies where id = ?', [$pharma]);
+
+                return view('pharmacie.maPharmacie',compact('pharmacie'));
+            }
+        }
+        //==================================editer compte utilisateur=================================//
+        public function editPharmacie(Pharmacie $pharmacie)
+        {
+            return view('pharmacie.edit',[
+                'pharmacie'=>$pharmacie
+            ]);
+        }
+//=================================update pharmacie================================//
+         public function updatePharmacie(Pharmacie $pharmacie,Request $request)
+         {
+            $pharmacie->nom = $request->nom;
+            $pharmacie->telephone = $request->telephone;
+            $pharmacie->adresse = $request->adresse;
+            $pharmacie->ville = $request->ville;
+            $pharmacie->quartier = $request->quartier;
+            $pharmacie->save();
+    
+            return redirect('/maPharmacie')->with('success', 'Information  mise à jour');
+         }
+
+          //lister produit
+		   public function listerProduitPharma(Request $request)
+		   {
+			 $user = Auth::user()->id;
+             $pharma = DB::select('select id from pharmacies where user_id = ?', [$user]);
+				$produits = DB::select('select * from produits where id_pharma = ?', [$pharma[0]->id]);
+			 //dd($produits);
+                return view('Produits.listerProduitPharma',[
+				   'produits'=>$produits
+	   
+			  ]);
+			
+		   }
 }

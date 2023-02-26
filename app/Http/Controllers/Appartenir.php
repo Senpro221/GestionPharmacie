@@ -13,7 +13,6 @@ class Appartenir extends Controller
 			foreach($panier as $pan)
 			$c = $pan->id;
 			
-
 			$user = Auth::user()->id;	
 			$id = $medicament->id;
 			$quantite=$request->quantite;

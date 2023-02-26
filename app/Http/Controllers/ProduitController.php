@@ -11,24 +11,37 @@ use App\Models\Medicament;
 use App\Models\Panier;
 use App\Models\User;
 use App\Models\Possede;
+use App\Models\Commande;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 class ProduitController extends Controller
 {
 //===================commande produit==========================/
  
-	public function index()
+	public function index(Request $request)
     {
-        $produits = Produit::all();
-
+		$user = Auth::user()->id;
+		$produits = DB::select('select id from pharmacies where user_id = ?', [$user]);
+	   
+        //$produits = Produit::all();
+		// if($request->session()->has('idPharmacie')){
+		// 	$pharma =  session('idPharmacie');
+		
+			$produits= DB::select('select * from produits where id_pharma =?',[$produits[0]->id]);
+			//dd($phar);
        return view('Produits.produit',[
-            'produits'=>$produits
-
+            'produits'=>$produits,
+			//'pharmacie' =>$pharmacie
        ]);
+	//}
     }
+	
 
     public function store(Produit $produit, ProduitRequest $request)
     {
+		if($request->session()->has('idPharmacie')){
+			$pharma =  session('idPharmacie');
+		  //dd($pharma);
        $produit::create([
             'nom'=>$request->nom,
             'image'=>$request->image,
@@ -37,9 +50,11 @@ class ProduitController extends Controller
             'prix_unitaire'=>$request->prix_unitaire,
             'dlc'=>$request->dlc,
             'libelle'=>$request->libelle,
-            'user_id'=>Auth::id()
+            'id_pharma'=>$pharma
        ]);
-       return redirect()->back()->with('success','Le produit à été ajouter avec succée');
+		
+	}
+       return redirect()->back()->with('success','Le produit a été ajouté avec succés');
     }
     # Affichage du panier
     public function show (Produit $produit) {
@@ -60,7 +75,7 @@ class ProduitController extends Controller
 
 
 		if($request['quantite'] > $produit['quantite']) {
-		    return back()->withMessage('La quantite demander n\'est pas disponible');
+		    return back()->withMessage('La quantité demandée n\'est pas disponible');
 		}else{
 			$user = Auth::user()->id; 
 			//=================id_panier de l'utilisateur connecter============================
@@ -80,12 +95,12 @@ class ProduitController extends Controller
 							return back()->withMessage('Produit exist  au panier');
 							}else{
 								$bc = DB::insert('insert into possedes (id_panier,quantites,id_prod) values (?, ?, ?)', [$c,$quantite,$id]);				
-								return back()->withMessage('Produit ajouter au panier');
+								return back()->withMessage('Produit ajouté au panier');
 							}
 						}			
 			}else{
 				$bc = DB::insert('insert into possedes (id_panier,quantites,id_prod) values (?, ?, ?)', [$pane[0]->id,$quantite,$id]);				
-				return back()->withMessage('Produit ajouter au panier');
+				return back()->withMessage('Produit ajouté au panier');
 							
 			}
 
@@ -127,7 +142,7 @@ class ProduitController extends Controller
 			$produit->libelle = $request->libelle;
 
 			$produit->save();
-			return redirect('ajout')->with('success', 'Produit a été mise à jour');
+			return redirect('ajout')->with('success', 'Le produit a été mise à jour');
    		}
 
 		public function pharmaDetaile(User $pharmacie)
@@ -165,14 +180,14 @@ class ProduitController extends Controller
 			$quant= $request->quantite;
 
 			$ap= DB::update('update possedes set quantites ='.$request->quantite .' where id_prod = ?', [$request->id]);
-			return back()->with('success','La quantite demander est disponible');
+			return back()->with('success','La quantité demandée est disponible');
 
 		}
  //suppression de produit
 		public function deleteProduit(Produit $produit)
 		{
 			$produit->delete();
-			return redirect('/ajout')->with('success', 'Produit a été supprimer avec succée');
+			return redirect('/ajout')->with('success', 'Le produit a été supprimé avec succés');
  		}
 //===================suppression de produit dans LE panier=====================//
 		public function delete(Request $request,$id)
@@ -180,18 +195,28 @@ class ProduitController extends Controller
 		$app =$request->id;
 		//return dd($app);
 		DB::delete('delete from possedes where id_prod =?',[$app]);
-		return back()->with('success', 'Produit retiré avec succée');
+		return back()->with('success', 'Le produit  à été retiré avec succés');
 		}
 
 		   //lister produit
-		   public function lister()
+		   public function lister(Request $request)
 		   {
-			 $produits = Produit::paginate(10);
-	   
-			  return view('Produits.lister',[
-				   'produits'=>$produits
-	   
-			  ]);
+			$pharma=null;
+				// $produits = Produit::paginate(10);
+				if($request->session()->has('idPharmacie')){
+					$pharma =  session('idPharmacie');
+					$produits = DB::select('select * from produits where id_pharma = ?', [$pharma]);
+					return view('Produits.lister',[
+						'produits'=>$produits
+			
+					]);
+				}else{
+					$produits = DB::select('select * from produits where id_pharma = ?', [$pharma]);
+					return view('Produits.lister',[
+						'produits'=>$produits
+			
+					]);
+				}
 		   }
 //==================================lister deo et parfun=====================================//
 			public function listerparfums()
@@ -244,57 +269,81 @@ class ProduitController extends Controller
 //==============================commander un produit======================	
 		   public function commandeProd(Possede $app,Request $request)
 		   {
-			 
 			  return view('order.commandeProd');
 		   }
 	   
 		 public  function detailleCommandeProd(Request $request){
 		   
-		   $user = Auth::user()->id;
-		   $livraison = $request->typeLivraison;
-	   
-		   $pane = DB::select('select id from paniers where user_id =?',[$user]);
-	   
-		   $produit=DB::select('select * from possedes,produits where produits.id = possedes.id_prod and id_panier=?',[$pane[0]->id]);
-			 foreach($produit as $produit){
-			   $cb  =  $produit->prix_unitaire * $produit->quantites;
+			$user = Auth::user()->id;
+			if($request->session()->has('idPharmacie')){
+			  $pharma =  session('idPharmacie');
+			//dd($pharma);
+			$livraison = $request->typeLivraison;
+		
+			$pane = DB::select('select id from paniers where user_id =?',[$user]);
+		
+			$produit=DB::select('select * from possedes,produits where produits.id = possedes.id_prod and id_panier=?',[$pane[0]->id]);
+		  foreach($produit as $produit){
+			 $quantites  = $produit->quantites;
 			   $id = $produit->id;
-				 
-			   DB::insert('insert into commandes (user_id,typeLivraison) values (?,?)', [$user,$livraison]);
-				
+			   DB::insert('insert into commandes (user_id,id_pharma,typeLivraison) values (?,?,?)', [$user,$pharma,$livraison]);
+         
 			   $pa = DB::select('select id from commandes where user_id =?',[$user]);
-		   
-			   DB::insert('insert into orders (id_commande,id_prod,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$cb]);
-	   //=========================on vide le panier de l'utilisateurs=======================================
+			   
+			   DB::insert('insert into commande_pivos (id_commande,id_prod,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$quantites]);
+	   
+			   $this->updateStock();
+	   
+			   //=========================on vide le panier de l'utilisateurs=======================================
 			   DB::delete('delete from possedes where id_panier =?',[$pane[0]->id]);
-			  
+		 
 			 }   
 			 return view('order.validerCommandeProd');
 		 }	  
-		 
-		 public function listerCommandesProd(){
-			$user = Auth::user()->id;
-			$nom = Auth::user()->prenom;
-			$commande = DB::select('select id from commandes where user_id =?',[$user]);
-		 if($commande ){
-		   $listeCom =  DB::select('select * from orders,produits,commandes where produits.id=orders.id_prod and commandes.id=orders.id_commande and id_commande=?',[$commande[0]->id]);
-		   return view('order.listerCommandesProd',[
-			'listeCom'=>$listeCom,
-			'nom'=>$nom,
-		 
-		  ]);
-		
-		}else{
-			$listeCom =  DB::select('select * from orders,produits,commandes where produits.id=orders.id_prod and commandes.id=orders.id_commande');
-
-			 return view('order.listerCommandesProd',[
-			   'listeCom'=>$listeCom,
-			   'nom'=>$nom,
-			
-			 ]);
-			   
 		}
+
+		public function listerCommandesProd(Request $request){
+			
+			$nompharma = null;
+			$user = null;
+			if($request->session()->has('nomPharmacie')){
+				$nompharma =  session('nomPharmacie');
+				//dd($nompharma);
+				$user =  Auth::user()->id;
+				$listeCommande =  DB::select('select * from commandes where  user_id=? ORDER BY dateCommande',[$user]);
+					return view('order.listerCommandesProd',[
+				'listeCommande'=>$listeCommande,
+				'nompharma'=>$nompharma
+
+				]);
+			}else{
+				$listeCommande =  DB::select('select * from commandes where  user_id=? ORDER BY dateCommande',[$user]);
+					return view('order.listerCommandesProd',[
+					'listeCommande'=>$listeCommande,
+					'nompharma'=>$nompharma
+					]);
+			}  
+		
 	}
+
+	public function DetailsCommandesProd($id){
+		$data = Commande::find($id);
+		  $detailsCom =  DB::select('select * from commande_pivos,produits,commandes where produits.id=commande_pivos.id_prod and commandes.id=commande_pivos.id_commande and id_commande=?',[$data->id]);
+			return view('order.DetailsCommandesProd',[
+			  'detailsCom'=>$detailsCom,
+			]);
+		
+	  }
+	
+
+	private function updateStock(){
+		$app =  DB::select('select * from possedes,produits where possedes.id_prod=produits.id');
+	   
+		foreach($app as $pa){
+		  DB::update('update produits set quantite = '. $pa->quantite - $pa->quantites.' where id = ?', [$pa->id]);
+		  
+		 }
+	   }
 }
 
 

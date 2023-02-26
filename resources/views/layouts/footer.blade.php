@@ -76,9 +76,7 @@
           <p>
             <a href="#!" class="text-reset">Vues</a>
           </p>
-          <p>
-            <a href="#!" class="text-reset">Help</a>
-          </p>
+          
         </div>
         <!-- Grid column -->
 

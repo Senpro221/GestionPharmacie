@@ -125,7 +125,7 @@ $user = Auth::user()->id;
             <a style="text-transform: uppercase;" class="nav-link active mt-2" href="/apropos">A propos</a></li>
           </li>
           <li class="nav-item">
-            <a style="text-transform: uppercase;" class="nav-link active mt-2" href="/contact">Contact</a></li>
+            <a style="text-transform: uppercase;" class="nav-link active mt-2" href="/contact">Contacts</a></li>
           </li>
   
       </ul>
@@ -157,9 +157,6 @@ $user = Auth::user()->id;
         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownMenuButton">
         <li>
             <a  style="text-decoration:none;" class="dropdown-item" href="/users/{{Auth::user()}}/profile">Mon profile</a>
-          </li>
-          <li>
-            <a  style="text-decoration:none;" class="dropdown-item" href="#">Settings</a>
           </li>
           <li>
             <a  style="text-decoration:none;" class="dropdown-item" href="{{route('logout')}}">Logout</a>
