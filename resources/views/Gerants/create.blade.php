@@ -104,7 +104,7 @@
 
             </tr>
              @forelse($users as $user)
-              {{-- @if(Auth::user()->id===$medicament->user_id) --}}
+             
             <tr>
             
                 <td>{{$user->name}}></td>
@@ -123,9 +123,7 @@
                </td>
    
             </tr>
-                {{-- @else 
-              @endif --}}
-      
+            
            @empty
 
         @endforelse

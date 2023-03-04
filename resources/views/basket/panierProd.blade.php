@@ -1,5 +1,5 @@
 
-@extends('./../layouts/enteteclient')
+@extends('./../layouts/entete')
 
 @section('page-content')
 
@@ -16,7 +16,7 @@
 			<thead class="thead-dark" >
 				<tr>
 					<th>#</th>
-					<th>Médicament</th>
+					<th>Produits</th>
 					<th>Prix</th>
 					<th>Quantité</th>
 					<th>Total</th>

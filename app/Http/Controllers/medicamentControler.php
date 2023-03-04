@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\medicamentRequest;
 use App\Models\Medicament;
 use App\Models\stock;
+use App\Models\User;
 use App\Http\Controllers\Commande;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\medicamentControler;
@@ -16,7 +17,7 @@ class medicamentControler extends Controller
 
     public function indexVisiteur()
     {
-      $medicaments = Medicament::paginate(5);
+      $medicaments = Medicament::paginate(7);
        return view('dashboardcl',[
             'medicaments'=>$medicaments,   
        ]);
@@ -24,7 +25,7 @@ class medicamentControler extends Controller
 
     public function index()
     {
-      $medicaments = Medicament::paginate(5);
+      $medicaments = Medicament::paginate(7);
       $quantite = null;
        return view('dashboardcl',[
             'medicaments'=>$medicaments,
@@ -76,7 +77,7 @@ class medicamentControler extends Controller
 
     public function lister()
     {
-      $medicaments = DB::select('select * from stocks,medicaments where medicaments.id = stocks.id_medoc');
+      $medicaments = DB::select('select * from stocks,medicaments where medicaments.id = stocks.id_medoc and statut=1');
       $medicaments = Medicament::paginate(10);
 
       $categorie='';
@@ -257,6 +258,16 @@ class medicamentControler extends Controller
         //]);
     }
     
-    
+    public function statutmedicaments(Request $request,$id){
+        $data = Medicament::find($id);
+        //dd($id);
+        if($data->statut==0){
+            $data->statut=1;
+        }else{
+            $data->statut=0;
+        }
+        $data->save();
+        return redirect('stock')->with('success','Ce médicament,ent à été desactivé avec succés.');
+     }
     
 }

@@ -47,10 +47,13 @@
  @auth
 <?php 
 $user = Auth::user()->id;
+ $panes = DB::select('select id from paniers where user_id = ?',[$user]);
+  $s=DB::table('possedes')->where('id_panier',$panes[0]->id)->count();
+
 //=================id_panier de l'utilisateur connecter============================
   $pane = DB::select('select id from paniers where user_id = ?',[$user]);
   $c=DB::table('appartenirs')->where('id_panier',$pane[0]->id)->count(); ?>
- {{ $c }}
+ {{ $c+$s }}
  
    @endauth 
 
@@ -159,7 +162,7 @@ $user = Auth::user()->id;
             <a  style="text-decoration:none;" class="dropdown-item" href="/users/{{Auth::user()}}/profile">Mon profile</a>
           </li>
           <li>
-            <a  style="text-decoration:none;" class="dropdown-item" href="{{route('logout')}}">Logout</a>
+            <a  style="text-decoration:none;" class="dropdown-item" href="{{route('logout')}}">Déconnexion</a>
           </li>
         </ul>
       @endauth

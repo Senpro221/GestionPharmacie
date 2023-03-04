@@ -53,12 +53,7 @@
             <span class="links_name">Pharmacies</span>
           </a>
         </li> --}}
-        <li>
-          <a href="{{ route('stock') }}">
-            <i class="bx bx-coin-stack"></i>
-            <span class="links_name">Stock</span>
-          </a>
-        </li>
+        
         <!-- <li>
           <a href="#">
             <i class="bx bx-book-alt"></i>

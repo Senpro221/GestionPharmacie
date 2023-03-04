@@ -19,9 +19,19 @@ class PharmacieController extends Controller
     
     public function listeMedicament()
     {
-        $medicaments = Medicament::all();
+        $medicaments = DB::select('select * from stocks,medicaments where medicaments.id  = stocks.id_medoc');
 
        return view('pharmacie.medicament',[
+            'medicaments'=>$medicaments
+
+       ]);
+    }
+
+    public function listeMedicamentVendeure()
+    {
+        $medicaments = DB::select('select * from stocks,medicaments where medicaments.id  = stocks.id_medoc');
+
+       return view('pharmacie.medicamentVendeur',[
             'medicaments'=>$medicaments
 
        ]);
@@ -47,7 +57,9 @@ class PharmacieController extends Controller
     }
 
     public function alertMedoc(Request $request,$id){
-         
+         //dd($id);
+         session(['idmedoc'=>$id]);
+
         $medicaments = Medicament::all();
         return view('medicaments.alertMedoc',[
             'medicaments'=>$medicaments
@@ -128,8 +140,9 @@ class PharmacieController extends Controller
           //lister produit
 		   public function listerProduitPharma(Request $request)
 		   {
-			 $user = Auth::user()->id;
-             $pharma = DB::select('select id from pharmacies where user_id = ?', [$user]);
+			 $user = Auth::user()->id; 
+             $vente = Auth::user()->role;
+             $pharma = DB::select('select pharmacies.id,role from pharmacies,users where user_id = ? || role=?', [$user,$vente]);
 				$produits = DB::select('select * from produits where id_pharma = ?', [$pharma[0]->id]);
 			 //dd($produits);
                 return view('Produits.listerProduitPharma',[
@@ -138,4 +151,84 @@ class PharmacieController extends Controller
 			  ]);
 			
 		   }
+
+           
+           public function vendreEspacePharmacies($id)
+           {
+            $medicament = DB::select('select * from medicaments  where id=?',[$id]);
+            return view('vendeurs.vendreEspacePharmacies',compact('medicament'));
+           }
+
+
+           public function stockupdateVenteParma(Request $request,$id){
+             $user = Auth::user()->id;
+             $quantiteVendue  = $request->quantite;
+             DB::insert('insert into vendres (user_id,id_medoc,quantiteVendue) values (?, ?, ?)', [$user,$id,$quantiteVendue]);
+              $app =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id');
+              $stocks =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id');
+             // dd($app[0]->quantite);
+              foreach($app as $pa){
+                //dd($pa->quantiteStock);
+                DB::update('update medicaments set quantite = '.$pa->quantite - $request->quantite.' where id = ?', [$pa->id]);
+               
+                 
+                DB::update('update stocks set quantiteStock = '.$pa->quantiteStock - $request->quantite.' where id_medoc = ?', [$pa->id_medoc]);
+          
+                }
+               
+               return redirect()->Route('listeMedicament')->with('success','médicament vendu avec succés');
+            }
+
+
+
+           public function vendre($id)
+           {
+            $medicament = DB::select('select * from medicaments  where id=?',[$id]);
+            return view('vendeurs.vendre',compact('medicament'));
+           }
+
+           public function stockupdate(Request $request,$id){
+
+           // dd($id);
+            $user = Auth::user()->id;
+            $quantiteVendue  = $request->quantite;
+            DB::insert('insert into vendres (user_id,id_medoc,quantiteVendue) values (?, ?, ?)', [$user,$id,$quantiteVendue]);
+             $app =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id');
+             $stocks =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id');
+            // dd($app[0]->quantite);
+             foreach($app as $pa){
+               //dd($pa->quantiteStock);
+               DB::update('update medicaments set quantite = '.$pa->quantite - $request->quantite.' where id = ?', [$pa->id]);
+              
+                
+               DB::update('update stocks set quantiteStock = '.$pa->quantiteStock - $request->quantite.' where id_medoc = ?', [$pa->id_medoc]);
+         
+               }
+              
+              return redirect()->Route('listeMedicamentVendeure')->with('success','médicament vendu avec succés');
+           }
+
+          
+           public function ajoutMedoc($id)
+           {
+           // dd($id);
+            session(['medoc'=>$id]);
+
+            $stock =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id and id_medoc=?',[$id]);
+                return view('stock.aupdateQuantite',compact('stock'));
+           }
+
+           public function mettreAjour(Request $request ,$id)
+           {
+            //dd($id);
+            if($request->session()->has('idPharmacie')){
+                $pharma =  session('idPharmacie');
+                $medoc= session('medoc');
+                //dd($medoc);
+                DB::update('update stocks set quantiteStock ='.$request->quantite.', quantiteMinim ='.$request->quantiteMinim.' ,id_pharma = '.$pharma.' where id_medoc= ?',[$medoc]);
+                return redirect()->Route('stock')->with('success','Stock mise à jour avec succés');
+
+           
+            }
+           }
 }

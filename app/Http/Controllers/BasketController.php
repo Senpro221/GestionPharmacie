@@ -17,14 +17,19 @@ use Illuminate\Support\Facades\DB;
 class BasketController extends Controller
 {
 	
-public function ajoutOrdonnance()
+public function ajoutOrdonnance(Request $request)
 {
-	//DB::insert('insert into commandes (image) values (?, ?)', [1, 'Dayle']);
-}
+       dd($request->quantite);
+	//dd($request->ordonnace);
+	session(['quantite'=>$request->quantite]);
+	session(['ordonance'=>$request->ordonnace]);
+	}//DB::insert('insert into commandes (image) values (?, ?)', [1, 'Dayle']);
+
 
     # Ajout d'un produit au panier
     public  function add(Medicament $medicament, Request $request) {
 		$count=0;
+		//$this->ajoutOrdonnance($request);
     	// Validation de la requête
     	$this->validate($request, [
     		"quantite" => "numeric|min:1",
@@ -60,36 +65,55 @@ public function ajoutOrdonnance()
 	        }
 		}
 
-		public function show()
+		public function show(Request $request)
 		{
 			 $user = Auth::user()->id; 
+			 
 			//=================id_panier de l'utilisateur connecter============================
-			 $pane = DB::select('select id from paniers where user_id =?'
-			 ,[$user]);
-			
+			 $pane = DB::select('select id from paniers where user_id =?',[$user]);
+			 if($request->session()->has('nomPharmacie')){
+				
+				$pharma = session('idPharmacie');
 			//print_r ($pane[0]->id);exit();
-			 $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);
+			 $medicament=DB::select('select * from appartenirs,medicaments,stocks where medicaments.id = appartenirs.id_medoc and id_panier=? and id_pharma=?',[$pane[0]->id,$pharma]);
 			 $app = DB::select('select * from appartenirs ');
 			
+			//=================id_panier de l'utilisateur connecter============================
+		
+			 $paniers=DB::select('select * from possedes,produits where produits.id = possedes.id_prod and id_panier=? and id_pharma=?',[$pane[0]->id,$pharma]);
+			 $appProd = DB::select('select * from possedes ');
+
 		
 			//$panier=DB::select('select * from paniers ');
 			return view("basket.listpan",[
 				'medicament'=>$medicament,
-				'app'=>$app
+				'app'=>$app,
+				'paniers'=>$paniers,
+				'appProd'=>$appProd
 				
-			]); 
-		}
+			]);
+		}else{
+			$medicament=null;
+			$paniers=null;
 
+			return view("basket.listpan",[
+				'medicament'=>$medicament,
+				'paniers'=>$paniers,
+				
+			]);
+		}
+	}
 	public function retour(Medicament $medicament,Request $request)
 	{
 		BasketController::add($medicament,$request);
 		
 	}
-	public function shows(Medicament $medicament,stock $stock)
+	public function shows(Medicament $medicament,stock $stock,Request $request)
 	{ 	
       return view("medicaments.medoc",[
         'medicament'=>$medicament,
-		'stock'=>$stock
+		'stock'=>$stock,
+		'request'=>$request
       ]);
 	}
 

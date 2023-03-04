@@ -1,5 +1,5 @@
 
-@extends('./../layouts/enteteclient')
+@extends('./../layouts/entete')
 
 
 @section('page-content')

@@ -24,47 +24,22 @@
       </div>
       <ul class="nav-links">
         <li>
-          <a href="/adminGerant" class="active" >
+          <a href="#" class="active" >
             <i class="bx bx-grid-alt"></i>
             <span class="links_name">Tableau De bord</span>
           </a>
         </li>
         <li>
-          <a href="{{ route('ajout') }}">
-            <i class="bx bx-box"></i>
-            <span class="links_name">Produits</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('listeMedicament') }}">
+          <a href="{{ route('listeMedicamentVendeure') }}">
             <i class="bx bx-box"></i>
             <span class="links_name">Medicaments</span>
           </a>
         </li>
+     
         <li>
-          <a href="{{ route('stock') }}">
-            <i class="bx bx-coin-stack"></i>
-            <span class="links_name">Stock</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('listesCommandesAll') }}">
+          <a href="{{ route('listesCommandesVendeur') }}">
             <i class="bx bx-list-ul"></i>
             <span class="links_name">Commandes</span>
-          </a>
-        </li>
-        <li>
-          <a href="{{ route('maPharmacie') }}">
-            <i class="bx bx-pie-chart-alt-2"></i>
-            <span class="links_name">Pharmacies</span>
-          </a>
-        </li>
-       
-       
-        <li>
-          <a href="{{ route('createUser') }}">
-            <i class="bx bx-user"></i>
-            <span class="links_name">Utilisateurs</span>
           </a>
         </li>
         <li class="log_out">

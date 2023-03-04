@@ -76,6 +76,9 @@ class UserController extends Controller
                 
             }elseif(Auth::user()->statut == '1'){
                 return redirect()->Route('pagePharmacie');
+            }elseif( Auth::user()->role ==='vendeur'){
+                return redirect()->Route('pagePharmacie');
+            
             }else{
                 return redirect('/visiteure');
             }
@@ -200,10 +203,9 @@ class UserController extends Controller
       $adresse = $request->adresse;
       $ville = $request->ville;
       $quartier = $request->quartier;
-      $rue = $request->rue;
       $telephone = $request->telephone;
     //==================================INSERTION AU NIVEAU DE LA TABLE PHARMACIE===========//
-    DB::insert('insert into pharmacies (nom,telephone,adresse,ville,quartier,rue,user_id) values(?, ?, ?, ?, ?, ?, ?)',[$nom,$telephone,$adresse,$ville,$quartier,$rue,$s]);
+    DB::insert('insert into pharmacies (nom,telephone,adresse,ville,quartier,user_id) values(?, ?, ?, ?, ?, ?)',[$nom,$telephone,$adresse,$ville,$quartier,$s]);
     return redirect()->back()->with('success','Votre compte a été créé ');
   }
 
@@ -224,7 +226,7 @@ class UserController extends Controller
           $request->session()->regenerate();
           if(Auth::user()->role === 'admin'){
               return view('admin');
-           }else if(Auth::user()->statut === '1' |  Auth::user()->role === 'vendeur'){
+           }elseif(Auth::user()->statut == '1' || Auth::user()->role === 'vendeur'){
                 return view('pharmacien');
            }else{
             return redirect('/dashboad');

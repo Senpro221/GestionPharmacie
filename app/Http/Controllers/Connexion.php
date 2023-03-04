@@ -46,13 +46,12 @@ class Connexion extends Controller
     $pane = DB::select('select id from paniers where user_id =?',[$user]);
 
     $medicament=DB::select('select * from appartenirs,medicaments where medicaments.id = appartenirs.id_medoc and id_panier=?',[$pane[0]->id]);
- 
+    DB::insert('insert into commandes (user_id,id_pharma,typeLivraison) values (?,?,?)', [$user,$pharma,$livraison]);
+
     foreach($medicament as $medicament){
          $id = $medicament->id;
          $quantites  = $medicament->quantites;
-
-        DB::insert('insert into commandes (user_id,id_pharma,typeLivraison) values (?,?,?)', [$user,$pharma,$livraison]);
-         
+  
         $pa = DB::select('select id from commandes where user_id =?',[$user]);
         
         DB::insert('insert into orders (id_commande,id_medoc,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$quantites]);
@@ -62,9 +61,30 @@ class Connexion extends Controller
         //=========================on vide le panier de l'utilisateurs=======================================
         DB::delete('delete from appartenirs where id_panier =?',[$pane[0]->id]);
         
+       //dd($db)
       } 
+      
+       
+      $pane = DB::select('select id from paniers where user_id =?',[$user]);
+		
+			$produit=DB::select('select * from possedes,produits where produits.id = possedes.id_prod and id_panier=?',[$pane[0]->id]);
+      //DB::insert('insert into commandes (user_id,id_pharma,typeLivraison) values (?,?,?)', [$user,$pharma,$livraison]);
 
-    }  
+      foreach($produit as $produit){
+			 $quantites  = $produit->quantites;
+			   $id = $produit->id;
+         
+			   $pa = DB::select('select id from commandes where user_id =?',[$user]);
+			   
+			   DB::insert('insert into commande_pivos (id_commande,id_prod,quantiteCom) values (?,?,?)', [$pa[0]->id,$id,$quantites]);
+	   
+			   $this->updateStock();
+	   
+			   //=========================on vide le panier de l'utilisateurs=======================================
+			   DB::delete('delete from possedes where id_panier =?',[$pane[0]->id]);
+		
+
+    }  }
       return view('order.valider');
   }
 
@@ -73,9 +93,10 @@ class Connexion extends Controller
       $nompharma = null;
        if($request->session()->has('nomPharmacie')){
         $nompharma =  session('nomPharmacie');
-       
+        $idPharmacie = session('idPharmacie');
+       // dd($idPharmacie);
         $user =  Auth::user()->id;
-       $listeCommande =  DB::select('select * from commandes where  user_id=? ORDER BY dateCommande',[$user]);
+       $listeCommande =  DB::select('select * from commandes where  user_id=? and id_pharma=?',[$user,$idPharmacie]);
        
        return view('order.listerCommandes',[
                   'listeCommande'=>$listeCommande,
@@ -93,19 +114,32 @@ class Connexion extends Controller
 
   public function DetailsCommandes($id){
     $data = Commande::find($id);
-      $detailsCom =  DB::select('select * from orders,medicaments,commandes where medicaments.id=orders.id_medoc and commandes.id=orders.id_commande and id_commande=?',[$data->id]);
-        return view('order.DetailsCommandes',[
-          'detailsCom'=>$detailsCom,
-        ]);
-    
+    //dd($data->id);
+    session(['idCommande'=>$data->id]);
+
+    return redirect()->Route('DetailsCommandesProd',$id);
+      
   }
 
+  
 
   public function listesCommandesAll(Request $request){
     
     $listeCommande =  DB::select('select * from commandes where statut =1  || statut=2');
 
     return view('order.listesCommandesAll',[
+      'listeCommande'=>$listeCommande,
+      'request'=>$request
+    ]);
+    
+  }
+
+
+  public function listesCommandesVendeur(Request $request){
+    
+    $listeCommande =  DB::select('select * from commandes where statut =1  || statut=2');
+
+    return view('order.listesCommandesVendeur',[
       'listeCommande'=>$listeCommande,
       'request'=>$request
     ]);
@@ -132,7 +166,7 @@ class Connexion extends Controller
           $data->statut=1;
       }
       $data->save();
-      return redirect('listesCommandesAll')->with('success','Cette commande a été livrée.');
+      return redirect('listesCommandesVendeur')->with('success','Cette commande a été livrée.');
     }
 
     public function index()
@@ -188,13 +222,14 @@ class Connexion extends Controller
      }
 
 //===================suppression de medicament=====================//
-    public function delete(Appartenires $app , Request $request,$id)
+    public function delete(Request $request,$id)
     { 
       $user = Auth::user()->id;
-
+//dd($id);
       $del = DB::select('select id from paniers where user_id=?',[$user]);
-      $idApp = DB::select('select id from appartenirs where id_panier = ? and id_medoc=?',[$del[0]->id,$id]);
-     // dd($id);
+      //dd($del[0]->id);
+      $idApp = DB::select('select id from appartenirs where id_panier = ?',[$del[0]->id]);
+      //dd($idApp);
         DB::delete('delete from appartenirs where id =?',[$idApp[0]->id]);
         return redirect("/basket")->with('success', 'Médicament retiré avec succés');
     }
@@ -208,11 +243,21 @@ class Connexion extends Controller
    
     private function updateStock(){
      $app =  DB::select('select * from appartenirs,medicaments where appartenirs.id_medoc=medicaments.id');
-    
+     $stcks =  DB::select('select * from stocks,medicaments where stocks.id_medoc=medicaments.id');
+     //dd($stcks);
      foreach($app as $pa){
-       DB::update('update medicaments set quantite = '. $pa->quantite - $pa->quantites.' where id = ?', [$pa->id]);
-       
+      $reduc =  DB::update('update medicaments set quantite = '. $pa->quantite - $pa->quantites.' where id = ?', [$pa->id]);
+      //  foreach($stcks as $stcks){
+      //   //dd($stcks->quantiteStock);
+      //   DB::update('update stocks set quantiteStock = '. $stcks->quantiteStock - $reduc.' where id = ?', [$stcks->id]);
+  
+      //  }
       }
+    }
+
+    public function entete(Request $request)
+    {
+      return view('layouts.entete',compact('request'));
     }
 }
 

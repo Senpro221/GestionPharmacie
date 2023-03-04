@@ -116,7 +116,7 @@ class ProduitController extends Controller
 			 $paniers=DB::select('select * from possedes,produits where produits.id = possedes.id_prod and id_panier=?',[$pane[0]->id]);
 			 $app = DB::select('select * from possedes ');
 
-			return view("basket.panierProd",[
+			return view("basket.listpan",[
 				'paniers'=>$paniers,
 				'app'=>$app
 			]); 
@@ -326,13 +326,18 @@ class ProduitController extends Controller
 		
 	}
 
-	public function DetailsCommandesProd($id){
+	public function DetailsCommandesProd(Request $request ,$id){
 		$data = Commande::find($id);
-		  $detailsCom =  DB::select('select * from commande_pivos,produits,commandes where produits.id=commande_pivos.id_prod and commandes.id=commande_pivos.id_commande and id_commande=?',[$data->id]);
-			return view('order.DetailsCommandesProd',[
+		if($request->session()->has('idCommande')){
+			$comm =  session('idCommande');
+		    $detailsCom =  DB::select('select * from orders,medicaments,commandes where medicaments.id=orders.id_medoc and commandes.id=orders.id_commande and id_commande=?',[$data->id]);
+
+		  $detailsCome =  DB::select('select * from commande_pivos,produits,commandes where produits.id=commande_pivos.id_prod and commandes.id=commande_pivos.id_commande and id_commande=?',[$data->id]);
+			return view('order.DetailsCommandes',[
 			  'detailsCom'=>$detailsCom,
+			  'detailsCome'=>$detailsCome,
 			]);
-		
+		}
 	  }
 	
 

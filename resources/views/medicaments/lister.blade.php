@@ -30,7 +30,7 @@ Autres médicaments</a>
    <h6>{{ $medicaments->count() }} résultat(s) pour la recherche "{{ request()->req }}"</h6>
 @endif
 @foreach($medicaments as $medicament)
-
+   @if($medicament->statut == 1)
 <div class="nb card float-lg-start shadow p-3 mb-1 bg-body rounded" style="max-width: 315px; height:35rem;">
    <img src="image/{{ $medicament->image }}" class="card-img-top" alt="vous">
   <div class="card-body">
@@ -56,7 +56,7 @@ Autres médicaments</a>
      
   </div>
 </div>
-
+@endif
 @endforeach
 <div class='float-lg-start'>
 {{$medicaments->links()}}

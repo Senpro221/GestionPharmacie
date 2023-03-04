@@ -9,7 +9,6 @@
 <a href="{{route('digestion')}}" type="button" class="btn btn-outline-success ms-2 fs-5">Digestion</a>
 <a href="{{route('DouleurFievre')}}" type="button" class="btn btn-outline-success ms-2 fs-5">Douleurs - Fièvre</a>
 <a href="{{route('Homéopathie')}}" type="button" class="btn btn-outline-success ms-2 fs-5">Homéopathie</a>
-<a href="{{route('CirculationVeineuse')}}" type="button" class="btn btn-outline-success ms-2 fs-5">
 Circulation veineuse</a>
 <a href="{{route('VitaminesMineraux')}}" type="button" class="btn btn-outline-success ms-2 fs-5">
 Vitamines - Minéraux</a>

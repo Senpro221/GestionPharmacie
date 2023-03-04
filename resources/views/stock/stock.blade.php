@@ -1,5 +1,5 @@
 
-@extends('./layouts/appSuper')
+@extends('./layouts/appGeran')
 
 
 @section('page-content')
@@ -40,15 +40,21 @@
                         @if ($current_datetime >= $stock->dlc)
                       
                        <td class="alert alert-danger" role="alert">{{ $stock->dlc }}</td> 
-                        <td>
-                        <form action="#" method="POST">
-                            @csrf
-                            @method('delete')
-                        <button type="submit" class="btn btn-danger">Supprimer</button></td> 
-                        </form> 
+                        
+                            @if ($stock->statut == 0)
+                            <td> <a href="{{ route('statutmedicaments',$stock->id) }}" class="btn btn-danger">Desactiver</a> </td> 
+                            
+                            @endif
+                     
                        @else
                         <td>{{ $stock->dlc }}</td>
+
+                        <form action="{{ route('ajoutMedoc',$stock->id) }}" method="POST">
+                            @csrf
+                             <td> <button type="submit" class="btn btn-success">Ajouter</button></td> 
+                       </form>
                         @endif
+                       
                       
                     </tr>
                         

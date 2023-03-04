@@ -20,10 +20,16 @@
     </div> 
 </div> 
 @foreach ($pharma as $pharma)
+ @if (Auth::user()->role)
+ <div class="class" style="position: relative">
+  <a href="{{ route('espaceVente',$pharma->id) }}" class="btn btn-success" style="position: absolute; margin-left: 55rem; margin-top: -150px; font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 25px;" >Accéder à votre espace de vente</a>
+</div>
+@else
  
   <div class="class" style="position: relative">
     <a href="{{ route('accederPharmacie',$pharma->id) }}" class="btn btn-success" style="position: absolute; margin-left: 55rem; margin-top: -150px; font-family: 'Times New Roman', Times, serif; font-weight: bold; font-size: 25px;" >Accéder à votre espace admin</a>
 </div>
+@endif
   @break
 @endforeach 
 <hr>

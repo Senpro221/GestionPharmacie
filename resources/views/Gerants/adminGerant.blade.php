@@ -22,6 +22,43 @@
       <div class="home-content">
         <div class="overview-boxes">
           <div class="box">
+            <div class="right-side">
+              @php
+                $user = DB::table('vendres')->where('user_id',Auth::user()->id)->count();
+              @endphp
+              <div class="box-topic">ventes</div>
+              <div class="number">{{ $user }}</div>
+              <div class="indicator">
+                <i class="bx bx-down-arrow-alt down"></i>
+                <span class="text">Vendue</span>
+              </div>
+            </div>
+            <i class="bx bxs-cart-add cart two"></i>
+          </div>
+          <div class="box">
+            <div class="right-side">
+           
+              <div class="box-topic">Profit</div>
+              @php $total = 0 @endphp
+              @if($request->session()->has('idPharmacie'))
+              @php $pharma = session('idPharmacie'); @endphp
+             
+              @foreach($ventes as $vente)
+                 
+                @php $total += $vente->quantiteVendue * $vente->prix_unitaire @endphp
+              
+                @endforeach
+              <div class="number">{{$total}} F</div>             
+              <div class="indicator">
+                <i class="bx bx-up-arrow-alt"></i>
+                <span class="text">Depuis hier</span>
+              </div>
+            </div>
+            <i class="bx bx-cart cart three"></i>
+          </div>
+           
+          @endif
+          <div class="box">
             @if($request->session()->has('idPharmacie'))
 				     @php $pharma =  session('idPharmacie');  
               $c=DB::table('commandes')->where('id_pharma',$pharma)->count();
@@ -41,14 +78,18 @@
           @endif
           <div class="box">
             <div class="right-side">
-              @php
-                $user = DB::table('users')->count();
+              @if($request->session()->has('idPharmacie'))
+               @php $pharma =  session('idPharmacie');  
+                $bb  = DB::select("select * from users where role ='vendeur' and id_pharma=?",[$pharma]);
+                //print_r($bb[0]->role);exit();
+                $user = DB::table('users')->where('role',$bb[0]->role)
+                ->where('id_pharma',$pharma)->count();
               @endphp
               <div class="box-topic">Utilisateur</div>
               <div class="number">{{ $user }}</div>
               <div class="indicator">
                 <i class="bx bx-down-arrow-alt down"></i>
-                <span class="text">Inscrits</span>
+                <span class="text">Enregistrer</span>
               </div>
             </div>
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.3" stroke="currentColor" class="w-6 h-6 ms-5  text-success" style="width:60px ;">
@@ -56,7 +97,106 @@
             </svg>
             
           </div>
-          
+        </div>
+        @endif
+          <div class="sales-boxes">
+            <div class="recent-sales box">
+              <div class="title">Commandes recentes</div>
+              <div class="sales-details">
+               
+                <ul class="details">
+                  <li class="topic">Date</li>
+                  @foreach ($commande as $com )
+                  
+                  <li><a href="#">{{ $com->dateCommande }}</a></li>
+                  @endforeach
+                </ul>        
+                <ul class="details">
+                  <li class="topic">Client</li>
+                  @foreach ($commande as $com )
+                  <li><a href="#">{{ $com->prenom }}</a></li>
+                  @endforeach
+                </ul>
+                <ul class="details">
+                  <li class="topic">Médicaments</li>
+                  @foreach ($medoc as $medoc)
+                  <li><a href="#">{{ $medoc->nom }}</a></li>
+                  @endforeach
+                </ul>
+                <ul class="details">
+                  <li class="topic">Prix</li>
+                  @foreach ($medicament as $medoc)
+                  <li><a href="#"></a>{{ $medoc->prix_unitaire }}</li>
+                  @endforeach
+                 
+                </ul>
+              </div>
+              <div class="button" >
+                <a href="#" type="button" class="btn-success" >Voir Tout</a>
+              </div>
+            </div>
+            <div class="top-sales box">
+              <div class="title">Produit le plus vendu</div>
+              <ul class="top-sales-details">
+                <li>
+                  <a href="#">
+                    <!--<img src="images/sunglasses.jpg" alt="">-->
+                    <span class="product">Ordinateur</span>
+                  </a>
+                  <span class="price">1107 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!--<img src="images/jeans.jpg" alt="">-->
+                    <span class="product">PC</span>
+                  </a>
+                  <span class="price">1567 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!-- <img src="images/nike.jpg" alt="">-->
+                    <span class="product">Chaussure</span>
+                  </a>
+                  <span class="price">1234 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!--<img src="images/scarves.jpg" alt="">-->
+                    <span class="product">Pantalon</span>
+                  </a>
+                  <span class="price">2312 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!--<img src="images/blueBag.jpg" alt="">-->
+                    <span class="product">Samsung</span>
+                  </a>
+                  <span class="price">1456 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!--<img src="images/bag.jpg" alt="">-->
+                    <span class="product">iPhone</span>
+                  </a>
+                  <span class="price">2345 F</span>
+                </li>
+  
+                <li>
+                  <a href="#">
+                    <!--<img src="images/addidas.jpg" alt="">-->
+                    <span class="product">iPhone X</span>
+                  </a>
+                  <span class="price">2345 F</span>
+                </li>
+                <li>
+                  <a href="#">
+                    <!--<img src="images/shirt.jpg" alt="">-->
+                    <span class="product">TShirt</span>
+                  </a>
+                  <span class="price">1245 F</span>
+                </li>
+              </ul>
+            </div>
 
         </div>
  

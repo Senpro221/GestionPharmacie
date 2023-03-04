@@ -29,6 +29,8 @@
 </div>
   <hr>
 @foreach($medicaments as $medicament)
+  @if ($medicament->statut==1)
+  
 <div  class="nb">
 <div class=" card float-lg-start shadow p-3 mb-1 bg-body rounded" style="width: 315px; height:35rem;">
    <img src="image/{{ $medicament->image }}"  class="card-img-top hover-zoom" alt="vous">
@@ -51,7 +53,8 @@
   </div>
 </div>
 </div>
-
+  
+@endif
 @endforeach
 
   <div class='voire float-lg-start mt-5 ms-9 mb-2'>

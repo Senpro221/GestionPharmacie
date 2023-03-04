@@ -1,5 +1,5 @@
 
-@extends('./layouts/appGeran')
+@extends('./layouts/appVendeur')
 
 
 @section('page-content')
@@ -28,7 +28,7 @@
           <td>{{$medicament->quantiteStock}}</td>
           <td>{{$medicament->prix_unitaire}}</td>
           <td>{{$medicament->categorie}}</td>
-          <td> <a href="{{ route('vendreEspacePharmacies',$medicament->id) }}" class="btn btn-success ms-5">Vendre</a></td>
+          <td> <a href="{{ route('vendre',$medicament->id) }}" class="btn btn-success ms-5">Vendre</a></td>
       </tr>
           {{-- @else 
         @endif

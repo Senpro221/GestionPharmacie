@@ -27,12 +27,15 @@
                 <td>{{ $nompharma }}</td>
                 <td>{{ $comm->dateCommande }}</td>
                 <td>{{ $comm->typeLivraison }}</td>
-                <td>validé</td>
+                @if ($comm->statut==1)
+                <td>validée</td>
+                @elseif ($comm->statut==2)
+                <td>Livrée</td>
+                @endif
+               
              
                 <td>
-                  {{-- @if ($comm->statut == 0)
-                  <a  href="{{ route('statutCommande',$comm->id) }}" class="btn btn-success">Valider</a>
-                  @endif --}}
+               
                   <a  href="{{ route('DetailsCommandes',$comm->id) }}" class="btn btn-info">Details</a>
                 </td>
               </tr>

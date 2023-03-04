@@ -1,4 +1,4 @@
-@extends('./../layouts/entetepharma')
+{{-- @extends('./../layouts/entetepharma')
 @section('page-content')
 <body>
   
@@ -11,7 +11,7 @@
   
   
               <span class="dec">Vous voulez vendre vos produits en toutes rapidité 
-      et en toute sécurité vous Etes au bonne endroit
+      et en toute sécurité vous Etes au bon endroit
            avec SEN Pharmacie </span> 
              
 
@@ -29,4 +29,4 @@
   <hr>
 @endsection
 </body>
-</html>
+</html> --}}

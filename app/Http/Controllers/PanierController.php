@@ -10,7 +10,7 @@ class PanierController extends Controller
 {
      public function stock(Medicament $stocks)
     {
-        $stocks = DB::select('select * from medicaments,stocks where medicaments.id=stocks.id_medoc');
+        $stocks = DB::select('select m.id,m.statut,m.nom,m.dlc,s.quantiteStock,s.quantiteMinim from medicaments m,stocks s where m.id = s.id_medoc');
         return view('stock.stock',compact('stocks'));
     }
 
