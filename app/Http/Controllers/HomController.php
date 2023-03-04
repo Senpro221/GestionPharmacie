@@ -147,12 +147,13 @@ class HomController extends Controller
     }}
 
     public function espaceVente(Request $request,$id){
-            
-        $pharma= DB::select('select pharmacies.id from pharmacies,users where users.role = ?', [Auth::user()->role]);
-       
         session(['idPharmacie'=>$pharma[0]->id]);
         if($request->session()->has('idPharmacie')){
-         $pharma =  session('idPharmacie');  
+            $pharma =  session('idPharmacie');  
+        dd($pharma);
+         $pharma= DB::select('select pharmacies.id from pharmacies,users where users.role = ?', [Auth::user()->role]);
+       
+        
         
         $ventes =  DB::select('select * from vendres,medicaments where vendres.id_medoc=medicaments.id');   
         // $medicament =  DB::select('select * from orders,medicaments,commandes where orders.id_medoc=medicaments.id and commandes.id_pharma=?',[$pharma]);    
